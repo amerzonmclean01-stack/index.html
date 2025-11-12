@@ -11,6 +11,7 @@
             --secondary: #d69e2e;
             --accent: #c53030;
             --light: #f7fafc;
+            --success: #38a169;
         }
 
         * {
@@ -33,74 +34,92 @@
             padding: 0 15px;
         }
 
-        /* === SUPER SIMPLE EDIT MODE === */
+        /* === SUPER VISIBLE EDIT MODE === */
         .edit-mode {
-            background: #1a365d;
+            background: linear-gradient(135deg, #1a365d, #c53030);
             color: white;
-            padding: 10px 0;
+            padding: 12px 0;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 10000;
             text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-bottom: 3px solid #d69e2e;
         }
 
         .edit-btn {
             background: #d69e2e;
             color: #1a365d;
             border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+            padding: 10px 20px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            margin: 0 5px;
+            margin: 0 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
+        .edit-btn:hover {
+            background: #ecc94b;
+            transform: translateY(-2px);
+        }
+
+        .edit-btn.large {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+        }
+
+        /* === EDITABLE ELEMENTS === */
         .editable {
             position: relative;
             border: 2px dashed transparent;
             transition: all 0.3s ease;
-            padding: 5px;
-            border-radius: 5px;
+            padding: 8px;
+            border-radius: 8px;
+            margin: 2px;
         }
 
         .edit-mode-on .editable {
-            border-color: #d69e2e;
-            background: rgba(214, 158, 46, 0.1);
+            border-color: #d69e2e !important;
+            background: rgba(214, 158, 46, 0.15) !important;
         }
 
         .editable:hover {
-            background: rgba(214, 158, 46, 0.2);
+            background: rgba(214, 158, 46, 0.25) !important;
         }
 
         .edit-icon {
             position: absolute;
-            top: -10px;
-            right: -10px;
+            top: -8px;
+            right: -8px;
             background: #d69e2e;
             color: #1a365d;
             border-radius: 50%;
-            width: 25px;
-            height: 25px;
+            width: 28px;
+            height: 28px;
             display: none;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 14px;
             cursor: pointer;
             z-index: 1000;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         .edit-mode-on .edit-icon {
             display: flex;
         }
 
-        /* === HEADER === */
+        /* === HEADER & NAVIGATION === */
         header {
             background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
             position: sticky;
-            top: 45px;
+            top: 63px;
             z-index: 999;
         }
 
@@ -119,118 +138,258 @@
 
         .nav-main {
             display: flex;
-            gap: 30px;
+            gap: 35px;
         }
 
         .nav-main a {
             color: #333;
             text-decoration: none;
-            font-weight: 500;
-            padding: 10px 0;
+            font-weight: 600;
+            padding: 12px 0;
+            position: relative;
+            transition: all 0.3s ease;
         }
 
+        .nav-main a:hover,
         .nav-main a.active {
             color: #d69e2e;
-            border-bottom: 2px solid #d69e2e;
+        }
+
+        .nav-main a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #d69e2e;
         }
 
         /* === SECTIONS === */
         .section {
-            padding: 60px 0;
-            min-height: 60vh;
+            padding: 80px 0;
+            min-height: 70vh;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             color: #1a365d;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
+            font-weight: 700;
         }
 
-        /* === HERO === */
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            line-height: 1.6;
+        }
+
+        /* === HERO SECTION === */
         .hero {
             background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
             color: white;
-            padding: 100px 0;
+            padding: 120px 0;
             text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
         }
 
         .btn {
-            display: inline-block;
-            padding: 12px 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
             background: #d69e2e;
             color: #1a365d;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 700;
             text-decoration: none;
-            margin: 10px;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
         }
 
-        /* === ABOUT SECTION === */
-        .about-section {
+        .btn:hover {
+            background: #ecc94b;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(214, 158, 46, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #1a365d;
+            border-color: white;
+        }
+
+        /* === BOOKS SECTION === */
+        .books-section {
             background: white;
         }
 
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .about-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .team-member {
-            background: #f7fafc;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .team-member img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            object-fit: cover;
-        }
-
-        /* === SUPPORT SECTION === */
-        .support-section {
-            background: #f7fafc;
-        }
-
-        .support-grid {
+        .books-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
 
-        .support-category {
+        .book-card {
             background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-color: #d69e2e;
+        }
+
+        .book-cover {
+            height: 320px;
+            overflow: hidden;
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .book-card:hover .book-cover img {
+            transform: scale(1.1);
+        }
+
+        .book-info {
+            padding: 25px;
+        }
+
+        .book-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+            color: #1a365d;
+        }
+
+        .book-author {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .book-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: 800;
+            color: #c53030;
+            font-size: 1.5rem;
+        }
+
+        .price::before {
+            content: "R ";
+        }
+
+        /* === ABOUT SECTION === */
+        .about-section {
+            background: #f7fafc;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .team-member {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+
+        .team-member img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin-bottom: 25px;
+            object-fit: cover;
+            border: 4px solid #d69e2e;
+        }
+
+        /* === SUPPORT SECTION === */
+        .support-section {
+            background: white;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .support-category {
+            background: #f7fafc;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border-left: 5px solid #d69e2e;
         }
 
         .support-category h3 {
             color: #1a365d;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            font-size: 1.4rem;
         }
 
         .support-category ul {
@@ -238,56 +397,78 @@
         }
 
         .support-category li {
-            margin-bottom: 10px;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 1.1rem;
         }
 
-        /* === CONTACT === */
+        /* === CONTACT SECTION === */
         .contact-section {
-            background: white;
+            background: #f7fafc;
         }
 
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .contact-info {
-            background: #f7fafc;
-            padding: 30px;
-            border-radius: 10px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
         }
 
         .contact-item {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: white;
-            border-radius: 5px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 10px;
+            border-left: 4px solid #d69e2e;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: #d69e2e;
+            margin-bottom: 10px;
         }
 
         .contact-form {
-            background: #f7fafc;
-            padding: 30px;
-            border-radius: 10px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #1a365d;
+            font-size: 1.1rem;
         }
 
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #d69e2e;
+            box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.1);
         }
 
         /* === EDIT MODAL === */
@@ -298,7 +479,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.7);
             z-index: 20000;
             align-items: center;
             justify-content: center;
@@ -310,67 +491,115 @@
 
         .edit-content {
             background: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 500px;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
             width: 90%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border: 3px solid #d69e2e;
         }
 
         .edit-content h3 {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: #1a365d;
+            font-size: 1.5rem;
+            text-align: center;
         }
 
         .edit-content textarea {
             width: 100%;
-            height: 150px;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            margin-bottom: 20px;
+            height: 200px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .edit-content textarea:focus {
+            outline: none;
+            border-color: #d69e2e;
+        }
+
+        /* === NOTIFICATION === */
+        .notification {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #38a169;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 3000;
+            display: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .notification.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translate(-50%, -20px); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
         }
 
         /* === RESPONSIVE === */
         @media (max-width: 768px) {
             .header-top {
                 flex-direction: column;
-                gap: 15px;
+                gap: 20px;
             }
             
             .nav-main {
-                gap: 15px;
+                gap: 20px;
                 flex-wrap: wrap;
                 justify-content: center;
             }
             
-            .section {
-                padding: 40px 0;
+            .hero h1 {
+                font-size: 2.5rem;
             }
             
             .section-title {
-                font-size: 2rem;
+                font-size: 2.2rem;
+            }
+            
+            .edit-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+                margin: 5px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- SUPER SIMPLE EDIT MODE -->
+    <!-- SUPER VISIBLE EDIT MODE -->
     <div class="edit-mode">
         <div class="container">
-            <strong>🚀 EASY EDIT MODE:</strong>
-            <button class="edit-btn" onclick="toggleEditMode()" id="editToggle">
-                <i class="fas fa-edit"></i> TURN ON EDITING
-            </button>
-            <button class="edit-btn" onclick="saveAllContent()">
-                <i class="fas fa-save"></i> SAVE EVERYTHING
-            </button>
-            <button class="edit-btn" onclick="resetToDefault()">
-                <i class="fas fa-undo"></i> RESET
-            </button>
-            <span style="margin-left: 20px; font-size: 0.9em;">Click the ✏️ icons to edit anything!</span>
+            <strong style="font-size: 1.2rem;">🎨 WEBSITE EDITOR - CLICK BELOW TO START EDITING!</strong>
+            <div style="margin-top: 10px;">
+                <button class="edit-btn large" onclick="toggleEditMode()" id="editToggle">
+                    <i class="fas fa-edit"></i> CLICK TO TURN ON EDITING
+                </button>
+                <button class="edit-btn" onclick="saveAllContent()">
+                    <i class="fas fa-save"></i> SAVE ALL CHANGES
+                </button>
+                <button class="edit-btn" onclick="resetToDefault()">
+                    <i class="fas fa-undo"></i> RESET CONTENT
+                </button>
+            </div>
         </div>
     </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
 
     <!-- Header -->
     <header>
@@ -382,10 +611,11 @@
                 </div>
                 
                 <nav class="nav-main">
-                    <a href="#home" class="active">Home</a>
-                    <a href="#about">About Us</a>
-                    <a href="#support">Support Center</a>
-                    <a href="#contact">Contact</a>
+                    <a href="#home" class="active nav-link">Home</a>
+                    <a href="#books" class="nav-link">Books</a>
+                    <a href="#about" class="nav-link">About Us</a>
+                    <a href="#support" class="nav-link">Support</a>
+                    <a href="#contact" class="nav-link">Contact</a>
                 </nav>
             </div>
         </div>
@@ -400,11 +630,35 @@
             </h1>
             <p class="editable" data-id="hero-subtitle">
                 <span class="edit-icon">✏️</span>
-                Your premier destination for quality ebooks and exceptional reading experiences
+                South Africa's premier destination for quality ebooks and exceptional reading experiences
             </p>
-            <div>
-                <a href="#about" class="btn">Learn About Us</a>
-                <a href="#support" class="btn" style="background: transparent; border: 2px solid white; color: white;">Get Support</a>
+            <div style="margin-top: 40px;">
+                <a href="#books" class="btn">
+                    <i class="fas fa-gem"></i>
+                    Browse Books
+                </a>
+                <a href="#about" class="btn btn-secondary">
+                    <i class="fas fa-users"></i>
+                    About Our Story
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Section -->
+    <section id="books" class="section books-section">
+        <div class="container">
+            <h2 class="section-title editable" data-id="books-title">
+                <span class="edit-icon">✏️</span>
+                Featured Ebooks
+            </h2>
+            <p class="section-subtitle editable" data-id="books-subtitle">
+                <span class="edit-icon">✏️</span>
+                Discover our curated collection of exceptional reads from South African and international authors
+            </p>
+            
+            <div class="books-grid" id="booksGrid">
+                <!-- Books will be loaded here -->
             </div>
         </div>
     </section>
@@ -414,21 +668,21 @@
         <div class="container">
             <h2 class="section-title editable" data-id="about-title">
                 <span class="edit-icon">✏️</span>
-                About The Definitive Word
+                Our Story
             </h2>
             
             <div class="about-content">
                 <div class="about-text editable" data-id="about-text-1">
                     <span class="edit-icon">✏️</span>
-                    <p>The Definitive Word was founded with a simple mission: to bring exceptional literature to discerning readers. We believe that great books have the power to transform lives, spark conversations, and shape perspectives.</p>
+                    The Definitive Word was born in South Africa with a passion for connecting readers with transformative literature. We believe that every great book has the power to change perspectives and inspire growth.
                 </div>
                 
                 <div class="about-text editable" data-id="about-text-2">
                     <span class="edit-icon">✏️</span>
-                    <p>Our team of literary experts carefully curates each title in our collection, ensuring that every book meets our standards for quality writing, compelling storytelling, and lasting impact.</p>
+                    Our team carefully selects each title, focusing on quality writing, compelling storytelling, and meaningful impact. We're proud to support both local South African authors and international literary excellence.
                 </div>
 
-                <h3 style="margin: 50px 0 30px; color: #1a365d;" class="editable" data-id="team-title">
+                <h3 style="text-align: center; margin: 60px 0 40px; color: #1a365d; font-size: 2rem;" class="editable" data-id="team-title">
                     <span class="edit-icon">✏️</span>
                     Meet Our Team
                 </h3>
@@ -438,7 +692,7 @@
                         <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Team Member">
                         <h4 class="editable" data-id="team1-name">
                             <span class="edit-icon">✏️</span>
-                            Alex Johnson
+                            Sipho Mbeki
                         </h4>
                         <p class="editable" data-id="team1-role">
                             <span class="edit-icon">✏️</span>
@@ -446,7 +700,7 @@
                         </p>
                         <p class="editable" data-id="team1-desc">
                             <span class="edit-icon">✏️</span>
-                            Passionate about connecting readers with transformative literature
+                            Passionate about bringing African literature to the world stage
                         </p>
                     </div>
                     
@@ -454,7 +708,7 @@
                         <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Team Member">
                         <h4 class="editable" data-id="team2-name">
                             <span class="edit-icon">✏️</span>
-                            Sarah Chen
+                            Nomvula Kalenga
                         </h4>
                         <p class="editable" data-id="team2-role">
                             <span class="edit-icon">✏️</span>
@@ -462,7 +716,7 @@
                         </p>
                         <p class="editable" data-id="team2-desc">
                             <span class="edit-icon">✏️</span>
-                            Curating exceptional books for our community
+                            Curating exceptional books for our growing community
                         </p>
                     </div>
                     
@@ -470,7 +724,7 @@
                         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Team Member">
                         <h4 class="editable" data-id="team3-name">
                             <span class="edit-icon">✏️</span>
-                            Marcus Rodriguez
+                            Thabo van der Merwe
                         </h4>
                         <p class="editable" data-id="team3-role">
                             <span class="edit-icon">✏️</span>
@@ -478,7 +732,7 @@
                         </p>
                         <p class="editable" data-id="team3-desc">
                             <span class="edit-icon">✏️</span>
-                            Here to help with any questions or issues
+                            Dedicated to providing exceptional service to our readers
                         </p>
                     </div>
                 </div>
@@ -486,16 +740,16 @@
         </div>
     </section>
 
-    <!-- Support Center Section -->
+    <!-- Support Section -->
     <section id="support" class="section support-section">
         <div class="container">
             <h2 class="section-title editable" data-id="support-title">
                 <span class="edit-icon">✏️</span>
-                Support Center
+                Support Centre
             </h2>
             <p class="section-subtitle editable" data-id="support-subtitle">
                 <span class="edit-icon">✏️</span>
-                We're here to help! Find answers to common questions and get support
+                We're here to help! Find answers to common questions and get the support you need
             </p>
             
             <div class="support-grid">
@@ -515,11 +769,11 @@
                         </li>
                         <li class="editable" data-id="support1-item3">
                             <span class="edit-icon">✏️</span>
-                            Payment issues
+                            Payment issues and refunds
                         </li>
                         <li class="editable" data-id="support1-item4">
                             <span class="edit-icon">✏️</span>
-                            Order confirmation
+                            Order confirmation and receipts
                         </li>
                     </ul>
                 </div>
@@ -532,7 +786,7 @@
                     <ul>
                         <li class="editable" data-id="support2-item1">
                             <span class="edit-icon">✏️</span>
-                            Supported devices
+                            Supported devices and apps
                         </li>
                         <li class="editable" data-id="support2-item2">
                             <span class="edit-icon">✏️</span>
@@ -540,11 +794,11 @@
                         </li>
                         <li class="editable" data-id="support2-item3">
                             <span class="edit-icon">✏️</span>
-                            Format compatibility
+                            Format compatibility guide
                         </li>
                         <li class="editable" data-id="support2-item4">
                             <span class="edit-icon">✏️</span>
-                            Transferring between devices
+                            Transferring books between devices
                         </li>
                     </ul>
                 </div>
@@ -557,19 +811,19 @@
                     <ul>
                         <li class="editable" data-id="support3-item1">
                             <span class="edit-icon">✏️</span>
-                            Creating an account
+                            Creating and managing your account
                         </li>
                         <li class="editable" data-id="support3-item2">
                             <span class="edit-icon">✏️</span>
-                            Password reset
+                            Password reset and security
                         </li>
                         <li class="editable" data-id="support3-item3">
                             <span class="edit-icon">✏️</span>
-                            Managing your library
+                            Managing your ebook library
                         </li>
                         <li class="editable" data-id="support3-item4">
                             <span class="edit-icon">✏️</span>
-                            Privacy and security
+                            Privacy and data protection
                         </li>
                     </ul>
                 </div>
@@ -584,6 +838,10 @@
                 <span class="edit-icon">✏️</span>
                 Contact Us
             </h2>
+            <p class="section-subtitle editable" data-id="contact-subtitle">
+                <span class="edit-icon">✏️</span>
+                Get in touch with our team - we're here to help with any questions
+            </p>
             
             <div class="contact-grid">
                 <div class="contact-info">
@@ -594,22 +852,32 @@
                     
                     <div class="contact-item editable" data-id="contact-email">
                         <span class="edit-icon">✏️</span>
-                        <strong>Email:</strong> support@thedefinitiveword.com
+                        <i class="fas fa-envelope"></i>
+                        <strong>Email:</strong><br>
+                        support@thedefinitiveword.co.za
                     </div>
                     
                     <div class="contact-item editable" data-id="contact-phone">
                         <span class="edit-icon">✏️</span>
-                        <strong>Phone:</strong> +1 (555) 123-4567
+                        <i class="fas fa-phone"></i>
+                        <strong>Phone:</strong><br>
+                        +27 (0) 11 123 4567
                     </div>
                     
                     <div class="contact-item editable" data-id="contact-address">
                         <span class="edit-icon">✏️</span>
-                        <strong>Address:</strong> 123 Book Street, Literary City, LC 12345
+                        <i class="fas fa-map-marker-alt"></i>
+                        <strong>Address:</strong><br>
+                        123 Book Street, Sandton<br>
+                        Johannesburg, 2196
                     </div>
                     
                     <div class="contact-item editable" data-id="contact-hours">
                         <span class="edit-icon">✏️</span>
-                        <strong>Hours:</strong> Mon-Fri 9AM-6PM EST
+                        <i class="fas fa-clock"></i>
+                        <strong>Business Hours:</strong><br>
+                        Mon-Fri: 8:30AM-5:30PM SAST<br>
+                        Sat: 9:00AM-1:00PM SAST
                     </div>
                 </div>
                 
@@ -636,6 +904,7 @@
                             <textarea rows="5" required></textarea>
                         </div>
                         <button type="submit" class="btn" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i>
                             Send Message
                         </button>
                     </form>
@@ -648,10 +917,14 @@
     <div class="edit-modal" id="editModal">
         <div class="edit-content">
             <h3 id="editModalTitle">Edit Content</h3>
-            <textarea id="editModalTextarea"></textarea>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn" onclick="saveEdit()" style="flex: 1;">Save Changes</button>
-                <button class="btn" onclick="closeEditModal()" style="flex: 1; background: #666;">Cancel</button>
+            <textarea id="editModalTextarea" placeholder="Type your content here..."></textarea>
+            <div style="display: flex; gap: 15px;">
+                <button class="btn" onclick="saveEdit()" style="flex: 1;">
+                    <i class="fas fa-check"></i> Save Changes
+                </button>
+                <button class="btn" onclick="closeEditModal()" style="flex: 1; background: #666;">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
             </div>
         </div>
     </div>
@@ -660,49 +933,109 @@
         let currentEditingElement = null;
         let editMode = false;
 
+        // Sample books data with Rands pricing
+        const sampleBooks = [
+            {
+                id: 1,
+                title: "The Silent Observer",
+                author: "Megan Foster", 
+                price: 249.99,
+                image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                badge: "Bestseller"
+            },
+            {
+                id: 2,
+                title: "Digital Revolution",
+                author: "Alex Chen",
+                price: 299.99,
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                badge: "New"
+            },
+            {
+                id: 3,
+                title: "Business Mastery",
+                author: "Sarah Johnson", 
+                price: 349.99,
+                image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                badge: "Popular"
+            }
+        ];
+
         // Toggle edit mode on/off
         function toggleEditMode() {
             editMode = !editMode;
             document.body.classList.toggle('edit-mode-on', editMode);
-            document.getElementById('editToggle').innerHTML = editMode ? 
+            const toggleBtn = document.getElementById('editToggle');
+            toggleBtn.innerHTML = editMode ? 
                 '<i class="fas fa-times"></i> TURN OFF EDITING' : 
-                '<i class="fas fa-edit"></i> TURN ON EDITING';
+                '<i class="fas fa-edit"></i> CLICK TO TURN ON EDITING';
+            toggleBtn.style.background = editMode ? '#c53030' : '#d69e2e';
+            
+            showNotification(editMode ? 
+                '✏️ EDIT MODE ON: Click any yellow ✏️ icon to edit content!' : 
+                '✅ Edit mode turned off');
         }
 
-        // Set up click handlers for all editable elements
+        // Set up everything when page loads
         document.addEventListener('DOMContentLoaded', function() {
             // Load saved content
             loadAllContent();
             
-            // Add click handlers to all edit icons
-            document.querySelectorAll('.edit-icon').forEach(icon => {
-                icon.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    if (editMode) {
-                        const editableElement = this.parentElement;
-                        openEditModal(editableElement);
-                    }
-                });
-            });
+            // Display sample books
+            displayBooks();
+            
+            // Set up navigation
+            setupNavigation();
+            
+            // Set up editing functionality
+            setupEditing();
+            
+            showNotification('Welcome to The Definitive Word! Click the EDIT button above to customize your site.');
+        });
 
-            // Add click handlers to editable areas (for larger click targets)
-            document.querySelectorAll('.editable').forEach(element => {
-                element.addEventListener('click', function(e) {
-                    if (editMode && !e.target.classList.contains('edit-icon')) {
-                        openEditModal(this);
-                    }
-                });
-            });
+        // Display books in the grid
+        function displayBooks() {
+            const grid = document.getElementById('booksGrid');
+            grid.innerHTML = '';
 
-            // Navigation
-            document.querySelectorAll('.nav-main a').forEach(link => {
+            sampleBooks.forEach(book => {
+                const card = document.createElement('div');
+                card.className = 'book-card';
+                card.innerHTML = `
+                    ${book.badge ? `<div style="position: absolute; top: 15px; right: 15px; background: #c53030; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 2;">${book.badge}</div>` : ''}
+                    <div class="book-cover">
+                        <img src="${book.image}" alt="${book.title}">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">${book.title}</h3>
+                        <p class="book-author">by ${book.author}</p>
+                        <div class="book-price">
+                            <span class="price">${book.price.toFixed(2)}</span>
+                            <button class="btn" onclick="addToCart(${book.id})" style="padding: 10px 20px; font-size: 0.9rem;">
+                                <i class="fas fa-cart-plus"></i>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Set up navigation
+        function setupNavigation() {
+            document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
-                    document.querySelectorAll('.nav-main a').forEach(l => l.classList.remove('active'));
+                    
+                    // Update active state
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     
+                    // Scroll to section
                     const targetId = this.getAttribute('href').substring(1);
                     const targetSection = document.getElementById(targetId);
+                    
                     if (targetSection) {
                         window.scrollTo({
                             top: targetSection.offsetTop - 100,
@@ -711,15 +1044,49 @@
                     }
                 });
             });
-        });
+
+            // Update active link on scroll
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('.section, .hero');
+                const navLinks = document.querySelectorAll('.nav-link');
+                
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollY >= (sectionTop - 150)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        // Set up editing functionality
+        function setupEditing() {
+            // Add click handlers to all edit icons and editable areas
+            document.querySelectorAll('.editable').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    if (editMode) {
+                        openEditModal(this);
+                    }
+                });
+            });
+        }
 
         // Open edit modal
         function openEditModal(element) {
             currentEditingElement = element;
             const currentText = element.textContent.replace('✏️', '').trim();
-            document.getElementById('editModalTitle').textContent = 'Edit: ' + element.getAttribute('data-id');
+            document.getElementById('editModalTitle').textContent = 'Edit Content';
             document.getElementById('editModalTextarea').value = currentText;
             document.getElementById('editModal').classList.add('active');
+            document.getElementById('editModalTextarea').focus();
         }
 
         // Save edit
@@ -729,7 +1096,7 @@
                 currentEditingElement.innerHTML = '<span class="edit-icon">✏️</span> ' + newText;
                 saveAllContent();
                 closeEditModal();
-                showNotification('Changes saved!');
+                showNotification('✅ Changes saved successfully!');
             }
         }
 
@@ -766,7 +1133,7 @@
 
         // Reset to default content
         function resetToDefault() {
-            if (confirm('Reset all content to original? This cannot be undone.')) {
+            if (confirm('Are you sure you want to reset all content to original? This cannot be undone.')) {
                 localStorage.removeItem('websiteContent');
                 location.reload();
             }
@@ -775,18 +1142,37 @@
         // Handle contact form
         function handleContactForm(event) {
             event.preventDefault();
-            showNotification('Thank you! Your message has been sent. We\'ll respond within 24 hours.');
+            showNotification('📧 Thank you! Your message has been sent. We will respond within 24 hours.');
             event.target.reset();
+        }
+
+        // Add to cart function
+        function addToCart(bookId) {
+            const book = sampleBooks.find(b => b.id === bookId);
+            if (book) {
+                showNotification(`🛒 Added "${book.title}" to cart! - R${book.price.toFixed(2)}`);
+            }
         }
 
         // Show notification
         function showNotification(message) {
-            alert('✅ ' + message); // Simple alert for now
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.background = message.includes('✅') || message.includes('📧') || message.includes('🛒') ? '#38a169' : '#d69e2e';
+            notification.className = 'notification show';
+            setTimeout(() => notification.className = 'notification', 5000);
         }
 
         // Close modal when clicking outside
         window.addEventListener('click', function(event) {
             if (event.target.classList.contains('edit-modal')) {
+                closeEditModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
                 closeEditModal();
             }
         });
