@@ -6,20 +6,18 @@
     <title>The Definitive Word - Premium Ebook Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* === CUSTOM COLOR THEME === */
         :root {
-            --primary: #1a365d;      /* Deep navy blue */
-            --secondary: #d69e2e;    /* Gold accent */
-            --accent: #c53030;       /* Rich red */
-            --success: #38a169;      /* Green */
-            --light: #f7fafc;        /* Light background */
-            --dark: #2d3748;         /* Dark text */
+            --primary: #1a365d;
+            --secondary: #d69e2e;
+            --accent: #c53030;
+            --success: #38a169;
+            --light: #f7fafc;
+            --dark: #2d3748;
             --text: #2d3748;
             --background: #ffffff;
             --gradient: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
         }
 
-        /* === MODERN FONTS === */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
         * {
@@ -34,6 +32,7 @@
             color: var(--text);
             background: var(--background);
             font-weight: 400;
+            scroll-behavior: smooth;
         }
 
         .container {
@@ -43,7 +42,7 @@
             padding: 0 15px;
         }
 
-        /* === PREMIUM ADMIN PANEL === */
+        /* === ADMIN PANEL === */
         .admin-panel {
             background: var(--gradient);
             color: white;
@@ -81,21 +80,7 @@
             box-shadow: 0 4px 12px rgba(214, 158, 46, 0.3);
         }
 
-        .stats {
-            margin-left: auto;
-            display: flex;
-            gap: 20px;
-            font-size: 0.85rem;
-            opacity: 0.9;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* === LUXURY HEADER === */
+        /* === HEADER === */
         header {
             background: white;
             box-shadow: 0 2px 30px rgba(0,0,0,0.08);
@@ -127,13 +112,6 @@
             font-size: 2.2rem;
         }
 
-        .logo-text {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
         .nav-main {
             display: flex;
             gap: 35px;
@@ -152,128 +130,49 @@
             color: var(--primary);
         }
 
-        .nav-main a::after {
+        .nav-main a.active {
+            color: var(--secondary);
+        }
+
+        .nav-main a.active::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 0;
+            width: 100%;
             height: 2px;
             background: var(--secondary);
-            transition: width 0.3s ease;
         }
 
-        .nav-main a:hover::after {
-            width: 100%;
+        /* === SECTIONS === */
+        .section {
+            padding: 80px 0;
+            min-height: 60vh;
         }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .search-bar {
-            position: relative;
-        }
-
-        .search-bar input {
-            padding: 10px 20px;
-            border: 1px solid #e2e8f0;
-            border-radius: 25px;
-            width: 240px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            background: var(--light);
-        }
-
-        .search-bar input:focus {
-            outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.1);
-        }
-
-        .icon-btn {
-            background: none;
-            border: none;
-            font-size: 1.3rem;
-            color: var(--dark);
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s ease;
-            padding: 8px;
-            border-radius: 50%;
-        }
-
-        .icon-btn:hover {
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
             color: var(--primary);
-            background: var(--light);
-            transform: translateY(-2px);
+            font-size: 2.5rem;
+            font-weight: 700;
         }
 
-        .badge {
-            background: var(--accent);
-            color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 0.7rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: 0;
-            right: 0;
-            font-weight: 600;
+        .section-subtitle {
+            text-align: center;
+            color: var(--dark);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 50px;
+            opacity: 0.8;
         }
 
-        /* === LUXURY HERO SECTION === */
+        /* === HERO SECTION === */
         .hero {
             background: var(--gradient);
             color: white;
             padding: 100px 0;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover;
-            opacity: 0.1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            max-width: 600px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 40px;
         }
 
         .btn {
@@ -298,401 +197,152 @@
             box-shadow: 0 10px 25px rgba(214, 158, 46, 0.3);
         }
 
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid rgba(255,255,255,0.3);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: white;
-            color: var(--primary);
-            border-color: white;
-        }
-
-        /* === FEATURES SECTION === */
-        .features {
-            padding: 80px 0;
+        /* === ABOUT SECTION === */
+        .about-section {
             background: var(--light);
         }
 
-        .section-title {
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
             text-align: center;
-            margin-bottom: 50px;
-            color: var(--primary);
-            font-size: 2.5rem;
-            font-weight: 700;
         }
 
-        .section-subtitle {
-            text-align: center;
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
             color: var(--dark);
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 50px;
-            opacity: 0.8;
         }
 
-        .features-grid {
+        .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
         }
 
-        .feature-card {
+        .team-member {
             background: white;
-            padding: 40px 30px;
+            padding: 30px;
             border-radius: 15px;
             text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid #e2e8f0;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         }
 
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient);
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            object-fit: cover;
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        /* === CONTACT SECTION === */
+        .contact-section {
+            background: white;
         }
 
-        .feature-icon {
-            font-size: 3rem;
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            text-align: center;
+        }
+
+        .contact-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 10px;
+        }
+
+        .contact-item i {
+            font-size: 2rem;
             color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .contact-form {
+            background: var(--light);
+            padding: 40px;
+            border-radius: 15px;
+        }
+
+        .form-group {
             margin-bottom: 20px;
         }
 
-        .feature-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-
-        /* === PREMIUM BOOKS GRID === */
-        .books-section {
-            padding: 80px 0;
-        }
-
-        .books-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .book-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-            border: 1px solid #e2e8f0;
-        }
-
-        .book-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
-
-        .book-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--accent);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            z-index: 2;
-        }
-
-        .book-cover {
-            height: 320px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .book-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .book-card:hover .book-cover img {
-            transform: scale(1.1);
-        }
-
-        .book-actions {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            display: flex;
-            gap: 8px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .book-card:hover .book-actions {
-            opacity: 1;
-        }
-
-        .action-btn {
-            width: 40px;
-            height: 40px;
-            background: white;
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
-            color: var(--dark);
-        }
-
-        .action-btn:hover {
-            background: var(--secondary);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        .book-info {
-            padding: 25px;
-        }
-
-        .book-title {
-            font-weight: 600;
+        .form-group label {
+            display: block;
             margin-bottom: 8px;
-            font-size: 1.2rem;
+            font-weight: 600;
             color: var(--primary);
-            line-height: 1.4;
         }
 
-        .book-author {
-            color: #718096;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-        }
-
-        .book-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .price {
-            font-weight: 700;
-            color: var(--accent);
-            font-size: 1.3rem;
-        }
-
-        /* === BLOG SECTION === */
-        .blog-section {
-            padding: 80px 0;
-            background: var(--light);
-        }
-
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .blog-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
             transition: all 0.3s ease;
         }
 
-        .blog-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.1);
         }
 
-        .blog-image {
-            height: 220px;
-            overflow: hidden;
-        }
-
-        .blog-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .blog-card:hover .blog-image img {
-            transform: scale(1.05);
-        }
-
-        .blog-content {
-            padding: 25px;
-        }
-
-        .blog-meta {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 12px;
-            font-size: 0.85rem;
-            color: #718096;
-        }
-
-        .blog-title {
-            font-size: 1.3rem;
-            margin-bottom: 12px;
-            color: var(--primary);
-            line-height: 1.4;
-        }
-
-        /* === NEWSLETTER === */
-        .newsletter {
-            background: var(--gradient);
-            color: white;
-            padding: 80px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .newsletter::before {
-            content: '';
-            position: absolute;
+        /* === EDIT MODAL === */
+        .edit-modal {
+            display: none;
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') center/cover;
-            opacity: 0.1;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
         }
 
-        .newsletter-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .newsletter-form {
+        .edit-modal.active {
             display: flex;
-            max-width: 450px;
-            margin: 30px auto;
+        }
+
+        .edit-content {
             background: white;
-            border-radius: 50px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
-        .newsletter-form input {
-            flex: 1;
-            padding: 15px 25px;
-            border: none;
-            font-size: 1rem;
-        }
-
-        .newsletter-form input:focus {
-            outline: none;
-        }
-
-        .newsletter-form button {
-            background: var(--secondary);
-            color: var(--primary);
-            border: none;
-            padding: 0 30px;
-            font-weight: 600;
+        .edit-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 2px dashed #e2e8f0;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .newsletter-form button:hover {
-            background: #ecc94b;
+        .edit-section:hover {
+            border-color: var(--secondary);
+            background: rgba(214, 158, 46, 0.05);
         }
 
-        /* === LUXURY FOOTER === */
-        footer {
-            background: var(--primary);
-            color: white;
-            padding: 60px 0 20px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 50px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column h3 {
-            margin-bottom: 25px;
-            color: var(--secondary);
-            font-size: 1.3rem;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 12px;
-        }
-
-        .footer-column a {
-            color: #cbd5e0;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 400;
-        }
-
-        .footer-column a:hover {
-            color: white;
-            padding-left: 5px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border-radius: 50%;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background: var(--secondary);
-            color: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #2d3748;
-            color: #a0aec0;
-            font-size: 0.9rem;
-        }
-
-        /* === RESPONSIVE DESIGN === */
+        /* === RESPONSIVE === */
         @media (max-width: 768px) {
             .header-top {
                 flex-direction: column;
@@ -705,41 +355,12 @@
                 justify-content: center;
             }
             
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-actions {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .admin-controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .stats {
-                margin-left: 0;
-                justify-content: space-around;
-            }
-            
-            .search-bar input {
-                width: 200px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
+            .section {
+                padding: 60px 0;
             }
             
             .section-title {
                 font-size: 2rem;
-            }
-            
-            .books-grid {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -748,392 +369,420 @@
     <!-- Notification -->
     <div class="notification" id="notification"></div>
 
-    <!-- Premium Admin Panel -->
+    <!-- Admin Panel -->
     <div class="admin-panel">
         <div class="container">
             <div class="admin-controls">
+                <button class="admin-btn" onclick="openEditModal()">
+                    <i class="fas fa-edit"></i> Edit Website Content
+                </button>
                 <button class="admin-btn" onclick="openModal('addBookModal')">
                     <i class="fas fa-plus"></i> Add Book
                 </button>
                 <button class="admin-btn" onclick="openModal('addBlogModal')">
                     <i class="fas fa-blog"></i> Add Blog
                 </button>
-                <button class="admin-btn" onclick="openModal('bookListModal')">
-                    <i class="fas fa-cog"></i> Manage
-                </button>
-                <div class="stats">
-                    <div class="stat-item">
-                        <i class="fas fa-book"></i>
-                        <span>Books: <span id="bookCount">0</span></span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-blog"></i>
-                        <span>Blogs: <span id="blogCount">0</span></span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>Cart: <span id="cartCountDisplay">0</span></span>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- Luxury Header -->
+    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-top">
                 <a href="#" class="logo">
                     <i class="fas fa-crown"></i>
-                    <span class="logo-text">The Definitive Word</span>
+                    The Definitive Word
                 </a>
                 
                 <nav class="nav-main">
-                    <a href="#books">Books</a>
-                    <a href="#blog">Blog</a>
-                    <a href="#features">Features</a>
-                    <a href="#about">About</a>
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#books" class="nav-link">Books</a>
+                    <a href="#blog" class="nav-link">Blog</a>
+                    <a href="#about" class="nav-link">About Us</a>
+                    <a href="#contact" class="nav-link">Contact</a>
                 </nav>
-
-                <div class="header-actions">
-                    <div class="search-bar">
-                        <input type="text" placeholder="Search books..." onkeypress="handleSearch(event)">
-                    </div>
-                    <button class="icon-btn" onclick="toggleWishlist()" title="Wishlist">
-                        <i class="fas fa-heart"></i>
-                        <span class="badge" id="wishlistCount">0</span>
-                    </button>
-                    <button class="icon-btn" onclick="openCart()" title="Cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="badge" id="cartCount">0</span>
-                    </button>
-                    <button class="icon-btn" onclick="openModal('loginModal')" title="Account">
-                        <i class="fas fa-user"></i>
-                    </button>
-                </div>
             </div>
         </div>
     </header>
 
-    <!-- Luxury Hero Section -->
-    <section class="hero">
+    <!-- Home Section -->
+    <section id="home" class="hero">
         <div class="container">
-            <div class="hero-content">
-                <h1>Premium Ebooks, Curated for Excellence</h1>
-                <p>Discover hand-picked literature from acclaimed authors. Your journey to exceptional reading starts here.</p>
-                <div class="hero-actions">
-                    <a href="#books" class="btn">
-                        <i class="fas fa-gem"></i>
-                        Explore Collection
-                    </a>
-                    <a href="#blog" class="btn btn-secondary">
-                        <i class="fas fa-newspaper"></i>
-                        Read Our Blog
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <h2 class="section-title">Why Readers Choose Us</h2>
-            <p class="section-subtitle">Experience the difference with our premium ebook service</p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3>Instant Access</h3>
-                    <p>Download your ebooks immediately after purchase, read anywhere on any device</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <h3>Curated Selection</h3>
-                    <p>Every book is hand-picked by our team of literary experts for quality and impact</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>DRM-Free</h3>
-                    <p>Own your books forever with our DRM-free policy. No restrictions, just reading</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Community</h3>
-                    <p>Join our community of passionate readers for discussions and author events</p>
-                </div>
+            <h1 id="hero-title">Premium Ebooks, Curated for Excellence</h1>
+            <p id="hero-subtitle">Discover hand-picked literature from acclaimed authors. Your journey to exceptional reading starts here.</p>
+            <div class="hero-actions">
+                <a href="#books" class="btn">
+                    <i class="fas fa-gem"></i>
+                    Explore Collection
+                </a>
+                <a href="#about" class="btn" style="background: transparent; border: 2px solid white; color: white;">
+                    <i class="fas fa-users"></i>
+                    Learn About Us
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Books Section -->
-    <section class="books-section" id="books">
+    <section id="books" class="section">
         <div class="container">
-            <h2 class="section-title">Featured Collection</h2>
-            <p class="section-subtitle">Discover our hand-picked selection of exceptional reads</p>
+            <h2 class="section-title" id="books-title">Featured Collection</h2>
+            <p class="section-subtitle" id="books-subtitle">Discover our hand-picked selection of exceptional reads</p>
             <div class="books-grid" id="booksGrid">
                 <!-- Books will be loaded here -->
             </div>
         </div>
     </section>
 
-    <!-- Blog Section -->
-    <section class="blog-section" id="blog">
+    <!-- About Us Section -->
+    <section id="about" class="section about-section">
         <div class="container">
-            <h2 class="section-title">From The Blog</h2>
-            <p class="section-subtitle">Insights, reviews, and literary discussions</p>
-            <div class="blog-grid" id="blogGrid">
-                <!-- Blog posts will be loaded here -->
-            </div>
-        </div>
-    </section>
+            <h2 class="section-title" id="about-title">About The Definitive Word</h2>
+            <div class="about-content">
+                <div class="about-text" id="about-text">
+                    <p>The Definitive Word was founded with a simple mission: to bring exceptional literature to discerning readers. We believe that great books have the power to transform lives, spark conversations, and shape perspectives.</p>
+                    
+                    <p>Our team of literary experts carefully curates each title in our collection, ensuring that every book meets our standards for quality writing, compelling storytelling, and lasting impact. We're passionate about connecting readers with works that inspire, challenge, and entertain.</p>
+                    
+                    <p>Beyond just selling books, we're building a community of passionate readers who appreciate the art of great writing. Join us on this journey of literary discovery.</p>
+                </div>
 
-    <!-- Newsletter -->
-    <section class="newsletter">
-        <div class="container">
-            <div class="newsletter-content">
-                <h2>Stay in the Literary Loop</h2>
-                <p>Get exclusive book recommendations, author interviews, and special offers delivered to your inbox</p>
-                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                    <input type="email" placeholder="Enter your email address" required>
-                    <button type="submit">Subscribe</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Luxury Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h3>The Definitive Word</h3>
-                    <p>Your premier destination for exceptional ebooks and literary content. Quality curated, excellence delivered.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-goodreads"></i></a>
+                <h3 style="margin: 50px 0 30px; color: var(--primary);">Our Team</h3>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Founder">
+                        <h4 id="team-member-1-name">Alex Johnson</h4>
+                        <p id="team-member-1-role">Founder & Chief Curator</p>
+                        <p id="team-member-1-desc">Former publishing executive with 15+ years in the literary world</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Editor">
+                        <h4 id="team-member-2-name">Sarah Chen</h4>
+                        <p id="team-member-2-role">Senior Editor</p>
+                        <p id="team-member-2-desc">Award-winning editor with a passion for discovering new voices</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Community Manager">
+                        <h4 id="team-member-3-name">Marcus Rodriguez</h4>
+                        <p id="team-member-3-role">Community Manager</p>
+                        <p id="team-member-3-desc">Building connections between readers and authors worldwide</p>
                     </div>
                 </div>
-                <div class="footer-column">
-                    <h3>Explore</h3>
-                    <ul>
-                        <li><a href="#books">Book Collection</a></li>
-                        <li><a href="#blog">Blog & Articles</a></li>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#about">About Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Categories</h3>
-                    <ul>
-                        <li><a href="#">Literary Fiction</a></li>
-                        <li><a href="#">Business & Finance</a></li>
-                        <li><a href="#">Personal Development</a></li>
-                        <li><a href="#">Science & Technology</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Support</h3>
-                    <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Contact Support</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2024 The Definitive Word. All rights reserved. | Premium Ebook Store</p>
             </div>
         </div>
-    </footer>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <h2 class="section-title" id="contact-title">Get In Touch</h2>
+            <p class="section-subtitle" id="contact-subtitle">We'd love to hear from you. Reach out with any questions or feedback.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <h4 id="contact-email-title">Email Us</h4>
+                        <p id="contact-email">hello@thedefinitiveword.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <h4 id="contact-phone-title">Call Us</h4>
+                        <p id="contact-phone">+1 (555) 123-4567</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h4 id="contact-address-title">Visit Us</h4>
+                        <p id="contact-address">123 Literary Lane<br>Bookville, BK 12345</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <h4 id="contact-hours-title">Business Hours</h4>
+                        <p id="contact-hours">Mon-Fri: 9AM-6PM EST<br>Sat: 10AM-4PM EST</p>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3 style="margin-bottom: 20px; color: var(--primary);">Send us a Message</h3>
+                    <form onsubmit="handleContactForm(event)">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Edit Content Modal -->
+    <div class="edit-modal" id="editModal">
+        <div class="edit-content">
+            <h2 style="margin-bottom: 30px; color: var(--primary);">Edit Website Content</h2>
+            
+            <div class="edit-section" onclick="editSection('hero-title', 'Hero Title')">
+                <h4>Hero Section Title</h4>
+                <p id="hero-title-preview">Premium Ebooks, Curated for Excellence</p>
+            </div>
+            
+            <div class="edit-section" onclick="editSection('hero-subtitle', 'Hero Subtitle')">
+                <h4>Hero Section Subtitle</h4>
+                <p id="hero-subtitle-preview">Discover hand-picked literature from acclaimed authors...</p>
+            </div>
+            
+            <div class="edit-section" onclick="editSection('about-title', 'About Us Title')">
+                <h4>About Us Title</h4>
+                <p id="about-title-preview">About The Definitive Word</p>
+            </div>
+            
+            <div class="edit-section" onclick="editSection('about-text', 'About Us Text')">
+                <h4>About Us Content</h4>
+                <p id="about-text-preview">The Definitive Word was founded with a simple mission...</p>
+            </div>
+            
+            <div class="edit-section" onclick="editTeamMember(1)">
+                <h4>Team Member 1</h4>
+                <p id="team-1-preview">Alex Johnson - Founder & Chief Curator</p>
+            </div>
+            
+            <div class="edit-section" onclick="editTeamMember(2)">
+                <h4>Team Member 2</h4>
+                <p id="team-2-preview">Sarah Chen - Senior Editor</p>
+            </div>
+            
+            <div class="edit-section" onclick="editTeamMember(3)">
+                <h4>Team Member 3</h4>
+                <p id="team-3-preview">Marcus Rodriguez - Community Manager</p>
+            </div>
+            
+            <div class="edit-section" onclick="editContactInfo()">
+                <h4>Contact Information</h4>
+                <p>Email, Phone, Address, and Business Hours</p>
+            </div>
+            
+            <button class="btn" onclick="closeEditModal()" style="width: 100%; margin-top: 20px; background: #666;">
+                Close Editor
+            </button>
+        </div>
+    </div>
 
     <script>
-        // Store Data
-        let books = JSON.parse(localStorage.getItem('storeBooks')) || [];
-        let blogPosts = JSON.parse(localStorage.getItem('storeBlogs')) || [];
-        let cart = [];
-        let wishlist = [];
-
-        // Initialize Store
-        function initializeStore() {
-            displayBooks();
-            displayBlogPosts();
-            updateStats();
-            showNotification('Welcome to The Definitive Word! 🎉');
-        }
-
-        // Book Management
-        function displayBooks() {
-            const grid = document.getElementById('booksGrid');
-            grid.innerHTML = '';
-
-            if (books.length === 0) {
-                grid.innerHTML = `
-                    <div style="text-align: center; grid-column: 1/-1; padding: 60px; color: #718096;">
-                        <i class="fas fa-book-open" style="font-size: 4rem; margin-bottom: 20px; opacity: 0.5;"></i>
-                        <h3 style="margin-bottom: 15px; color: var(--primary);">No Books Yet</h3>
-                        <p>Use the admin panel to add your first book to the collection</p>
-                    </div>
-                `;
-                return;
-            }
-
-            books.forEach(book => {
-                const isInWishlist = wishlist.includes(book.id);
-                const card = document.createElement('div');
-                card.className = 'book-card';
-                card.innerHTML = `
-                    ${book.badge ? `<div class="book-badge">${book.badge}</div>` : ''}
-                    <div class="book-actions">
-                        <button class="action-btn" onclick="toggleWishlistItem(${book.id})" title="${isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}">
-                            <i class="fas fa-heart" style="color: ${isInWishlist ? '#c53030' : '#718096'};"></i>
-                        </button>
-                    </div>
-                    <div class="book-cover">
-                        <img src="${book.image}" alt="${book.title}">
-                    </div>
-                    <div class="book-info">
-                        <h3 class="book-title">${book.title}</h3>
-                        <p class="book-author">by ${book.author}</p>
-                        <div class="book-price">
-                            <span class="price">$${book.price}</span>
-                            <button class="btn" onclick="addToCart(${book.id})" style="padding: 10px 20px; font-size: 0.9rem;">
-                                <i class="fas fa-shopping-cart"></i>
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(card);
+        // Navigation functionality
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Scroll to section
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
             });
-        }
+        });
 
-        // Blog Management
-        function displayBlogPosts() {
-            const grid = document.getElementById('blogGrid');
-            grid.innerHTML = '';
-
-            if (blogPosts.length === 0) {
-                grid.innerHTML = `
-                    <div style="text-align: center; grid-column: 1/-1; padding: 60px; color: #718096;">
-                        <i class="fas fa-blog" style="font-size: 4rem; margin-bottom: 20px; opacity: 0.5;"></i>
-                        <h3 style="margin-bottom: 15px; color: var(--primary);">No Blog Posts Yet</h3>
-                        <p>Use the admin panel to publish your first blog post</p>
-                    </div>
-                `;
-                return;
-            }
-
-            blogPosts.forEach(post => {
-                const card = document.createElement('div');
-                card.className = 'blog-card';
-                card.innerHTML = `
-                    <div class="blog-image">
-                        <img src="${post.image}" alt="${post.title}">
-                    </div>
-                    <div class="blog-content">
-                        <div class="blog-meta">
-                            <span><i class="fas fa-calendar"></i> ${post.date}</span>
-                            <span><i class="fas fa-tag"></i> ${post.category}</span>
-                        </div>
-                        <h3 class="blog-title">${post.title}</h3>
-                        <p style="color: #718096; line-height: 1.6;">${post.content.substring(0, 120)}...</p>
-                        <button class="btn" style="margin-top: 20px; padding: 10px 20px; font-size: 0.9rem;" onclick="showNotification('Reading: ' + '${post.title}')">
-                            Read Article
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
+        // Update active nav link on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section, .hero');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
             });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Edit Modal Functions
+        function openEditModal() {
+            document.getElementById('editModal').classList.add('active');
+            updateEditPreview();
         }
 
-        // Cart Functions
-        function addToCart(bookId) {
-            const book = books.find(b => b.id === bookId);
-            if (!book) return;
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
 
-            const existing = cart.find(item => item.id === bookId);
-            if (existing) {
-                existing.quantity++;
-            } else {
-                cart.push({...book, quantity: 1});
+        function updateEditPreview() {
+            // Update preview text in edit modal
+            document.getElementById('hero-title-preview').textContent = document.getElementById('hero-title').textContent;
+            document.getElementById('hero-subtitle-preview').textContent = document.getElementById('hero-subtitle').textContent.substring(0, 50) + '...';
+            document.getElementById('about-title-preview').textContent = document.getElementById('about-title').textContent;
+            document.getElementById('about-text-preview').textContent = document.getElementById('about-text').textContent.substring(0, 50) + '...';
+            document.getElementById('team-1-preview').textContent = document.getElementById('team-member-1-name').textContent + ' - ' + document.getElementById('team-member-1-role').textContent;
+            document.getElementById('team-2-preview').textContent = document.getElementById('team-member-2-name').textContent + ' - ' + document.getElementById('team-member-2-role').textContent;
+            document.getElementById('team-3-preview').textContent = document.getElementById('team-member-3-name').textContent + ' - ' + document.getElementById('team-member-3-role').textContent;
+        }
+
+        function editSection(elementId, label) {
+            const currentText = document.getElementById(elementId).textContent;
+            const newText = prompt(`${label}:\n\nEdit the text below:`, currentText);
+            
+            if (newText !== null && newText.trim() !== '') {
+                document.getElementById(elementId).textContent = newText;
+                updateEditPreview();
+                showNotification(`${label} updated successfully!`);
+                saveContentToStorage();
             }
-
-            updateCartDisplay();
-            showNotification(`"${book.title}" added to cart! 📚`);
         }
 
-        function updateCartDisplay() {
-            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cartCount').textContent = count;
-            document.getElementById('cartCountDisplay').textContent = count;
-        }
-
-        function openCart() {
-            showNotification(`You have ${cart.reduce((sum, item) => sum + item.quantity, 0)} items in your cart`);
-        }
-
-        // Wishlist Functions
-        function toggleWishlistItem(bookId) {
-            const index = wishlist.indexOf(bookId);
-            if (index > -1) {
-                wishlist.splice(index, 1);
-                showNotification('Removed from wishlist');
-            } else {
-                wishlist.push(bookId);
-                showNotification('Added to wishlist! 💖');
+        function editTeamMember(memberNumber) {
+            const name = prompt(`Team Member ${memberNumber} Name:`, document.getElementById(`team-member-${memberNumber}-name`).textContent);
+            const role = prompt(`Team Member ${memberNumber} Role:`, document.getElementById(`team-member-${memberNumber}-role`).textContent);
+            const desc = prompt(`Team Member ${memberNumber} Description:`, document.getElementById(`team-member-${memberNumber}-desc`).textContent);
+            
+            if (name && role && desc) {
+                document.getElementById(`team-member-${memberNumber}-name`).textContent = name;
+                document.getElementById(`team-member-${memberNumber}-role`).textContent = role;
+                document.getElementById(`team-member-${memberNumber}-desc`).textContent = desc;
+                updateEditPreview();
+                showNotification(`Team member ${memberNumber} updated!`);
+                saveContentToStorage();
             }
-            document.getElementById('wishlistCount').textContent = wishlist.length;
-            displayBooks();
         }
 
-        function toggleWishlist() {
-            showNotification(`You have ${wishlist.length} items in your wishlist`);
+        function editContactInfo() {
+            const email = prompt('Contact Email:', document.getElementById('contact-email').textContent);
+            const phone = prompt('Contact Phone:', document.getElementById('contact-phone').textContent);
+            const address = prompt('Contact Address (use \\n for line breaks):', document.getElementById('contact-address').textContent.replace(/<br>/g, '\n'));
+            const hours = prompt('Business Hours (use \\n for line breaks):', document.getElementById('contact-hours').textContent.replace(/<br>/g, '\n'));
+            
+            if (email) document.getElementById('contact-email').textContent = email;
+            if (phone) document.getElementById('contact-phone').textContent = phone;
+            if (address) document.getElementById('contact-address').innerHTML = address.replace(/\n/g, '<br>');
+            if (hours) document.getElementById('contact-hours').innerHTML = hours.replace(/\n/g, '<br>');
+            
+            showNotification('Contact information updated!');
+            saveContentToStorage();
         }
 
-        // Admin Functions
-        function openModal(modalId) {
-            showNotification('Admin feature ready - Add your content!');
+        function handleContactForm(event) {
+            event.preventDefault();
+            showNotification('Thank you for your message! We\'ll get back to you within 24 hours.');
+            event.target.reset();
         }
 
-        function updateStats() {
-            document.getElementById('bookCount').textContent = books.length;
-            document.getElementById('blogCount').textContent = blogPosts.length;
-        }
-
-        function showNotification(message, isError = false) {
+        function showNotification(message) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
-            notification.style.background = isError ? '#c53030' : '#38a169';
+            notification.style.background = '#38a169';
             notification.className = 'notification show';
             setTimeout(() => notification.className = 'notification', 4000);
         }
 
-        function handleSearch(event) {
-            if (event.key === 'Enter') {
-                showNotification(`Searching for: "${event.target.value}"`);
-                event.target.value = '';
+        // Save content to localStorage
+        function saveContentToStorage() {
+            const content = {
+                heroTitle: document.getElementById('hero-title').textContent,
+                heroSubtitle: document.getElementById('hero-subtitle').textContent,
+                aboutTitle: document.getElementById('about-title').textContent,
+                aboutText: document.getElementById('about-text').innerHTML,
+                teamMembers: {
+                    1: {
+                        name: document.getElementById('team-member-1-name').textContent,
+                        role: document.getElementById('team-member-1-role').textContent,
+                        desc: document.getElementById('team-member-1-desc').textContent
+                    },
+                    2: {
+                        name: document.getElementById('team-member-2-name').textContent,
+                        role: document.getElementById('team-member-2-role').textContent,
+                        desc: document.getElementById('team-member-2-desc').textContent
+                    },
+                    3: {
+                        name: document.getElementById('team-member-3-name').textContent,
+                        role: document.getElementById('team-member-3-role').textContent,
+                        desc: document.getElementById('team-member-3-desc').textContent
+                    }
+                },
+                contact: {
+                    email: document.getElementById('contact-email').textContent,
+                    phone: document.getElementById('contact-phone').textContent,
+                    address: document.getElementById('contact-address').innerHTML,
+                    hours: document.getElementById('contact-hours').innerHTML
+                }
+            };
+            localStorage.setItem('websiteContent', JSON.stringify(content));
+        }
+
+        // Load content from localStorage
+        function loadContentFromStorage() {
+            const saved = localStorage.getItem('websiteContent');
+            if (saved) {
+                const content = JSON.parse(saved);
+                
+                document.getElementById('hero-title').textContent = content.heroTitle;
+                document.getElementById('hero-subtitle').textContent = content.heroSubtitle;
+                document.getElementById('about-title').textContent = content.aboutTitle;
+                document.getElementById('about-text').innerHTML = content.aboutText;
+                
+                // Team members
+                for (let i = 1; i <= 3; i++) {
+                    if (content.teamMembers[i]) {
+                        document.getElementById(`team-member-${i}-name`).textContent = content.teamMembers[i].name;
+                        document.getElementById(`team-member-${i}-role`).textContent = content.teamMembers[i].role;
+                        document.getElementById(`team-member-${i}-desc`).textContent = content.teamMembers[i].desc;
+                    }
+                }
+                
+                // Contact info
+                if (content.contact) {
+                    document.getElementById('contact-email').textContent = content.contact.email;
+                    document.getElementById('contact-phone').textContent = content.contact.phone;
+                    document.getElementById('contact-address').innerHTML = content.contact.address;
+                    document.getElementById('contact-hours').innerHTML = content.contact.hours;
+                }
             }
         }
 
-        function subscribeNewsletter(event) {
-            event.preventDefault();
-            showNotification('🎉 Welcome to our literary community! Check your email for confirmation.');
-            event.target.reset();
-        }
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadContentFromStorage();
+            showNotification('Welcome! Click "Edit Website Content" to customize your site.');
+        });
 
-        // Initialize store when page loads
-        document.addEventListener('DOMContentLoaded', initializeStore);
+        // Close edit modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('edit-modal')) {
+                closeEditModal();
+            }
+        });
     </script>
 </body>
 </html>
