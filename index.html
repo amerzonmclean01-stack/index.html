@@ -6,169 +6,405 @@
     <title>The Definitive Word - Premium Ebook Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ... (keep all existing CSS styles exactly as they are) ... */
+        /* ... (keep ALL previous CSS styles exactly as they are) ... */
         
-        /* New interactive styles */
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
+        /* Enhanced Enrollment Modal Styles */
         .enrollment-modal {
-            max-width: 500px;
+            max-width: 700px;
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+            color: white;
         }
         
-        .program-benefits {
+        .enrollment-modal .modal-content {
+            background: transparent;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .enrollment-modal .modal-header {
+            border-bottom: 2px solid rgba(214, 158, 46, 0.3);
+            padding-bottom: 25px;
+        }
+        
+        .enrollment-modal .modal-header h2 {
+            color: #d69e2e;
+            font-size: 2rem;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .enrollment-steps-container {
             background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
             margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.2);
         }
         
         .enrollment-steps {
             display: flex;
             justify-content: space-between;
-            margin: 25px 0;
+            margin: 30px 0;
             position: relative;
         }
         
         .enrollment-steps::before {
             content: '';
             position: absolute;
-            top: 20px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: #d69e2e;
+            top: 25px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: rgba(255,255,255,0.3);
             z-index: 1;
         }
+        
+        .enrollment-steps::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 10%;
+            width: 0%;
+            height: 3px;
+            background: #d69e2e;
+            z-index: 2;
+            transition: width 0.5s ease;
+        }
+        
+        .enrollment-steps.step-1::after { width: 0%; }
+        .enrollment-steps.step-2::after { width: 40%; }
+        .enrollment-steps.step-3::after { width: 80%; }
         
         .step {
             text-align: center;
             position: relative;
-            z-index: 2;
-            background: #1a365d;
-            padding: 10px;
+            z-index: 3;
+            background: #2d3748;
+            padding: 15px;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto;
+            border: 3px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
         }
         
         .step.active {
             background: #d69e2e;
             color: #1a365d;
+            border-color: #d69e2e;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(214, 158, 46, 0.4);
+        }
+        
+        .step.completed {
+            background: #38a169;
+            color: white;
+            border-color: #38a169;
+        }
+        
+        .step i {
+            font-size: 1.2rem;
         }
         
         .step-label {
-            margin-top: 10px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #d69e2e;
+        }
+        
+        .step-label span {
+            display: block;
             font-size: 0.8rem;
+            font-weight: normal;
+            color: rgba(255,255,255,0.7);
+            margin-top: 5px;
         }
         
         .enrollment-form {
             display: none;
+            animation: slideInUp 0.5s ease;
         }
         
         .enrollment-form.active {
             display: block;
-            animation: slideIn 0.5s ease;
         }
         
-        .success-message {
-            text-align: center;
-            padding: 30px;
-            display: none;
+        .program-preview {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 4px solid #d69e2e;
         }
         
-        .success-message.active {
-            display: block;
-            animation: bounceIn 0.6s ease;
+        .program-preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
         
-        @keyframes bounceIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); opacity: 1; }
+        .program-preview-title {
+            color: #d69e2e;
+            font-size: 1.4rem;
+            font-weight: 700;
         }
         
-        .workshop-modal {
-            max-width: 600px;
+        .program-price-tag {
+            background: #d69e2e;
+            color: #1a365d;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.3rem;
         }
         
-        .workshop-details {
-            background: #f7fafc;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-        
-        .workshop-features {
+        .program-features-list {
             list-style: none;
-            margin: 15px 0;
+            margin: 20px 0;
         }
         
-        .workshop-features li {
-            padding: 8px 0;
-            border-bottom: 1px solid #e2e8f0;
+        .program-features-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         
-        .workshop-features li:last-child {
+        .program-features-list li:last-child {
             border-bottom: none;
         }
         
-        .workshop-features i {
+        .program-features-list i {
             color: #d69e2e;
+            width: 20px;
         }
         
-        .calendar-highlight {
-            background: rgba(214, 158, 46, 0.3) !important;
-            border: 2px solid #d69e2e !important;
+        .enrollment-form .form-group {
+            margin-bottom: 20px;
         }
         
-        .reading-progress {
+        .enrollment-form label {
+            color: #d69e2e;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .enrollment-form .form-control {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 8px;
+            padding: 12px 15px;
             width: 100%;
-            height: 4px;
-            background: #e2e8f0;
-            border-radius: 2px;
-            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .enrollment-form .form-control:focus {
+            border-color: #d69e2e;
+            background: rgba(255,255,255,0.15);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.2);
+        }
+        
+        .enrollment-form .form-control::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .success-animation {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #38a169;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            animation: bounceIn 0.6s ease;
+        }
+        
+        .success-icon i {
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        .success-title {
+            color: #d69e2e;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .success-message {
+            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .welcome-kit {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 1px solid rgba(214, 158, 46, 0.3);
+        }
+        
+        .welcome-kit h5 {
+            color: #d69e2e;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .kit-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            text-align: center;
+        }
+        
+        .kit-item {
+            padding: 15px 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .kit-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .kit-item i {
+            font-size: 1.5rem;
+            color: #d69e2e;
+            margin-bottom: 8px;
+        }
+        
+        .kit-item span {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .enrollment-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .enrollment-btn {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .enrollment-btn.primary {
+            background: #d69e2e;
+            color: #1a365d;
+        }
+        
+        .enrollment-btn.primary:hover {
+            background: #ecc94b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(214, 158, 46, 0.4);
+        }
+        
+        .enrollment-btn.secondary {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .enrollment-btn.secondary:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: #d69e2e;
+        }
+        
+        .enrollment-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .enrollment-progress {
+            margin: 20px 0;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .progress-bar-container {
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
             overflow: hidden;
         }
         
         .progress-bar {
             height: 100%;
-            background: #d69e2e;
-            width: 0%;
+            background: linear-gradient(90deg, #d69e2e, #ecc94b);
+            border-radius: 3px;
             transition: width 0.5s ease;
+            width: 0%;
         }
         
-        .interactive-demo {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-            text-align: center;
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .demo-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 15px 0;
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
         
         .pulse {
@@ -176,309 +412,319 @@
         }
         
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(214, 158, 46, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(214, 158, 46, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(214, 158, 46, 0);
+            }
         }
         
-        .shake {
-            animation: shake 0.5s ease;
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .enrollment-modal {
+                margin: 20px;
+                max-width: calc(100vw - 40px);
+            }
+            
+            .enrollment-steps-container {
+                padding: 20px;
+            }
+            
+            .step {
+                width: 40px;
+                height: 40px;
+                padding: 10px;
+            }
+            
+            .step i {
+                font-size: 1rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .enrollment-actions {
+                flex-direction: column;
+            }
+            
+            .kit-items {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+        @media (max-width: 480px) {
+            .enrollment-steps::before,
+            .enrollment-steps::after {
+                left: 15%;
+                right: 15%;
+            }
+            
+            .step-label {
+                font-size: 0.8rem;
+            }
+            
+            .program-preview-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- ... (keep all existing HTML exactly as it is) ... -->
+    <!-- ... (keep ALL previous HTML exactly as it is) ... -->
 
-    <!-- New Interactive Modals -->
+    <!-- Enhanced Enrollment Modal -->
     <div class="edit-modal" id="enrollmentModal">
         <div class="modal-content enrollment-modal">
             <div class="modal-header">
-                <h2 id="enrollmentTitle">Enroll in Program</h2>
+                <h2 id="enrollmentTitle">Begin Your Transformation</h2>
                 <button class="close-modal" onclick="closeEnrollmentModal()">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="enrollment-steps">
-                    <div class="step active" id="step1">1</div>
-                    <div class="step" id="step2">2</div>
-                    <div class="step" id="step3">3</div>
-                </div>
-                <div class="step-label">
-                    <span style="width: 33%; display: inline-block; text-align: center;">Program Info</span>
-                    <span style="width: 33%; display: inline-block; text-align: center;">Your Details</span>
-                    <span style="width: 33%; display: inline-block; text-align: center;">Confirmation</span>
-                </div>
-                
-                <div class="enrollment-form active" id="enrollmentStep1">
-                    <div class="program-benefits">
-                        <h4 id="programName">Program Name</h4>
-                        <p id="programDescription">Program description will appear here</p>
-                        <div class="program-price" id="programPriceDisplay" style="text-align: center; font-size: 1.5rem; margin: 15px 0;"></div>
+                <!-- Progress Bar -->
+                <div class="enrollment-progress">
+                    <div class="progress-text">
+                        <span>Enrollment Progress</span>
+                        <span id="progressPercent">0%</span>
                     </div>
-                    <div class="modal-footer">
-                        <button class="modal-btn secondary" onclick="closeEnrollmentModal()">Cancel</button>
-                        <button class="modal-btn primary" onclick="nextEnrollmentStep()">Continue</button>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="enrollmentProgressBar"></div>
                     </div>
                 </div>
                 
-                <div class="enrollment-form" id="enrollmentStep2">
-                    <form id="enrollmentForm">
-                        <div class="form-group">
-                            <label>Full Name</label>
-                            <input type="text" class="form-control" required id="enrollmentName">
+                <div class="enrollment-steps-container">
+                    <!-- Step Indicators -->
+                    <div class="enrollment-steps step-1" id="enrollmentSteps">
+                        <div class="step-container">
+                            <div class="step active" id="step1">
+                                <i class="fas fa-info"></i>
+                            </div>
+                            <div class="step-label">
+                                Program Details
+                                <span>Step 1 of 3</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="email" class="form-control" required id="enrollmentEmail">
+                        <div class="step-container">
+                            <div class="step" id="step2">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="step-label">
+                                Your Information
+                                <span>Step 2 of 3</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="tel" class="form-control" required id="enrollmentPhone">
-                        </div>
-                        <div class="form-group">
-                            <label>How did you hear about us?</label>
-                            <select class="form-control" id="enrollmentSource">
-                                <option value="">Select an option</option>
-                                <option value="friend">Friend Referral</option>
-                                <option value="social">Social Media</option>
-                                <option value="search">Online Search</option>
-                                <option value="event">Live Event</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                    </form>
-                    <div class="modal-footer">
-                        <button class="modal-btn secondary" onclick="prevEnrollmentStep()">Back</button>
-                        <button class="modal-btn primary" onclick="nextEnrollmentStep()">Continue</button>
-                    </div>
-                </div>
-                
-                <div class="enrollment-form" id="enrollmentStep3">
-                    <div class="success-message" id="enrollmentSuccess">
-                        <i class="fas fa-check-circle" style="font-size: 4rem; color: #38a169; margin: 20px 0;"></i>
-                        <h3>Enrollment Successful!</h3>
-                        <p>Thank you for enrolling in <strong id="successProgramName">Program Name</strong>.</p>
-                        <p>We've sent a confirmation email with program details and next steps.</p>
-                        <div class="interactive-demo">
-                            <p>🎉 <strong>Welcome to the community!</strong></p>
-                            <p>Your journey to transformation begins now.</p>
+                        <div class="step-container">
+                            <div class="step" id="step3">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="step-label">
+                                Confirmation
+                                <span>Step 3 of 3</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button class="modal-btn primary" onclick="closeEnrollmentModal()">Start Learning</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="edit-modal" id="workshopModal">
-        <div class="modal-content workshop-modal">
-            <div class="modal-header">
-                <h2 id="workshopModalTitle">Workshop Registration</h2>
-                <button class="close-modal" onclick="closeWorkshopModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="workshop-details">
-                    <h4 id="workshopName">Workshop Name</h4>
-                    <div class="workshop-meta">
-                        <span><i class="far fa-calendar"></i> <span id="workshopDate">Date</span></span>
-                        <span><i class="far fa-clock"></i> <span id="workshopTime">Time</span></span>
-                        <span><i class="fas fa-users"></i> <span id="workshopSeats">Seats available</span></span>
-                    </div>
-                    <p id="workshopFullDescription">Workshop description will appear here.</p>
                     
-                    <h5>What You'll Learn:</h5>
-                    <ul class="workshop-features" id="workshopFeatures">
-                        <!-- Features will be added dynamically -->
-                    </ul>
-                </div>
-                
-                <form id="workshopRegistrationForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>First Name</label>
-                            <input type="text" class="form-control" required id="workshopFirstName">
+                    <!-- Step 1: Program Information -->
+                    <div class="enrollment-form active" id="enrollmentStep1">
+                        <div class="program-preview">
+                            <div class="program-preview-header">
+                                <h3 class="program-preview-title" id="programName">Program Name</h3>
+                                <div class="program-price-tag" id="programPriceDisplay">R0.00</div>
+                            </div>
+                            <p id="programDescription">Program description will appear here.</p>
+                            
+                            <div class="program-duration">
+                                <strong><i class="fas fa-clock"></i> Duration:</strong> 
+                                <span id="programDuration">0 weeks</span>
+                            </div>
+                            
+                            <h4 style="color: #d69e2e; margin: 20px 0 15px;">What's Included:</h4>
+                            <ul class="program-features-list" id="programFeaturesList">
+                                <!-- Features will be dynamically added -->
+                            </ul>
                         </div>
-                        <div class="form-group">
-                            <label>Last Name</label>
-                            <input type="text" class="form-control" required id="workshopLastName">
+                        
+                        <div class="enrollment-actions">
+                            <button class="enrollment-btn secondary" onclick="closeEnrollmentModal()">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                            <button class="enrollment-btn primary" onclick="nextEnrollmentStep()">
+                                Continue to Enrollment <i class="fas fa-arrow-right"></i>
+                            </button>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" class="form-control" required id="workshopEmail">
+                    
+                    <!-- Step 2: Personal Information -->
+                    <div class="enrollment-form" id="enrollmentStep2">
+                        <h3 style="color: #d69e2e; margin-bottom: 20px;">Your Information</h3>
+                        
+                        <form id="enrollmentForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="enrollmentFirstName">First Name *</label>
+                                    <input type="text" class="form-control" id="enrollmentFirstName" required placeholder="Enter your first name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="enrollmentLastName">Last Name *</label>
+                                    <input type="text" class="form-control" id="enrollmentLastName" required placeholder="Enter your last name">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="enrollmentEmail">Email Address *</label>
+                                <input type="email" class="form-control" id="enrollmentEmail" required placeholder="your.email@example.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="enrollmentPhone">Phone Number *</label>
+                                <input type="tel" class="form-control" id="enrollmentPhone" required placeholder="+27 12 345 6789">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="enrollmentSource">How did you hear about us? *</label>
+                                <select class="form-control" id="enrollmentSource" required>
+                                    <option value="">Please select...</option>
+                                    <option value="friend">Friend or Family Referral</option>
+                                    <option value="social">Social Media</option>
+                                    <option value="search">Online Search</option>
+                                    <option value="event">Live Event or Workshop</option>
+                                    <option value="website">Our Website</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="enrollmentGoals">What are your main goals for this program?</label>
+                                <textarea class="form-control" id="enrollmentGoals" rows="3" placeholder="Share what you hope to achieve..."></textarea>
+                            </div>
+                        </form>
+                        
+                        <div class="enrollment-actions">
+                            <button class="enrollment-btn secondary" onclick="prevEnrollmentStep()">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button class="enrollment-btn primary" onclick="nextEnrollmentStep()">
+                                Continue to Review <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="tel" class="form-control" required id="workshopPhone">
+                    
+                    <!-- Step 3: Confirmation -->
+                    <div class="enrollment-form" id="enrollmentStep3">
+                        <div class="success-animation">
+                            <div class="success-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <h3 class="success-title">Welcome to the Program!</h3>
+                            <p class="success-message">
+                                Thank you for enrolling in <strong id="successProgramName">Program Name</strong>. 
+                                We're excited to have you join our community of learners and support your 
+                                spiritual growth journey.
+                            </p>
+                            
+                            <div class="welcome-kit">
+                                <h5>Your Welcome Kit Includes:</h5>
+                                <div class="kit-items">
+                                    <div class="kit-item">
+                                        <i class="fas fa-book-open"></i>
+                                        <span>Program Materials</span>
+                                    </div>
+                                    <div class="kit-item">
+                                        <i class="fas fa-users"></i>
+                                        <span>Community Access</span>
+                                    </div>
+                                    <div class="kit-item">
+                                        <i class="fas fa-calendar-check"></i>
+                                        <span>Session Schedule</span>
+                                    </div>
+                                    <div class="kit-item">
+                                        <i class="fas fa-headset"></i>
+                                        <span>Support Resources</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p class="success-message">
+                                We've sent a confirmation email with your program details and next steps. 
+                                Check your inbox within the next 5 minutes.
+                            </p>
+                        </div>
+                        
+                        <div class="enrollment-actions">
+                            <button class="enrollment-btn primary pulse" onclick="closeEnrollmentModal()" style="flex: 1;">
+                                <i class="fas fa-rocket"></i> Start Your Journey
+                            </button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Any questions or special requirements?</label>
-                        <textarea class="form-control" id="workshopQuestions" rows="3"></textarea>
-                    </div>
-                </form>
-                
-                <div class="modal-footer">
-                    <button class="modal-btn secondary" onclick="closeWorkshopModal()">Cancel</button>
-                    <button class="modal-btn primary" onclick="registerForWorkshop()">
-                        <i class="fas fa-ticket-alt"></i> Register Now
-                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // ... (keep all existing JavaScript code exactly as it is) ...
+        // ... (keep ALL previous JavaScript code exactly as it is) ...
 
-        // New Interactive Variables
+        // Enhanced Enrollment Variables
         let currentProgram = null;
-        let currentWorkshop = null;
         let currentEnrollmentStep = 1;
-        let readingProgress = 0;
+        const totalEnrollmentSteps = 3;
 
-        // Enhanced sample data with workshop details
-        const workshopData = [
-            {
-                id: 1,
-                title: "Prayer & Meditation Workshop",
-                date: "Nov 9, 2023",
-                time: "6:00 PM - 8:00 PM",
-                seats: 15,
-                description: "Learn powerful prayer techniques and meditation practices to deepen your spiritual connection.",
-                fullDescription: "In this transformative workshop, you'll discover ancient and modern prayer techniques that can deepen your relationship with God. We'll explore various meditation practices from Christian traditions and learn how to incorporate them into your daily spiritual routine.",
-                features: [
-                    "5 different prayer techniques you can use daily",
-                    "Guided meditation sessions",
-                    "Practical tips for maintaining consistency",
-                    "Q&A with experienced spiritual leaders",
-                    "Take-home prayer guide"
-                ]
-            },
-            {
-                id: 2,
-                title: "Biblical Financial Stewardship",
-                date: "Nov 13, 2023",
-                time: "10:00 AM - 12:00 PM", 
-                seats: 20,
-                description: "Discover God's principles for financial management and generosity.",
-                fullDescription: "This workshop will transform your understanding of money from a biblical perspective. Learn how to manage your finances God's way and experience the freedom that comes with financial stewardship.",
-                features: [
-                    "Biblical principles of wealth management",
-                    "Creating a God-honoring budget",
-                    "The power of generosity and giving",
-                    "Getting out of debt God's way",
-                    "Financial planning for the future"
-                ]
-            },
-            {
-                id: 3, 
-                title: "Marriage Enrichment Seminar",
-                date: "Nov 20, 2023",
-                time: "9:00 AM - 4:00 PM",
-                seats: 12,
-                description: "Strengthen your marriage through biblical principles and practical tools.",
-                fullDescription: "Join us for this full-day seminar designed to strengthen marriages through biblical principles and practical relationship tools. Whether you're newlyweds or have been married for decades, this seminar will bring fresh life to your relationship.",
-                features: [
-                    "Communication skills that really work",
-                    "Conflict resolution strategies",
-                    "Keeping romance alive long-term",
-                    "Financial harmony in marriage",
-                    "Praying together as a couple"
-                ]
-            }
-        ];
-
-        // Program data
+        // Enhanced Program Data
         const programData = {
             'spiritual-foundations': {
                 name: 'Spiritual Foundations',
-                description: '12-week beginner program to build a strong spiritual foundation',
+                description: 'Build a strong spiritual foundation with our comprehensive 12-week program designed for beginners and those seeking to deepen their faith journey.',
                 price: 1299,
                 duration: '12 weeks',
-                features: ['Weekly Bible study materials', 'Prayer journal template', '4 group coaching sessions', 'Access to online community']
+                features: [
+                    'Weekly Bible study materials and workbooks',
+                    'Personal prayer journal template',
+                    '4 live group coaching sessions',
+                    'Access to private online community',
+                    'Weekly inspirational video content',
+                    'Progress tracking and assessments',
+                    'Certificate of completion'
+                ]
             },
             'leadership-development': {
                 name: 'Leadership Development', 
-                description: '6-month intensive program for emerging Christian leaders',
+                description: 'Transform into a confident Christian leader with our intensive 6-month program featuring mentorship, practical training, and theological education.',
                 price: 4999,
                 duration: '6 months',
-                features: ['Advanced theological training', 'Mentorship from senior leaders', 'Practical ministry experience', 'Leadership certification']
+                features: [
+                    'Advanced theological training modules',
+                    'One-on-one mentorship sessions',
+                    'Practical ministry experience opportunities',
+                    'Leadership certification upon completion',
+                    'Networking with Christian leaders',
+                    'Personalized growth plan',
+                    'Lifetime access to alumni resources'
+                ]
             },
             'marriage-family': {
                 name: 'Marriage & Family',
-                description: '8-week program to strengthen family relationships',
+                description: 'Strengthen your family relationships through biblical principles and practical tools in this transformative 8-week program for couples and families.',
                 price: 2499, 
                 duration: '8 weeks',
-                features: ['Couples workbook', 'Weekly video sessions', 'Private counseling sessions', 'Family activity guides']
+                features: [
+                    'Comprehensive couples workbook',
+                    'Weekly interactive video sessions',
+                    '2 private counseling sessions included',
+                    'Family activity guides and resources',
+                    'Communication skills training',
+                    'Conflict resolution strategies',
+                    'Ongoing support community access'
+                ]
             }
         };
 
-        // Enhanced initialization
-        function initApp() {
-            loadAllContent();
-            displayBooks();
-            setupNavigation();
-            setupEditInteractions();
-            loadCart();
-            loadCommunityData();
-            loadBlogData();
-            initMinistrySection();
-            updateCartDisplay();
-            setupInteractiveElements();
-            showNotification('🌟 Welcome! Explore our interactive features - click around to see everything in action!');
-        }
-
-        // Setup all interactive elements
-        function setupInteractiveElements() {
-            setupTabNavigation();
-            setupWorkshopInteractions();
-            setupCalendarInteractions();
-            setupReadingProgress();
-            setupInteractiveDemos();
-        }
-
-        // Enhanced tab navigation
-        function setupTabNavigation() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    
-                    // Update active state
-                    navLinks.forEach(nl => nl.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Scroll to section with smooth animation
-                    document.getElementById(targetId).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    
-                    // Add visual feedback
-                    this.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        this.style.transform = 'scale(1)';
-                    }, 150);
-                    
-                    // Show notification for certain sections
-                    if (targetId === 'ministry') {
-                        showNotification('✨ Explore our ministry programs and life coaching services!', 3000);
-                    } else if (targetId === 'books') {
-                        showNotification('📚 Check out our latest book collection!', 2000);
-                    }
-                });
-            });
-        }
-
-        // Enhanced enrollment functionality
+        // Enhanced Enrollment Functions
         function enrollProgram(programId) {
             if (!currentUser) {
                 showNotification('Please login to enroll in a program');
@@ -501,17 +747,29 @@
             const programName = document.getElementById('programName');
             const programDesc = document.getElementById('programDescription');
             const programPrice = document.getElementById('programPriceDisplay');
+            const programDuration = document.getElementById('programDuration');
+            const programFeatures = document.getElementById('programFeaturesList');
             const successProgram = document.getElementById('successProgramName');
             
+            // Set program information
             title.textContent = `Enroll in ${currentProgram.name}`;
             programName.textContent = currentProgram.name;
             programDesc.textContent = currentProgram.description;
             programPrice.textContent = `R${currentProgram.price}`;
+            programDuration.textContent = currentProgram.duration;
             successProgram.textContent = currentProgram.name;
+            
+            // Populate features list
+            programFeatures.innerHTML = '';
+            currentProgram.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fas fa-check"></i> ${feature}`;
+                programFeatures.appendChild(li);
+            });
             
             // Reset to first step
             currentEnrollmentStep = 1;
-            updateEnrollmentSteps();
+            updateEnrollmentUI();
             
             modal.classList.add('active');
         }
@@ -520,33 +778,59 @@
             document.getElementById('enrollmentModal').classList.remove('active');
             currentProgram = null;
             currentEnrollmentStep = 1;
-            updateEnrollmentSteps();
+            updateEnrollmentUI();
         }
 
-        function updateEnrollmentSteps() {
+        function updateEnrollmentUI() {
+            // Update progress bar
+            const progressPercent = ((currentEnrollmentStep - 1) / (totalEnrollmentSteps - 1)) * 100;
+            document.getElementById('enrollmentProgressBar').style.width = `${progressPercent}%`;
+            document.getElementById('progressPercent').textContent = `${Math.round(progressPercent)}%`;
+            
             // Update step indicators
-            for (let i = 1; i <= 3; i++) {
+            for (let i = 1; i <= totalEnrollmentSteps; i++) {
                 const step = document.getElementById(`step${i}`);
                 const form = document.getElementById(`enrollmentStep${i}`);
                 
+                if (i < currentEnrollmentStep) {
+                    step.className = 'step completed';
+                    step.innerHTML = '<i class="fas fa-check"></i>';
+                } else if (i === currentEnrollmentStep) {
+                    step.className = 'step active';
+                    // Set appropriate icon for current step
+                    if (i === 1) step.innerHTML = '<i class="fas fa-info"></i>';
+                    else if (i === 2) step.innerHTML = '<i class="fas fa-user"></i>';
+                    else if (i === 3) step.innerHTML = '<i class="fas fa-check"></i>';
+                } else {
+                    step.className = 'step';
+                    // Set appropriate icon for future steps
+                    if (i === 1) step.innerHTML = '<i class="fas fa-info"></i>';
+                    else if (i === 2) step.innerHTML = '<i class="fas fa-user"></i>';
+                    else if (i === 3) step.innerHTML = '<i class="fas fa-check"></i>';
+                }
+                
+                // Show/hide forms
                 if (i === currentEnrollmentStep) {
-                    step.classList.add('active');
                     form.classList.add('active');
                 } else {
-                    step.classList.remove('active');
                     form.classList.remove('active');
                 }
             }
+            
+            // Update steps container class for progress line
+            document.getElementById('enrollmentSteps').className = `enrollment-steps step-${currentEnrollmentStep}`;
         }
 
         function nextEnrollmentStep() {
             if (currentEnrollmentStep === 2) {
                 // Validate form
-                const name = document.getElementById('enrollmentName').value;
+                const firstName = document.getElementById('enrollmentFirstName').value;
+                const lastName = document.getElementById('enrollmentLastName').value;
                 const email = document.getElementById('enrollmentEmail').value;
                 const phone = document.getElementById('enrollmentPhone').value;
+                const source = document.getElementById('enrollmentSource').value;
                 
-                if (!name || !email || !phone) {
+                if (!firstName || !lastName || !email || !phone || !source) {
                     showNotification('Please fill in all required fields');
                     document.getElementById('enrollmentForm').classList.add('shake');
                     setTimeout(() => {
@@ -554,17 +838,22 @@
                     }, 500);
                     return;
                 }
+                
+                // Validate email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showNotification('Please enter a valid email address');
+                    return;
+                }
             }
             
-            if (currentEnrollmentStep < 3) {
+            if (currentEnrollmentStep < totalEnrollmentSteps) {
                 currentEnrollmentStep++;
-                updateEnrollmentSteps();
+                updateEnrollmentUI();
                 
-                // If moving to final step, show success after delay
+                // If moving to final step, simulate processing
                 if (currentEnrollmentStep === 3) {
-                    setTimeout(() => {
-                        document.getElementById('enrollmentSuccess').classList.add('active');
-                    }, 500);
+                    simulateEnrollmentProcessing();
                 }
             }
         }
@@ -572,322 +861,37 @@
         function prevEnrollmentStep() {
             if (currentEnrollmentStep > 1) {
                 currentEnrollmentStep--;
-                updateEnrollmentSteps();
+                updateEnrollmentUI();
             }
         }
 
-        // Workshop functionality
-        function setupWorkshopInteractions() {
-            // Add click handlers to workshop register buttons
-            document.querySelectorAll('.workshop-item .btn').forEach((btn, index) => {
-                btn.addEventListener('click', function() {
-                    if (!currentUser) {
-                        showNotification('Please login to register for workshops');
-                        toggleLogin(true);
-                        return;
-                    }
-                    openWorkshopModal(index);
-                });
-            });
-        }
-
-        function openWorkshopModal(workshopIndex) {
-            const workshop = workshopData[workshopIndex];
-            if (!workshop) return;
-            
-            currentWorkshop = workshop;
-            const modal = document.getElementById('workshopModal');
-            const title = document.getElementById('workshopModalTitle');
-            const name = document.getElementById('workshopName');
-            const date = document.getElementById('workshopDate');
-            const time = document.getElementById('workshopTime');
-            const seats = document.getElementById('workshopSeats');
-            const desc = document.getElementById('workshopFullDescription');
-            const features = document.getElementById('workshopFeatures');
-            
-            title.textContent = `Register for ${workshop.title}`;
-            name.textContent = workshop.title;
-            date.textContent = workshop.date;
-            time.textContent = workshop.time;
-            seats.textContent = `${workshop.seats} seats available`;
-            desc.textContent = workshop.fullDescription;
-            
-            // Clear and add features
-            features.innerHTML = '';
-            workshop.features.forEach(feature => {
-                const li = document.createElement('li');
-                li.innerHTML = `<i class="fas fa-check"></i> ${feature}`;
-                features.appendChild(li);
-            });
-            
-            modal.classList.add('active');
-        }
-
-        function closeWorkshopModal() {
-            document.getElementById('workshopModal').classList.remove('active');
-            currentWorkshop = null;
-        }
-
-        function registerForWorkshop() {
-            const form = document.getElementById('workshopRegistrationForm');
-            const firstName = document.getElementById('workshopFirstName').value;
-            const lastName = document.getElementById('workshopLastName').value;
-            const email = document.getElementById('workshopEmail').value;
-            const phone = document.getElementById('workshopPhone').value;
-            
-            if (!firstName || !lastName || !email || !phone) {
-                showNotification('Please fill in all required fields');
-                form.classList.add('shake');
-                setTimeout(() => {
-                    form.classList.remove('shake');
-                }, 500);
-                return;
-            }
-            
-            // Simulate registration process
-            showNotification('Registering you for the workshop...');
-            
-            setTimeout(() => {
-                closeWorkshopModal();
-                showNotification(`✅ Successfully registered for ${currentWorkshop.title}! Confirmation email sent.`, 5000);
-                
-                // Reset form
-                form.reset();
-            }, 2000);
-        }
-
-        // Calendar interactions
-        function setupCalendarInteractions() {
-            const calendarDates = document.querySelectorAll('.calendar-date.has-event');
-            
-            calendarDates.forEach(date => {
-                date.addEventListener('click', function() {
-                    // Remove previous highlights
-                    document.querySelectorAll('.calendar-date').forEach(d => {
-                        d.classList.remove('calendar-highlight');
-                    });
-                    
-                    // Highlight clicked date
-                    this.classList.add('calendar-highlight');
-                    
-                    // Find corresponding workshop
-                    const dateText = this.textContent;
-                    const workshopIndex = workshopData.findIndex(w => 
-                        w.date.includes(dateText) || dateText === '9' || dateText === '13' || dateText === '20'
-                    );
-                    
-                    if (workshopIndex !== -1) {
-                        openWorkshopModal(workshopIndex);
-                    }
-                });
-            });
-        }
-
-        // Reading progress simulation
-        function setupReadingProgress() {
-            const progressBar = document.createElement('div');
-            progressBar.className = 'reading-progress';
-            progressBar.innerHTML = '<div class="progress-bar" id="readingProgressBar"></div>';
-            
-            // Add to a few book cards as demo
-            document.querySelectorAll('.book-card').forEach((card, index) => {
-                if (index < 3) { // Only add to first 3 books
-                    const clone = progressBar.cloneNode(true);
-                    card.querySelector('.book-info').appendChild(clone);
-                    
-                    // Add click to simulate reading
-                    card.addEventListener('click', function(e) {
-                        if (!e.target.closest('.btn')) { // Don't trigger when clicking add to cart
-                            simulateReading(this);
-                        }
-                    });
-                }
-            });
-        }
-
-        function simulateReading(bookCard) {
-            const progressBar = bookCard.querySelector('.progress-bar');
-            if (!progressBar) return;
-            
-            let progress = parseInt(progressBar.style.width) || 0;
-            if (progress < 100) {
-                progress += 25;
-                if (progress > 100) progress = 100;
-                progressBar.style.width = `${progress}%`;
-                
-                if (progress === 100) {
-                    showNotification('🎉 You finished reading this book!', 3000);
-                } else {
-                    showNotification(`📖 Reading progress: ${progress}%`, 2000);
-                }
-            }
-        }
-
-        // Interactive demos
-        function setupInteractiveDemos() {
-            // Add demo buttons to ministry section
-            const ministryCta = document.querySelector('.ministry-cta');
-            const demoDiv = document.createElement('div');
-            demoDiv.className = 'interactive-demo';
-            demoDiv.innerHTML = `
-                <h4>Try Our Interactive Features</h4>
-                <div class="demo-buttons">
-                    <button class="btn" onclick="showMinistryTour()">
-                        <i class="fas fa-play"></i> Take a Tour
-                    </button>
-                    <button class="btn btn-secondary" onclick="simulateCoachingSession()">
-                        <i class="fas fa-comments"></i> Demo Coaching
-                    </button>
-                </div>
-            `;
-            ministryCta.appendChild(demoDiv);
-        }
-
-        function showMinistryTour() {
-            showNotification('🚀 Starting ministry tour...', 2000);
-            
-            // Highlight different sections
-            const sections = ['ministry-programs', 'life-coaching', 'ministry-books', 'workshop-calendar'];
-            let current = 0;
-            
-            const tourInterval = setInterval(() => {
-                if (current < sections.length) {
-                    const section = document.querySelector(`.${sections[current]}`);
-                    if (section) {
-                        section.style.boxShadow = '0 0 0 3px #d69e2e';
-                        section.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        
-                        setTimeout(() => {
-                            section.style.boxShadow = '';
-                        }, 2000);
-                    }
-                    current++;
-                } else {
-                    clearInterval(tourInterval);
-                    showNotification('🎊 Tour completed! Explore each section in detail.', 4000);
-                }
-            }, 2500);
-        }
-
-        function simulateCoachingSession() {
-            const questions = [
-                "What area of your life would you like to improve?",
-                "How can we support your spiritual growth journey?",
-                "What challenges are you currently facing?",
-                "What would success look like for you in 6 months?"
-            ];
-            
-            let currentQuestion = 0;
-            
-            function askNextQuestion() {
-                if (currentQuestion < questions.length) {
-                    const response = prompt(questions[currentQuestion]);
-                    if (response !== null) {
-                        showNotification(`✓ Thank you for sharing: "${response.substring(0, 50)}..."`, 3000);
-                        currentQuestion++;
-                        setTimeout(askNextQuestion, 2000);
-                    }
-                } else {
-                    showNotification('🎯 Based on your responses, we\'ve created a personalized coaching plan for you!', 5000);
-                }
-            }
-            
-            askNextQuestion();
-        }
-
-        // Enhanced coaching form submission
-        function submitCoachingRequest(event) {
-            event.preventDefault();
-            
-            // Add loading state
-            const button = event.target.querySelector('button[type="submit"]');
+        function simulateEnrollmentProcessing() {
+            const button = document.querySelector('#enrollmentStep2 .enrollment-btn.primary');
             const originalText = button.innerHTML;
-            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            // Show processing state
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Enrollment...';
             button.disabled = true;
             
             // Simulate API call
             setTimeout(() => {
-                showNotification('✅ Coaching request submitted! We will contact you within 24 hours.');
-                document.getElementById('coachingForm').reset();
-                button.innerHTML = originalText;
                 button.disabled = false;
                 
-                // Show confirmation animation
-                event.target.classList.add('pulse');
-                setTimeout(() => {
-                    event.target.classList.remove('pulse');
-                }, 1000);
+                // Show success state
+                showNotification(`🎉 Successfully enrolled in ${currentProgram.name}!`, 5000);
+                
+                // Track enrollment in user data
+                if (currentUser) {
+                    if (!currentUser.enrollments) {
+                        currentUser.enrollments = [];
+                    }
+                    currentUser.enrollments.push({
+                        program: currentProgram.name,
+                        date: new Date().toLocaleDateString(),
+                        status: 'active'
+                    });
+                }
             }, 2000);
-        }
-
-        // Enhanced payment processing
-        function processPayment() {
-            if (cart.length === 0) {
-                showNotification('Your cart is empty!');
-                return;
-            }
-            
-            // Show processing animation
-            const button = document.querySelector('#creditCardForm .btn');
-            const originalText = button.innerHTML;
-            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Payment...';
-            button.disabled = true;
-            
-            // Simulate payment processing
-            setTimeout(() => {
-                cart = [];
-                saveCart();
-                updateCartDisplay();
-                
-                button.innerHTML = '<i class="fas fa-check"></i> Payment Successful!';
-                button.style.background = '#38a169';
-                
-                showNotification('🎉 Payment successful! Thank you for your purchase. Your books are available for download.', 5000);
-                
-                // Reset button after delay
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.disabled = false;
-                    button.style.background = '';
-                }, 3000);
-            }, 3000);
-        }
-
-        // Enhanced login functionality
-        function performLogin() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            if (email && password) {
-                // Show loading state
-                const button = document.querySelector('#loginModal .modal-btn.primary');
-                const originalText = button.textContent;
-                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
-                
-                setTimeout(() => {
-                    currentUser = { 
-                        email, 
-                        name: email.split('@')[0],
-                        joined: new Date().toLocaleDateString()
-                    };
-                    
-                    document.getElementById('loginBtn').innerHTML = `<i class="fas fa-user"></i> ${currentUser.name}`;
-                    document.getElementById('createPostBtn').style.display = 'block';
-                    
-                    // Update login button in header
-                    const loginBtn = document.getElementById('loginBtn');
-                    loginBtn.innerHTML = `<i class="fas fa-user-check"></i> ${currentUser.name}`;
-                    loginBtn.style.background = '#38a169';
-                    
-                    toggleLogin(false);
-                    showNotification(`🎊 Welcome back, ${currentUser.name}! You now have access to all features.`, 4000);
-                    
-                    // Reset button
-                    button.textContent = originalText;
-                }, 1500);
-            } else {
-                showNotification('Please enter both email and password');
-            }
         }
 
         // ... (keep all other existing JavaScript functions) ...
