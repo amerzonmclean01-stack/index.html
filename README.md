@@ -133,21 +133,6 @@
             background: #d69e2e;
         }
 
-        .nav-main a::before {
-            content: '✏️';
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            font-size: 0.7rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .edit-mode-on .nav-main a::before {
-            opacity: 1;
-        }
-
         .header-actions {
             display: flex;
             gap: 15px;
@@ -326,38 +311,6 @@
                 transform: translateX(0);
                 opacity: 1;
             }
-        }
-
-        /* === QUICK EDIT TOOLTIP === */
-        .quick-edit-tooltip {
-            position: fixed;
-            background: #1a365d;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            z-index: 10003;
-            pointer-events: none;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .quick-edit-tooltip.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .quick-edit-tooltip::after {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 0 5px 5px 5px;
-            border-style: solid;
-            border-color: transparent transparent #1a365d transparent;
         }
 
         /* === MODAL === */
@@ -549,223 +502,6 @@
             color: #1a365d;
         }
 
-        /* === BLOG SECTION === */
-        .blog-section {
-            background: #f7fafc;
-        }
-
-        .blog-container {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 40px;
-        }
-
-        .blog-posts {
-            display: grid;
-            gap: 30px;
-        }
-
-        .blog-post {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-
-        .blog-post:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .blog-post-image {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .blog-post-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .blog-post:hover .blog-post-image img {
-            transform: scale(1.05);
-        }
-
-        .blog-post-content {
-            padding: 25px;
-        }
-
-        .blog-post-meta {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        .blog-post-category {
-            background: #d69e2e;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .blog-post-title {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: #1a365d;
-        }
-
-        .blog-post-excerpt {
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .blog-post-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 15px;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .blog-post-actions {
-            display: flex;
-            gap: 15px;
-        }
-
-        .blog-post-actions button {
-            background: none;
-            border: none;
-            color: #666;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: color 0.3s ease;
-        }
-
-        .blog-post-actions button:hover {
-            color: #d69e2e;
-        }
-
-        /* Blog Sidebar */
-        .blog-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .sidebar-widget {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .widget-title {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: #1a365d;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #d69e2e;
-        }
-
-        .categories-list {
-            list-style: none;
-        }
-
-        .categories-list li {
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .categories-list a {
-            color: #4a5568;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .categories-list a:hover {
-            color: #d69e2e;
-        }
-
-        .categories-list span {
-            background: #e2e8f0;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-        }
-
-        .recent-posts-list {
-            list-style: none;
-        }
-
-        .recent-posts-list li {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .recent-post {
-            display: flex;
-            gap: 15px;
-        }
-
-        .recent-post-image {
-            width: 70px;
-            height: 70px;
-            border-radius: 8px;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .recent-post-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .recent-post-content h4 {
-            font-size: 0.95rem;
-            margin-bottom: 5px;
-            color: #1a365d;
-        }
-
-        .recent-post-content .post-date {
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        .tags-cloud {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .tag {
-            background: #e2e8f0;
-            color: #4a5568;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .tag:hover {
-            background: #d69e2e;
-            color: white;
-        }
-
         /* === MINISTRY SECTION === */
         .ministry-section {
             background: linear-gradient(135deg, #2c5282 0%, #1a365d 100%);
@@ -930,66 +666,6 @@
             margin: 20px 0;
         }
 
-        /* Life Coaching */
-        .life-coaching {
-            background: rgba(255,255,255,0.05);
-            padding: 60px 0;
-            margin: 60px 0;
-            border-radius: 20px;
-        }
-
-        .coaching-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        .coaching-content h3 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #d69e2e;
-        }
-
-        .coaching-content p {
-            margin-bottom: 25px;
-            line-height: 1.7;
-            opacity: 0.9;
-        }
-
-        .coaching-features {
-            list-style: none;
-            margin: 30px 0;
-        }
-
-        .coaching-features li {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1.1rem;
-        }
-
-        .coaching-features i {
-            color: #d69e2e;
-            font-size: 1.2rem;
-        }
-
-        .coaching-form {
-            background: rgba(255,255,255,0.1);
-            padding: 40px;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .coaching-form h4 {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            color: #d69e2e;
-            text-align: center;
-        }
-
         /* Ministry Books */
         .ministry-books {
             padding: 60px 0;
@@ -1061,182 +737,6 @@
             font-weight: 700;
             color: #d69e2e;
             margin: 15px 0;
-        }
-
-        /* Workshop Calendar */
-        .workshop-calendar {
-            background: rgba(255,255,255,0.05);
-            padding: 60px 0;
-            margin: 60px 0;
-            border-radius: 20px;
-        }
-
-        .calendar-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            margin-top: 40px;
-        }
-
-        .calendar-view {
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 30px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .calendar-day {
-            text-align: center;
-            padding: 10px;
-            font-weight: 600;
-            color: #d69e2e;
-        }
-
-        .calendar-date {
-            text-align: center;
-            padding: 12px 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .calendar-date:hover {
-            background: rgba(214, 158, 46, 0.2);
-        }
-
-        .calendar-date.active {
-            background: #d69e2e;
-            color: #1a365d;
-            font-weight: 700;
-        }
-
-        .calendar-date.has-event::after {
-            content: '';
-            display: block;
-            width: 6px;
-            height: 6px;
-            background: #c53030;
-            border-radius: 50%;
-            margin: 5px auto 0;
-        }
-
-        .workshop-list {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .workshop-item {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
-        }
-
-        .workshop-item:hover {
-            background: rgba(255,255,255,0.15);
-            transform: translateX(5px);
-        }
-
-        .workshop-item h4 {
-            color: #d69e2e;
-            margin-bottom: 8px;
-        }
-
-        .workshop-meta {
-            display: flex;
-            gap: 15px;
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 10px;
-        }
-
-        .workshop-meta i {
-            color: #d69e2e;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            padding: 60px 0;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .testimonial-card {
-            background: rgba(255,255,255,0.1);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.2);
-            position: relative;
-        }
-
-        .testimonial-card::before {
-            content: '"';
-            font-size: 4rem;
-            color: #d69e2e;
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            opacity: 0.3;
-            font-family: serif;
-        }
-
-        .testimonial-content {
-            position: relative;
-            z-index: 2;
-            margin-bottom: 20px;
-            font-style: italic;
-            line-height: 1.6;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid #d69e2e;
-        }
-
-        .author-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .author-info h5 {
-            color: #d69e2e;
-            margin-bottom: 5px;
-        }
-
-        .author-info p {
-            font-size: 0.9rem;
-            opacity: 0.8;
         }
 
         /* CTA Section */
@@ -1498,48 +998,6 @@
             line-height: 1.8;
             margin-bottom: 30px;
             text-align: center;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .team-member {
-            text-align: center;
-            background: white;
-            padding: 30px 20px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-
-        .team-member:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .team-member img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            border: 4px solid #d69e2e;
-        }
-
-        .team-member h4 {
-            font-size: 1.3rem;
-            margin-bottom: 8px;
-            color: #1a365d;
-        }
-
-        .team-member p:first-of-type {
-            font-weight: 600;
-            color: #d69e2e;
-            margin-bottom: 15px;
         }
 
         /* === FOOTER === */
@@ -2116,10 +1574,6 @@
                 font-size: 2rem;
             }
             
-            .blog-container {
-                grid-template-columns: 1fr;
-            }
-            
             .community-container {
                 grid-template-columns: 1fr;
             }
@@ -2133,10 +1587,6 @@
                 right: -100%;
             }
             
-            .nav-main a::before {
-                display: none;
-            }
-            
             .edit-mode-indicator {
                 top: 10px;
                 right: 10px;
@@ -2145,11 +1595,6 @@
             
             .ministry-hero h2 {
                 font-size: 2.5rem;
-            }
-            
-            .coaching-container,
-            .calendar-container {
-                grid-template-columns: 1fr;
             }
             
             .ministry-features {
@@ -2163,10 +1608,6 @@
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
-            }
-            
-            .coaching-form {
-                padding: 25px;
             }
 
             .enrollment-modal {
@@ -2258,9 +1699,6 @@
         </button>
     </div>
 
-    <!-- Quick Edit Tooltip -->
-    <div class="quick-edit-tooltip" id="quickEditTooltip">Double-click to edit • Right-click for options</div>
-
     <!-- Header -->
     <header>
         <div class="container">
@@ -2273,7 +1711,6 @@
                 <nav class="nav-main">
                     <a href="#home" class="active nav-link" data-tab="home">Home</a>
                     <a href="#books" class="nav-link" data-tab="books">Books</a>
-                    <a href="#blog" class="nav-link" data-tab="blog">Blog</a>
                     <a href="#ministry" class="nav-link" data-tab="ministry">Ministry</a>
                     <a href="#community" class="nav-link" data-tab="community">Community</a>
                     <a href="#payment" class="nav-link" data-tab="payment">Payment</a>
@@ -2331,58 +1768,6 @@
             
             <div class="books-grid" id="booksGrid">
                 <!-- Books will be loaded here -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Blog Section -->
-    <section id="blog" class="section blog-section">
-        <div class="container">
-            <h2 class="section-title editable" data-id="blog-title">
-                <span class="edit-indicator">✏️</span>
-                Our Blog
-            </h2>
-            <p class="section-subtitle editable" data-id="blog-subtitle">
-                <span class="edit-indicator">✏️</span>
-                Insights, author interviews, reading recommendations, and literary discussions
-            </p>
-            
-            <div class="blog-container">
-                <div class="blog-posts" id="blogPosts">
-                    <!-- Blog posts will be loaded here -->
-                </div>
-                
-                <div class="blog-sidebar">
-                    <div class="sidebar-widget">
-                        <h3 class="widget-title editable" data-id="categories-title">
-                            <span class="edit-indicator">✏️</span>
-                            Categories
-                        </h3>
-                        <ul class="categories-list" id="categoriesList">
-                            <!-- Categories will be loaded here -->
-                        </ul>
-                    </div>
-                    
-                    <div class="sidebar-widget">
-                        <h3 class="widget-title editable" data-id="recent-posts-title">
-                            <span class="edit-indicator">✏️</span>
-                            Recent Posts
-                        </h3>
-                        <ul class="recent-posts-list" id="recentPostsList">
-                            <!-- Recent posts will be loaded here -->
-                        </ul>
-                    </div>
-                    
-                    <div class="sidebar-widget">
-                        <h3 class="widget-title editable" data-id="tags-title">
-                            <span class="edit-indicator">✏️</span>
-                            Popular Tags
-                        </h3>
-                        <div class="tags-cloud" id="tagsCloud">
-                            <!-- Tags will be loaded here -->
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -2795,7 +2180,6 @@
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#books">Books</a></li>
-                        <li><a href="#blog">Blog</a></li>
                         <li><a href="#ministry">Ministry</a></li>
                         <li><a href="#community">Community</a></li>
                         <li><a href="#payment">Payment</a></li>
@@ -3116,9 +2500,6 @@
         let currentRating = 0;
         let discussions = [];
         let reviews = [];
-        let blogPosts = [];
-        let categories = [];
-        let tags = [];
         let contextMenuElement = null;
         let currentProgram = null;
         let currentEnrollmentStep = 1;
@@ -3283,32 +2664,6 @@
             }
         };
 
-        // Sample blog data
-        const sampleBlogPosts = [
-            {
-                id: 1,
-                title: "The Rise of African Literature in the Global Market",
-                excerpt: "Exploring how African authors are making their mark on the international literary scene and what it means for the future of publishing.",
-                content: "Full content would go here...",
-                author: "Nomvula Kalenga",
-                date: "2023-07-15",
-                category: "Literature",
-                image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                tags: ["african literature", "publishing", "global market"],
-                likes: 24,
-                comments: 8
-            }
-        ];
-
-        const sampleCategories = [
-            { name: "Literature", count: 12 },
-            { name: "Recommendations", count: 8 }
-        ];
-
-        const sampleTags = [
-            "fiction", "non-fiction", "south africa", "african literature"
-        ];
-
         // Sample discussions and reviews
         const sampleDiscussions = [
             {
@@ -3339,7 +2694,6 @@
             setupEditInteractions();
             loadCart();
             loadCommunityData();
-            loadBlogData();
             initMinistrySection();
             updateCartDisplay();
             setupInteractiveElements();
@@ -3845,7 +3199,7 @@
         function showMinistryTour() {
             showNotification('🚀 Starting ministry tour...', 2000);
             
-            const sections = ['ministry-programs', 'life-coaching', 'ministry-books'];
+            const sections = ['ministry-programs', 'ministry-books'];
             let current = 0;
             
             const tourInterval = setInterval(() => {
@@ -4145,98 +3499,6 @@
             } else {
                 showNotification('Please enter your review');
             }
-        }
-
-        // Blog functionality
-        function loadBlogData() {
-            blogPosts = [...sampleBlogPosts];
-            categories = [...sampleCategories];
-            tags = [...sampleTags];
-            displayBlogPosts();
-            displayCategories();
-            displayRecentPosts();
-            displayTags();
-        }
-
-        function displayBlogPosts() {
-            const blogPostsContainer = document.getElementById('blogPosts');
-            blogPostsContainer.innerHTML = '';
-            
-            blogPosts.forEach(post => {
-                const postElement = document.createElement('article');
-                postElement.className = 'blog-post';
-                postElement.innerHTML = `
-                    <div class="blog-post-image">
-                        <img src="${post.image}" alt="${post.title}">
-                    </div>
-                    <div class="blog-post-content">
-                        <div class="blog-post-meta">
-                            <span class="blog-post-category">${post.category}</span>
-                            <span><i class="far fa-calendar"></i> ${post.date}</span>
-                            <span><i class="far fa-user"></i> ${post.author}</span>
-                        </div>
-                        <h3 class="blog-post-title">${post.title}</h3>
-                        <p class="blog-post-excerpt">${post.excerpt}</p>
-                        <div class="blog-post-footer">
-                            <div class="blog-post-actions">
-                                <button><i class="far fa-heart"></i> ${post.likes}</button>
-                                <button><i class="far fa-comment"></i> ${post.comments}</button>
-                            </div>
-                            <a href="#" class="btn" style="padding: 8px 15px;">Read More</a>
-                        </div>
-                    </div>
-                `;
-                blogPostsContainer.appendChild(postElement);
-            });
-        }
-
-        function displayCategories() {
-            const categoriesList = document.getElementById('categoriesList');
-            categoriesList.innerHTML = '';
-            
-            categories.forEach(category => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <a href="#">
-                        ${category.name}
-                        <span>${category.count}</span>
-                    </a>
-                `;
-                categoriesList.appendChild(li);
-            });
-        }
-
-        function displayRecentPosts() {
-            const recentPostsList = document.getElementById('recentPostsList');
-            recentPostsList.innerHTML = '';
-            
-            blogPosts.slice(0, 3).forEach(post => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <div class="recent-post">
-                        <div class="recent-post-image">
-                            <img src="${post.image}" alt="${post.title}">
-                        </div>
-                        <div class="recent-post-content">
-                            <h4>${post.title}</h4>
-                            <div class="post-date">${post.date}</div>
-                        </div>
-                    </div>
-                `;
-                recentPostsList.appendChild(li);
-            });
-        }
-
-        function displayTags() {
-            const tagsCloud = document.getElementById('tagsCloud');
-            tagsCloud.innerHTML = '';
-            
-            tags.forEach(tag => {
-                const span = document.createElement('span');
-                span.className = 'tag';
-                span.textContent = tag;
-                tagsCloud.appendChild(span);
-            });
         }
 
         // Payment functionality
