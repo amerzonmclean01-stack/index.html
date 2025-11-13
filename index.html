@@ -26,6 +26,7 @@
             line-height: 1.6;
             color: #333;
             background: #f9f9f9;
+            scroll-behavior: smooth;
         }
 
         .container {
