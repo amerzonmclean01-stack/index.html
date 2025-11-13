@@ -6,876 +6,81 @@
     <title>The Definitive Word - Premium Ebook Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #1a365d;
-            --secondary: #d69e2e;
-            --accent: #c53030;
-            --light: #f7fafc;
-            --success: #38a169;
-            --dark: #2d3748;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f9f9f9;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        /* === EDITABLE ELEMENTS === */
-        .editable {
-            position: relative;
-            border: 2px dashed transparent;
+        /* ... (keep all existing CSS styles exactly as they are) ... */
+        
+        /* Additional styles for price and icon editing */
+        .price-editable {
+            cursor: pointer;
             transition: all 0.3s ease;
-            padding: 5px;
-            border-radius: 6px;
-            margin: 1px;
         }
-
-        .edit-mode-on .editable {
-            border-color: #d69e2e !important;
-            background: rgba(214, 158, 46, 0.15) !important;
-        }
-
-        .editable:hover {
+        
+        .edit-mode-on .price-editable:hover {
             background: rgba(214, 158, 46, 0.25) !important;
+            border-radius: 4px;
+            padding: 2px 8px;
         }
-
-        .edit-indicator {
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            background: #d69e2e;
-            color: #1a365d;
-            border-radius: 50%;
-            width: 22px;
-            height: 22px;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            cursor: pointer;
-            z-index: 1000;
-            font-weight: bold;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-
-        .edit-mode-on .edit-indicator {
-            display: flex;
-        }
-
-        /* === HEADER === */
-        header {
-            background: white;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 999;
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #1a365d;
-        }
-
-        .nav-main {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-main a {
-            color: #333;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 10px 0;
+        
+        .icon-editable {
             position: relative;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
             cursor: pointer;
-            user-select: none;
+            transition: all 0.3s ease;
         }
-
-        .nav-main a:hover,
-        .nav-main a.active {
-            color: #d69e2e;
-        }
-
-        .nav-main a.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: #d69e2e;
-        }
-
-        /* Double-click indicator for tabs */
-        .nav-main a::before {
+        
+        .edit-mode-on .icon-editable:hover::after {
             content: '✏️';
             position: absolute;
             top: -5px;
             right: -5px;
-            font-size: 0.7rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .edit-mode-on .nav-main a::before {
-            opacity: 1;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .cart-icon {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #c53030;
-            color: white;
+            background: #d69e2e;
+            color: #1a365d;
             border-radius: 50%;
             width: 20px;
             height: 20px;
+            font-size: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
-            font-weight: bold;
         }
-
-        /* === SECTIONS === */
-        .section {
-            padding: 70px 0;
-            min-height: 65vh;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 40px;
-            color: #1a365d;
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 50px;
-            font-size: 1.1rem;
-            color: #666;
-        }
-
-        /* === HERO SECTION === */
-        .hero {
-            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
-            color: white;
-            padding: 100px 0;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 25px;
-            background: #d69e2e;
-            color: #1a365d;
-            border: none;
+        
+        .icon-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #f7fafc;
             border-radius: 8px;
+        }
+        
+        .icon-option {
+            padding: 10px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
             cursor: pointer;
-            font-weight: 700;
-            text-decoration: none;
             transition: all 0.3s ease;
-            font-size: 1rem;
         }
-
-        .btn:hover {
-            background: #ecc94b;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid #d69e2e;
-        }
-
-        .btn-secondary:hover {
+        
+        .icon-option:hover {
+            border-color: #d69e2e;
             background: rgba(214, 158, 46, 0.1);
         }
-
-        /* === CONTEXT MENU === */
-        .context-menu {
-            position: fixed;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            z-index: 10001;
-            min-width: 180px;
-            opacity: 0;
-            transform: scale(0.95);
-            transition: all 0.2s ease;
-            pointer-events: none;
-        }
-
-        .context-menu.active {
-            opacity: 1;
-            transform: scale(1);
-            pointer-events: all;
-        }
-
-        .context-menu-item {
-            padding: 12px 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: background 0.2s ease;
-            border-bottom: 1px solid #f1f1f1;
-        }
-
-        .context-menu-item:last-child {
-            border-bottom: none;
-        }
-
-        .context-menu-item:hover {
-            background: #f7fafc;
-        }
-
-        .context-menu-item i {
-            width: 16px;
-            text-align: center;
-            color: #d69e2e;
-        }
-
-        /* === EDIT MODE INDICATOR === */
-        .edit-mode-indicator {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #d69e2e;
-            color: #1a365d;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 10000;
-            display: none;
-            align-items: center;
-            gap: 8px;
-            animation: slideIn 0.3s ease;
-        }
-
-        .edit-mode-indicator.active {
-            display: flex;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* === QUICK EDIT TOOLTIP === */
-        .quick-edit-tooltip {
-            position: fixed;
-            background: #1a365d;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            z-index: 10003;
-            pointer-events: none;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .quick-edit-tooltip.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .quick-edit-tooltip::after {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 0 5px 5px 5px;
-            border-style: solid;
-            border-color: transparent transparent #1a365d transparent;
-        }
-
-        /* === MODAL === */
-        .edit-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10001;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .edit-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: white;
-            width: 90%;
-            max-width: 600px;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-header h2 {
-            color: #1a365d;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #666;
-            transition: color 0.3s ease;
-        }
-
-        .close-modal:hover {
-            color: #c53030;
-        }
-
-        .modal-body textarea {
-            width: 100%;
-            min-height: 150px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: inherit;
-            resize: vertical;
-        }
-
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .modal-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .modal-btn.primary {
-            background: #d69e2e;
-            color: #1a365d;
-        }
-
-        .modal-btn.secondary {
-            background: #e2e8f0;
-            color: #4a5568;
-        }
-
-        .modal-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        /* === NOTIFICATION === */
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #d69e2e;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            z-index: 10002;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .notification.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        /* === BOOKS SECTION === */
-        .books-section {
-            background: white;
-        }
-
-        .books-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .book-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .book-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-
-        .book-cover {
-            height: 250px;
-            overflow: hidden;
-        }
-
-        .book-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .book-card:hover .book-cover img {
-            transform: scale(1.05);
-        }
-
-        .book-info {
-            padding: 20px;
-        }
-
-        .book-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #1a365d;
-        }
-
-        .book-author {
-            color: #666;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-        }
-
-        .book-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1a365d;
-        }
-
-        /* === BLOG SECTION === */
-        .blog-section {
-            background: #f7fafc;
-        }
-
-        .blog-container {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 40px;
-        }
-
-        .blog-posts {
-            display: grid;
-            gap: 30px;
-        }
-
-        .blog-post {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-
-        .blog-post:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .blog-post-image {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .blog-post-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .blog-post:hover .blog-post-image img {
-            transform: scale(1.05);
-        }
-
-        .blog-post-content {
-            padding: 25px;
-        }
-
-        .blog-post-meta {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        .blog-post-category {
-            background: #d69e2e;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .blog-post-title {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: #1a365d;
-        }
-
-        .blog-post-excerpt {
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .blog-post-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 15px;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .blog-post-actions {
-            display: flex;
-            gap: 15px;
-        }
-
-        .blog-post-actions button {
-            background: none;
-            border: none;
-            color: #666;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: color 0.3s ease;
-        }
-
-        .blog-post-actions button:hover {
-            color: #d69e2e;
-        }
-
-        /* === RESPONSIVE === */
-        @media (max-width: 768px) {
-            .header-top {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .nav-main {
-                gap: 20px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .blog-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .books-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-main a::before {
-                display: none;
-            }
-            
-            .edit-mode-indicator {
-                top: 10px;
-                right: 10px;
-                font-size: 0.75rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .section-title {
-                font-size: 1.7rem;
-            }
-            
-            .context-menu {
-                min-width: 160px;
-            }
+        
+        .icon-option.selected {
+            border-color: #d69e2e;
+            background: rgba(214, 158, 46, 0.2);
         }
     </style>
 </head>
 <body>
-    <!-- Edit Mode Indicator -->
-    <div class="edit-mode-indicator" id="editModeIndicator">
-        <i class="fas fa-edit"></i>
-        <span>Edit Mode Active</span>
-        <button onclick="toggleEditMode()" style="background: none; border: none; color: #1a365d; cursor: pointer; margin-left: 10px;">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-
-    <!-- Quick Edit Tooltip -->
-    <div class="quick-edit-tooltip" id="quickEditTooltip">Double-click to edit • Right-click for options</div>
-
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-top">
-                <div class="logo editable" data-id="logo">
-                    <span class="edit-indicator">✏️</span>
-                    The Definitive Word
-                </div>
-                
-                <nav class="nav-main">
-                    <a href="#home" class="active nav-link" data-tab="home">Home</a>
-                    <a href="#books" class="nav-link" data-tab="books">Books</a>
-                    <a href="#blog" class="nav-link" data-tab="blog">Blog</a>
-                    <a href="#community" class="nav-link" data-tab="community">Community</a>
-                    <a href="#payment" class="nav-link" data-tab="payment">Payment</a>
-                    <a href="#about" class="nav-link" data-tab="about">About Us</a>
-                </nav>
-                
-                <div class="header-actions">
-                    <div class="cart-icon" onclick="toggleCart()">
-                        <i class="fas fa-shopping-cart fa-lg"></i>
-                        <div class="cart-count" id="cartCount">0</div>
-                    </div>
-                    <button class="btn" onclick="toggleLogin()" id="loginBtn">
-                        <i class="fas fa-user"></i> Login
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Home Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <h1 class="editable" data-id="hero-title">
-                <span class="edit-indicator">✏️</span>
-                Welcome to The Definitive Word
-            </h1>
-            <p class="editable" data-id="hero-subtitle">
-                <span class="edit-indicator">✏️</span>
-                South Africa's premier destination for quality ebooks and exceptional reading experiences
-            </p>
-            <div style="margin-top: 35px;">
-                <a href="#books" class="btn">
-                    <i class="fas fa-gem"></i>
-                    Browse Books
-                </a>
-                <a href="#blog" class="btn btn-secondary">
-                    <i class="fas fa-blog"></i>
-                    Read Our Blog
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Books Section -->
-    <section id="books" class="section books-section">
-        <div class="container">
-            <h2 class="section-title editable" data-id="books-title">
-                <span class="edit-indicator">✏️</span>
-                Featured Ebooks
-            </h2>
-            <p class="section-subtitle editable" data-id="books-subtitle">
-                <span class="edit-indicator">✏️</span>
-                Discover our curated collection of exceptional reads from South African and international authors
-            </p>
-            
-            <div class="books-grid" id="booksGrid">
-                <!-- Books will be loaded here -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Blog Section -->
-    <section id="blog" class="section blog-section">
-        <div class="container">
-            <h2 class="section-title editable" data-id="blog-title">
-                <span class="edit-indicator">✏️</span>
-                Our Blog
-            </h2>
-            <p class="section-subtitle editable" data-id="blog-subtitle">
-                <span class="edit-indicator">✏️</span>
-                Insights, author interviews, reading recommendations, and literary discussions
-            </p>
-            
-            <div class="blog-container">
-                <div class="blog-posts" id="blogPosts">
-                    <!-- Blog posts will be loaded here -->
-                </div>
-                
-                <div class="blog-sidebar">
-                    <div class="sidebar-widget">
-                        <h3 class="widget-title editable" data-id="categories-title">
-                            <span class="edit-indicator">✏️</span>
-                            Categories
-                        </h3>
-                        <ul class="categories-list" id="categoriesList">
-                            <!-- Categories will be loaded here -->
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Context Menu -->
-    <div class="context-menu" id="contextMenu">
-        <div class="context-menu-item" onclick="editElement()">
-            <i class="fas fa-edit"></i>
-            <span>Edit Content</span>
-        </div>
-        <div class="context-menu-item" onclick="toggleEditMode()">
-            <i class="fas fa-magic"></i>
-            <span id="toggleEditText">Enable Edit Mode</span>
-        </div>
-        <div class="context-menu-item" onclick="saveAllContent()">
-            <i class="fas fa-save"></i>
-            <span>Save Changes</span>
-        </div>
-        <div class="context-menu-item" onclick="resetToDefault()">
-            <i class="fas fa-undo"></i>
-            <span>Reset to Default</span>
-        </div>
-    </div>
-
-    <!-- Edit Modal -->
-    <div class="edit-modal" id="editModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="editModalTitle">Edit Content</h2>
-                <button class="close-modal" onclick="closeEditModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <textarea id="editModalTextarea"></textarea>
-            </div>
-            <div class="modal-footer">
-                <button class="modal-btn secondary" onclick="closeEditModal()">Cancel</button>
-                <button class="modal-btn primary" onclick="saveEdit()">Save Changes</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification -->
-    <div class="notification" id="notification"></div>
+    <!-- ... (keep all existing HTML exactly as it is) ... -->
 
     <script>
-        // Global variables
-        let currentEditingElement = null;
-        let editMode = false;
-        let cart = [];
-        let currentUser = null;
-        let clickTimer = null;
-        let contextMenuElement = null;
+        // ... (keep all existing JavaScript code exactly as it is until the sample data section) ...
 
-        // Sample data
+        // Enhanced sample data with icon support
         const sampleBooks = [
             {
                 id: 1,
@@ -884,7 +89,8 @@
                 price: 249.99,
                 image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
                 badge: "Bestseller",
-                description: "A psychological thriller that explores the depths of human consciousness."
+                description: "A psychological thriller that explores the depths of human consciousness.",
+                icon: "fas fa-book"
             },
             {
                 id: 2,
@@ -893,7 +99,8 @@
                 price: 299.99,
                 image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
                 badge: "New",
-                description: "How technology is reshaping our world and what it means for the future."
+                description: "How technology is reshaping our world and what it means for the future.",
+                icon: "fas fa-laptop"
             },
             {
                 id: 3,
@@ -902,414 +109,440 @@
                 price: 349.99,
                 image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
                 badge: "Popular",
-                description: "Essential strategies for entrepreneurial success in the modern economy."
+                description: "Essential strategies for entrepreneurial success in the modern economy.",
+                icon: "fas fa-chart-line"
+            },
+            {
+                id: 4,
+                title: "African Skies",
+                author: "Tendai Moyo", 
+                price: 279.99,
+                image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                badge: "Local Author",
+                description: "A captivating novel set against the backdrop of contemporary South Africa.",
+                icon: "fas fa-globe-africa"
+            },
+            {
+                id: 5,
+                title: "Mindful Living",
+                author: "James Wilson", 
+                price: 229.99,
+                image: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                badge: "",
+                description: "Practical techniques for finding peace and purpose in a busy world.",
+                icon: "fas fa-spa"
+            },
+            {
+                id: 6,
+                title: "Culinary Journey",
+                author: "Maria Rodriguez", 
+                price: 319.99,
+                image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                badge: "Featured",
+                description: "Explore world cuisines with these delicious and accessible recipes.",
+                icon: "fas fa-utensils"
             }
         ];
 
-        // Initialize the application
-        function initApp() {
-            loadAllContent();
-            displayBooks();
-            setupNavigation();
-            setupEditInteractions();
-            loadCart();
-            updateCartDisplay();
-            showNotification('💡 Pro Tip: Double-click any text to edit, or right-click for editing options');
-        }
+        // Ministry books data with icons
+        const ministryBooks = [
+            {
+                id: 101,
+                title: "The Path to Spiritual Maturity",
+                author: "Dr. Michael Johnson", 
+                price: 299.99,
+                image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "A comprehensive guide to deepening your spiritual walk.",
+                icon: "fas fa-pray"
+            },
+            {
+                id: 102,
+                title: "Prayer That Changes Everything",
+                author: "Sarah Williams",
+                price: 249.99,
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Discover the power of prayer and how to develop a consistent prayer life.",
+                icon: "fas fa-hands-praying"
+            },
+            {
+                id: 103,
+                title: "Biblical Leadership Principles",
+                author: "Pastor David Chen", 
+                price: 349.99,
+                image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Learn leadership skills and wisdom from the Bible.",
+                icon: "fas fa-user-tie"
+            },
+            {
+                id: 104,
+                title: "Healing from Within",
+                author: "Dr. Rebecca Martinez", 
+                price: 279.99,
+                image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "A Christian approach to emotional healing and overcoming past trauma.",
+                icon: "fas fa-heart-circle-plus"
+            },
+            {
+                id: 105,
+                title: "The Generous Life",
+                author: "Financial Ministry Team", 
+                price: 229.99,
+                image: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Biblical principles for financial stewardship and generosity.",
+                icon: "fas fa-hand-holding-heart"
+            },
+            {
+                id: 106,
+                title: "Family Foundations",
+                author: "The Relationship Coaches", 
+                price: 319.99,
+                image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Building strong Christian families through biblical values.",
+                icon: "fas fa-house-chimney-heart"
+            }
+        ];
 
-        // Setup edit interactions (double-click and right-click)
+        // Available icons for easy selection
+        const availableIcons = [
+            'fas fa-book', 'fas fa-gem', 'fas fa-laptop', 'fas fa-chart-line', 
+            'fas fa-globe-africa', 'fas fa-spa', 'fas fa-utensils', 'fas fa-pray',
+            'fas fa-hands-praying', 'fas fa-user-tie', 'fas fa-heart-circle-plus',
+            'fas fa-hand-holding-heart', 'fas fa-house-chimney-heart', 'fas fa-cross',
+            'fas fa-bible', 'fas fa-hands-helping', 'fas fa-users', 'fas fa-seedling',
+            'fas fa-graduation-cap', 'fas fa-heart', 'fas fa-star', 'fas fa-award',
+            'fas fa-lightbulb', 'fas fa-compass', 'fas fa-shield-heart', 'fas fa-dove'
+        ];
+
+        // Enhanced setup edit interactions to include prices and icons
         function setupEditInteractions() {
-            // Setup for all editable elements
-            document.querySelectorAll('.editable').forEach(element => {
-                // Double-click to edit
-                element.addEventListener('dblclick', function(e) {
+            // Double-click to edit
+            document.addEventListener('dblclick', function(e) {
+                if (!editMode) return;
+                
+                const editable = e.target.closest('.editable');
+                if (editable) {
                     e.preventDefault();
                     e.stopPropagation();
-                    
-                    if (editMode) {
-                        openEditModal(this);
-                    } else {
-                        toggleEditMode();
-                        openEditModal(this);
-                    }
-                });
+                    openEditModal(editable);
+                }
                 
-                // Right-click for context menu
-                element.addEventListener('contextmenu', function(e) {
+                // Check if it's a price element
+                const priceElement = e.target.closest('.price-editable');
+                if (priceElement) {
                     e.preventDefault();
                     e.stopPropagation();
-                    
-                    contextMenuElement = this;
-                    showContextMenu(e);
-                });
+                    editPrice(priceElement);
+                }
                 
-                // Show tooltip on hover
-                element.addEventListener('mouseenter', function(e) {
-                    showQuickEditTooltip(e, this);
-                });
-                
-                element.addEventListener('mouseleave', function() {
-                    hideQuickEditTooltip();
-                });
-            });
-            
-            // Setup for navigation tabs
-            document.querySelectorAll('.nav-link').forEach(tab => {
-                // Double-click to edit tab name
-                tab.addEventListener('dblclick', function(e) {
+                // Check if it's an icon element
+                const iconElement = e.target.closest('.icon-editable');
+                if (iconElement) {
                     e.preventDefault();
                     e.stopPropagation();
-                    
-                    if (editMode) {
-                        editTabName(this);
-                    } else {
-                        toggleEditMode();
-                        editTabName(this);
-                    }
-                });
-                
-                // Right-click for context menu
-                tab.addEventListener('contextmenu', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    contextMenuElement = this;
-                    showContextMenu(e);
-                });
-                
-                // Show tooltip on hover
-                tab.addEventListener('mouseenter', function(e) {
-                    showQuickEditTooltip(e, this);
-                });
-                
-                tab.addEventListener('mouseleave', function() {
-                    hideQuickEditTooltip();
-                });
-            });
-            
-            // Close context menu when clicking elsewhere
-            document.addEventListener('click', function() {
-                hideContextMenu();
-            });
-            
-            // Handle escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    hideContextMenu();
-                    closeEditModal();
+                    editIcon(iconElement);
                 }
             });
+
+            // ... (keep the rest of the existing setupEditInteractions code) ...
         }
 
-        // Show context menu
-        function showContextMenu(event) {
-            const contextMenu = document.getElementById('contextMenu');
-            const toggleEditText = document.getElementById('toggleEditText');
+        // Function to edit price
+        function editPrice(priceElement) {
+            const currentPrice = priceElement.textContent.replace('R', '').trim();
+            const newPrice = prompt('Enter new price (e.g., 249.99):', currentPrice);
             
-            // Update context menu text based on current mode
-            toggleEditText.textContent = editMode ? 'Disable Edit Mode' : 'Enable Edit Mode';
-            
-            // Position context menu
-            contextMenu.style.left = event.pageX + 'px';
-            contextMenu.style.top = event.pageY + 'px';
-            contextMenu.classList.add('active');
-        }
-
-        // Hide context menu
-        function hideContextMenu() {
-            const contextMenu = document.getElementById('contextMenu');
-            contextMenu.classList.remove('active');
-            contextMenuElement = null;
-        }
-
-        // Edit current element (from context menu)
-        function editElement() {
-            if (contextMenuElement) {
-                if (contextMenuElement.classList.contains('nav-link')) {
-                    editTabName(contextMenuElement);
-                } else {
-                    openEditModal(contextMenuElement);
-                }
-            }
-            hideContextMenu();
-        }
-
-        // Toggle edit mode
-        function toggleEditMode() {
-            editMode = !editMode;
-            document.body.classList.toggle('edit-mode-on', editMode);
-            
-            const indicator = document.getElementById('editModeIndicator');
-            if (editMode) {
-                indicator.classList.add('active');
-                showNotification('✏️ Edit Mode Enabled: Double-click any text to edit, right-click for options');
-            } else {
-                indicator.classList.remove('active');
-                showNotification('✅ Edit Mode Disabled');
-            }
-            
-            hideContextMenu();
-        }
-
-        // Edit tab name
-        function editTabName(tabElement) {
-            const currentText = tabElement.textContent;
-            const tabType = tabElement.getAttribute('data-tab');
-            
-            const newName = prompt(`Edit "${tabType}" tab name:`, currentText);
-            if (newName && newName.trim() !== '') {
-                tabElement.textContent = newName;
-                saveTabContent(tabType, newName);
-                showNotification(`✅ "${tabType}" tab renamed to "${newName}"`);
-            }
-        }
-
-        // Save tab content
-        function saveTabContent(tabId, content) {
-            const savedTabs = JSON.parse(localStorage.getItem('websiteTabs')) || {};
-            savedTabs[tabId] = content;
-            localStorage.setItem('websiteTabs', JSON.stringify(savedTabs));
-        }
-
-        // Load tab content
-        function loadTabContent() {
-            const savedTabs = JSON.parse(localStorage.getItem('websiteTabs')) || {};
-            document.querySelectorAll('.nav-link').forEach(tab => {
-                const tabId = tab.getAttribute('data-tab');
-                if (savedTabs[tabId]) {
-                    tab.textContent = savedTabs[tabId];
-                }
-            });
-        }
-
-        // Show quick edit tooltip
-        function showQuickEditTooltip(event, element) {
-            if (editMode) {
-                const tooltip = document.getElementById('quickEditTooltip');
-                const rect = element.getBoundingClientRect();
+            if (newPrice && !isNaN(parseFloat(newPrice))) {
+                priceElement.textContent = `R${parseFloat(newPrice).toFixed(2)}`;
                 
-                tooltip.style.left = (rect.left + rect.width / 2) + 'px';
-                tooltip.style.top = (rect.top - 40) + 'px';
-                tooltip.classList.add('show');
-            }
-        }
-
-        // Hide quick edit tooltip
-        function hideQuickEditTooltip() {
-            const tooltip = document.getElementById('quickEditTooltip');
-            tooltip.classList.remove('show');
-        }
-
-        // Setup navigation
-        function setupNavigation() {
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    if (!editMode) {
-                        e.preventDefault();
-                        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                        this.classList.add('active');
-                        
-                        const targetId = this.getAttribute('href').substring(1);
-                        const targetSection = document.getElementById(targetId);
-                        
-                        if (targetSection) {
-                            window.scrollTo({
-                                top: targetSection.offsetTop - 80,
-                                behavior: 'smooth'
-                            });
-                        }
-                    }
-                });
-            });
-
-            window.addEventListener('scroll', function() {
-                if (!editMode) {
-                    const sections = document.querySelectorAll('.section, .hero');
-                    const navLinks = document.querySelectorAll('.nav-link');
-                    
-                    let current = '';
-                    sections.forEach(section => {
-                        const sectionTop = section.offsetTop;
-                        if (scrollY >= (sectionTop - 120)) {
-                            current = section.getAttribute('id');
-                        }
-                    });
-
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === current) {
-                            link.classList.add('active');
-                        }
-                    });
-                }
-            });
-        }
-
-        // Open edit modal
-        function openEditModal(element) {
-            currentEditingElement = element;
-            const currentText = element.textContent.replace('✏️', '').trim();
-            document.getElementById('editModalTitle').textContent = 'Edit Content';
-            document.getElementById('editModalTextarea').value = currentText;
-            document.getElementById('editModal').classList.add('active');
-            document.getElementById('editModalTextarea').focus();
-        }
-
-        // Save edit
-        function saveEdit() {
-            if (currentEditingElement) {
-                const newText = document.getElementById('editModalTextarea').value;
-                currentEditingElement.innerHTML = '<span class="edit-indicator">✏️</span> ' + newText;
+                // Update the data in our arrays
+                updatePriceInData(priceElement.closest('.book-card, .ministry-book-card'), parseFloat(newPrice));
                 saveAllContent();
-                closeEditModal();
-                showNotification('✅ Changes saved successfully!');
+                showNotification('Price updated successfully!');
+            } else if (newPrice !== null) {
+                showNotification('Please enter a valid price');
             }
         }
 
-        // Close edit modal
-        function closeEditModal() {
-            document.getElementById('editModal').classList.remove('active');
-            currentEditingElement = null;
-        }
-
-        // Save all content
-        function saveAllContent() {
-            const content = {};
-            document.querySelectorAll('.editable').forEach(element => {
-                const id = element.getAttribute('data-id');
-                const text = element.textContent.replace('✏️', '').trim();
-                content[id] = text;
-            });
-            localStorage.setItem('websiteContent', JSON.stringify(content));
-            showNotification('💾 All changes saved successfully!');
-        }
-
-        // Load all content
-        function loadAllContent() {
-            const saved = localStorage.getItem('websiteContent');
-            if (saved) {
-                const content = JSON.parse(saved);
-                document.querySelectorAll('.editable').forEach(element => {
-                    const id = element.getAttribute('data-id');
-                    if (content[id]) {
-                        element.innerHTML = '<span class="edit-indicator">✏️</span> ' + content[id];
-                    }
-                });
+        // Function to update price in data arrays
+        function updatePriceInData(element, newPrice) {
+            const bookTitle = element.querySelector('.book-title, h4').textContent;
+            
+            // Find book in sampleBooks
+            let book = sampleBooks.find(b => b.title === bookTitle);
+            if (book) {
+                book.price = newPrice;
+                return;
             }
             
-            loadTabContent();
-        }
-
-        // Reset to default
-        function resetToDefault() {
-            if (confirm('Are you sure you want to reset all content to original? This cannot be undone.')) {
-                localStorage.removeItem('websiteContent');
-                localStorage.removeItem('websiteTabs');
-                localStorage.removeItem('cart');
-                location.reload();
+            // Find book in ministryBooks
+            book = ministryBooks.find(b => b.title === bookTitle);
+            if (book) {
+                book.price = newPrice;
+                return;
             }
-            hideContextMenu();
+            
+            // Update program prices
+            const programTitle = element.querySelector('h3')?.textContent;
+            if (programTitle && element.closest('.program-card')) {
+                // This would update program prices - you can extend this as needed
+                showNotification('Program price updated in display');
+            }
         }
 
-        // Display books
-        function displayBooks() {
-            const grid = document.getElementById('booksGrid');
-            grid.innerHTML = '';
+        // Function to edit icon
+        function editIcon(iconElement) {
+            const currentIcon = iconElement.className;
+            openIconSelector(iconElement);
+        }
 
+        // Function to open icon selector modal
+        function openIconSelector(iconElement) {
+            // Create icon selector modal
+            const modal = document.createElement('div');
+            modal.className = 'edit-modal active';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Select Icon</h2>
+                        <button class="close-modal" onclick="closeIconSelector()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="icon-selector" id="iconSelector">
+                            ${availableIcons.map(icon => `
+                                <div class="icon-option" data-icon="${icon}">
+                                    <i class="${icon} fa-2x"></i>
+                                    <div style="font-size: 0.8rem; margin-top: 5px;">${icon.replace('fas fa-', '')}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="modal-btn secondary" onclick="closeIconSelector()">Cancel</button>
+                        <button class="modal-btn primary" onclick="saveIcon()">Save Icon</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Store reference to the icon element being edited
+            window.currentIconElement = iconElement;
+            
+            // Add click handlers for icon options
+            document.querySelectorAll('.icon-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.icon-option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    window.selectedIcon = this.getAttribute('data-icon');
+                });
+            });
+        }
+
+        // Function to close icon selector
+        function closeIconSelector() {
+            const modal = document.querySelector('.edit-modal');
+            if (modal) {
+                modal.remove();
+            }
+            window.currentIconElement = null;
+            window.selectedIcon = null;
+        }
+
+        // Function to save selected icon
+        function saveIcon() {
+            if (window.currentIconElement && window.selectedIcon) {
+                // Update the icon class
+                window.currentIconElement.className = `icon-editable ${window.selectedIcon}`;
+                
+                // Update the data in our arrays
+                updateIconInData(window.currentIconElement, window.selectedIcon);
+                saveAllContent();
+                showNotification('Icon updated successfully!');
+            }
+            closeIconSelector();
+        }
+
+        // Function to update icon in data arrays
+        function updateIconInData(iconElement, newIcon) {
+            const card = iconElement.closest('.book-card, .ministry-book-card, .ministry-feature, .program-card');
+            if (!card) return;
+            
+            const title = card.querySelector('.book-title, h3, h4')?.textContent;
+            if (!title) return;
+            
+            // Find in sampleBooks
+            let item = sampleBooks.find(b => b.title === title);
+            if (item) {
+                item.icon = newIcon;
+                return;
+            }
+            
+            // Find in ministryBooks
+            item = ministryBooks.find(b => b.title === title);
+            if (item) {
+                item.icon = newIcon;
+                return;
+            }
+            
+            // Find in ministry features
+            if (card.classList.contains('ministry-feature')) {
+                // Update ministry feature icons
+                showNotification('Ministry feature icon updated in display');
+            }
+            
+            // Find in program cards
+            if (card.classList.contains('program-card')) {
+                // Update program icons
+                showNotification('Program icon updated in display');
+            }
+        }
+
+        // Enhanced display functions with editable prices and icons
+        function displayBooks() {
+            const booksGrid = document.getElementById('booksGrid');
+            booksGrid.innerHTML = '';
+            
             sampleBooks.forEach(book => {
-                const card = document.createElement('div');
-                card.className = 'book-card';
-                card.innerHTML = `
-                    ${book.badge ? `<div style="position: absolute; top: 15px; right: 15px; background: #c53030; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 2;">${book.badge}</div>` : ''}
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                bookCard.innerHTML = `
                     <div class="book-cover">
                         <img src="${book.image}" alt="${book.title}">
                     </div>
                     <div class="book-info">
                         <h3 class="book-title">${book.title}</h3>
                         <p class="book-author">by ${book.author}</p>
-                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">${book.description}</p>
+                        <p class="book-description">${book.description}</p>
                         <div class="book-price">
-                            <span class="price">R${book.price.toFixed(2)}</span>
-                            <button class="btn" onclick="addToCart(${book.id})" style="padding: 10px 20px; font-size: 0.9rem;">
-                                <i class="fas fa-cart-plus"></i>
-                                Add to Cart
+                            <span class="price price-editable">R${book.price.toFixed(2)}</span>
+                            <button class="btn" onclick="addToCart(${book.id})">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
                             </button>
                         </div>
                     </div>
                 `;
-                grid.appendChild(card);
+                booksGrid.appendChild(bookCard);
             });
         }
 
-        // Cart functionality
+        // Enhanced display ministry books with editable prices
+        function displayMinistryBooks() {
+            const ministryBooksTrack = document.getElementById('ministryBooksTrack');
+            ministryBooksTrack.innerHTML = '';
+            
+            ministryBooks.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'ministry-book-card';
+                bookCard.innerHTML = `
+                    <div class="book-cover-small">
+                        <img src="${book.image}" alt="${book.title}">
+                    </div>
+                    <h4>${book.title}</h4>
+                    <p>by ${book.author}</p>
+                    <p class="book-description">${book.description}</p>
+                    <div class="book-price-small price-editable">R${book.price.toFixed(2)}</div>
+                    <button class="btn" style="width: 100%; padding: 10px;" onclick="addToCart(${book.id})">
+                        <i class="fas fa-cart-plus"></i> Add to Cart
+                    </button>
+                `;
+                ministryBooksTrack.appendChild(bookCard);
+            });
+        }
+
+        // Enhanced ministry features with editable icons
+        function initMinistrySection() {
+            displayMinistryBooks();
+            setupMinistryIcons();
+        }
+
+        // Setup ministry section icons to be editable
+        function setupMinistryIcons() {
+            // Make ministry feature icons editable
+            document.querySelectorAll('.ministry-feature i').forEach(icon => {
+                icon.classList.add('icon-editable');
+            });
+            
+            // Make program card icons editable
+            document.querySelectorAll('.program-header i').forEach(icon => {
+                icon.classList.add('icon-editable');
+            });
+        }
+
+        // Enhanced add to cart to use updated prices
         function addToCart(bookId) {
-            const book = sampleBooks.find(b => b.id === bookId);
+            const allBooks = [...sampleBooks, ...ministryBooks];
+            const book = allBooks.find(b => b.id === bookId);
             if (book) {
                 const existingItem = cart.find(item => item.id === bookId);
+                
                 if (existingItem) {
                     existingItem.quantity += 1;
                 } else {
                     cart.push({
-                        id: book.id,
-                        title: book.title,
-                        price: book.price,
-                        image: book.image,
+                        ...book,
                         quantity: 1
                     });
                 }
+                
                 saveCart();
                 updateCartDisplay();
-                showNotification(`🛒 Added "${book.title}" to cart!`);
+                showNotification(`"${book.title}" added to cart!`);
             }
         }
 
+        // Enhanced update cart display to show current prices
         function updateCartDisplay() {
             const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            // Update cart count
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             cartCount.textContent = totalItems;
-        }
-
-        function saveCart() {
-            localStorage.setItem('cart', JSON.stringify(cart));
-        }
-
-        function loadCart() {
-            const savedCart = localStorage.getItem('cart');
-            if (savedCart) {
-                cart = JSON.parse(savedCart);
-            }
-        }
-
-        // Utility functions
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
             
-            if (message.includes('✅') || message.includes('saved') || message.includes('Enabled')) {
-                notification.style.background = '#38a169';
-            } else if (message.includes('🛒')) {
-                notification.style.background = '#d69e2e';
-            } else {
-                notification.style.background = '#d69e2e';
-            }
+            // Update cart items
+            cartItems.innerHTML = '';
+            let total = 0;
             
-            notification.className = 'notification show';
-            setTimeout(() => {
-                notification.className = 'notification';
-            }, 4000);
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="cart-item-details">
+                        <div class="cart-item-title">${item.title}</div>
+                        <div class="cart-item-author">by ${item.author}</div>
+                        <div class="cart-item-price">R${item.price.toFixed(2)} × ${item.quantity}</div>
+                    </div>
+                    <button class="cart-item-remove" onclick="removeFromCart(${item.id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+            
+            // Update total
+            cartTotal.textContent = `R${total.toFixed(2)}`;
         }
 
-        // Placeholder functions for other features
-        function toggleCart() {
-            showNotification('Cart functionality would open here');
+        // Enhanced initialization
+        function initApp() {
+            loadAllContent();
+            displayBooks();
+            setupNavigation();
+            setupEditInteractions();
+            loadCart();
+            loadCommunityData();
+            loadBlogData();
+            initMinistrySection();
+            updateCartDisplay();
+            showNotification('💡 Pro Tip: Double-click any price to edit it, or double-click icons to change them');
         }
 
-        function toggleLogin() {
-            showNotification('Login modal would open here');
-        }
-
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', initApp);
+        // ... (keep all other existing JavaScript functions exactly as they are) ...
     </script>
 </body>
 </html>
