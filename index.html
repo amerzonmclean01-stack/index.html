@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Definitive Word - AI-Powered Ebook Store</title>
+    <title>The Definitive Word - Premium AI Ebook Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -17,6 +17,8 @@
             --ai-purple: #7c3aed;
             --ai-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
             --ai-glow: 0 0 20px rgba(79, 70, 229, 0.3);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -27,8 +29,8 @@
         }
 
         body {
-            background: #0f172a;
-            color: #e2e8f0;
+            background: #ffffff;
+            color: #2d3748;
             line-height: 1.6;
             overflow-x: hidden;
         }
@@ -42,9 +44,8 @@
 
         /* Header Styles */
         header {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: white;
+            box-shadow: var(--shadow);
             position: fixed;
             top: 0;
             left: 0;
@@ -65,13 +66,12 @@
             gap: 10px;
             font-size: 1.8rem;
             font-weight: 700;
-            background: var(--ai-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
         }
 
         .logo i {
             font-size: 2rem;
+            color: var(--ai-blue);
         }
 
         .nav-main {
@@ -80,7 +80,7 @@
         }
 
         .nav-main a {
-            color: #cbd5e1;
+            color: #4a5568;
             text-decoration: none;
             font-weight: 600;
             padding: 8px 16px;
@@ -90,8 +90,8 @@
         }
 
         .nav-main a:hover, .nav-main a.active {
-            color: white;
-            background: rgba(79, 70, 229, 0.1);
+            color: var(--ai-blue);
+            background: rgba(79, 70, 229, 0.05);
         }
 
         .nav-main a.active::after {
@@ -137,10 +137,12 @@
             padding: 10px;
             border-radius: 8px;
             transition: background 0.3s ease;
+            color: #4a5568;
         }
 
         .cart-icon:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(79, 70, 229, 0.05);
+            color: var(--ai-blue);
         }
 
         .cart-count {
@@ -161,7 +163,7 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             padding: 150px 0 100px;
             position: relative;
             overflow: hidden;
@@ -175,9 +177,8 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(214, 158, 46, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 20% 80%, rgba(79, 70, 229, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
             z-index: 1;
         }
 
@@ -190,18 +191,16 @@
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 20px;
-            background: linear-gradient(to right, #e2e8f0, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
             line-height: 1.1;
         }
 
         .hero p {
             font-size: 1.3rem;
-            color: #94a3b8;
+            color: #4a5568;
             margin-bottom: 40px;
             max-width: 700px;
             margin-left: auto;
@@ -241,21 +240,20 @@
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: white;
+            color: var(--ai-blue);
+            border: 2px solid var(--ai-blue);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(79, 70, 229, 0.05);
             transform: translateY(-3px);
         }
 
         /* AI Features Section */
         .ai-features {
             padding: 100px 0;
-            background: #1e293b;
+            background: white;
         }
 
         .section-title {
@@ -267,13 +265,11 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 15px;
-            background: linear-gradient(to right, #e2e8f0, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
         }
 
         .section-title p {
-            color: #94a3b8;
+            color: #4a5568;
             font-size: 1.2rem;
             max-width: 600px;
             margin: 0 auto;
@@ -286,10 +282,11 @@
         }
 
         .feature-card {
-            background: rgba(30, 41, 59, 0.7);
+            background: white;
             border-radius: 15px;
             padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #e2e8f0;
+            box-shadow: var(--shadow);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -307,7 +304,7 @@
 
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-lg);
             border-color: rgba(79, 70, 229, 0.3);
         }
 
@@ -327,18 +324,18 @@
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 15px;
-            color: #e2e8f0;
+            color: var(--primary);
         }
 
         .feature-card p {
-            color: #94a3b8;
+            color: #4a5568;
             margin-bottom: 20px;
         }
 
         /* Books Section */
         .books-section {
             padding: 100px 0;
-            background: #0f172a;
+            background: #f8fafc;
         }
 
         .books-header {
@@ -354,9 +351,9 @@
         }
 
         .filter-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: #cbd5e1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: white;
+            color: #4a5568;
+            border: 1px solid #e2e8f0;
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
@@ -376,17 +373,18 @@
         }
 
         .book-card {
-            background: rgba(30, 41, 59, 0.7);
+            background: white;
             border-radius: 15px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #e2e8f0;
+            box-shadow: var(--shadow);
             transition: all 0.3s ease;
             position: relative;
         }
 
         .book-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-lg);
             border-color: rgba(79, 70, 229, 0.3);
         }
 
@@ -428,17 +426,17 @@
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 8px;
-            color: #e2e8f0;
+            color: var(--primary);
         }
 
         .book-author {
-            color: #94a3b8;
+            color: #718096;
             margin-bottom: 15px;
             font-size: 0.9rem;
         }
 
         .book-description {
-            color: #cbd5e1;
+            color: #4a5568;
             font-size: 0.9rem;
             margin-bottom: 20px;
             line-height: 1.5;
@@ -453,7 +451,7 @@
         .book-price {
             font-size: 1.3rem;
             font-weight: 700;
-            color: #e2e8f0;
+            color: var(--primary);
         }
 
         .add-to-cart {
@@ -475,6 +473,127 @@
             box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
         }
 
+        /* Ministry Section */
+        .ministry-section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .ministry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .ministry-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .ministry-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .ministry-icon {
+            width: 100%;
+            height: 200px;
+            background: var(--ai-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .ministry-content {
+            padding: 25px;
+        }
+
+        .ministry-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .ministry-content p {
+            color: #4a5568;
+            margin-bottom: 20px;
+        }
+
+        /* Dashboard Section */
+        .dashboard {
+            padding: 100px 0;
+            background: #f8fafc;
+        }
+
+        .dashboard-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .dashboard-tab {
+            background: none;
+            border: none;
+            color: #718096;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .dashboard-tab.active {
+            color: var(--ai-blue);
+            background: rgba(79, 70, 229, 0.1);
+        }
+
+        .dashboard-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+            box-shadow: var(--shadow);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: var(--ai-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
         /* AI Assistant */
         .ai-assistant {
             position: fixed;
@@ -482,11 +601,10 @@
             right: 30px;
             width: 400px;
             height: 600px;
-            background: rgba(30, 41, 59, 0.95);
-            backdrop-filter: blur(10px);
+            background: white;
             border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid #e2e8f0;
+            box-shadow: var(--shadow-lg);
             z-index: 1000;
             display: flex;
             flex-direction: column;
@@ -550,31 +668,32 @@
         }
 
         .ai-message.bot {
-            background: rgba(255, 255, 255, 0.1);
-            color: #e2e8f0;
+            background: #f7fafc;
+            color: #4a5568;
             align-self: flex-start;
             border-bottom-left-radius: 5px;
+            border: 1px solid #e2e8f0;
         }
 
         .ai-input {
             padding: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid #e2e8f0;
             display: flex;
             gap: 10px;
         }
 
         .ai-input input {
             flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 10px;
             padding: 12px 15px;
-            color: white;
+            color: #2d3748;
             outline: none;
         }
 
         .ai-input input:focus {
-            border-color: rgba(79, 70, 229, 0.5);
+            border-color: var(--ai-blue);
         }
 
         .ai-send {
@@ -595,77 +714,94 @@
             transform: scale(1.05);
         }
 
-        /* Dashboard */
-        .dashboard {
-            padding: 100px 0;
-            background: #1e293b;
-        }
-
-        .dashboard-tabs {
+        /* Login Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
             display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 10px;
+            align-items: center;
+            justify-content: center;
+            z-index: 1100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
 
-        .dashboard-tab {
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .modal-close {
             background: none;
             border: none;
-            color: #94a3b8;
-            padding: 10px 20px;
-            border-radius: 8px;
+            font-size: 1.5rem;
+            color: #718096;
             cursor: pointer;
-            transition: all 0.3s ease;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5568;
             font-weight: 600;
         }
 
-        .dashboard-tab.active {
-            color: white;
-            background: rgba(79, 70, 229, 0.2);
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
-        .dashboard-content {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 15px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: rgba(15, 23, 42, 0.5);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            background: var(--ai-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .stat-label {
-            color: #94a3b8;
-            font-size: 0.9rem;
+        .form-control:focus {
+            border-color: var(--ai-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
         }
 
         /* Footer */
         footer {
-            background: #0f172a;
+            background: var(--primary);
             padding: 60px 0 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
         }
 
         .footer-content {
@@ -678,7 +814,7 @@
         .footer-column h3 {
             font-size: 1.2rem;
             margin-bottom: 20px;
-            color: #e2e8f0;
+            color: white;
         }
 
         .footer-column ul {
@@ -690,13 +826,13 @@
         }
 
         .footer-column a {
-            color: #94a3b8;
+            color: #cbd5e0;
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         .footer-column a:hover {
-            color: #e2e8f0;
+            color: white;
         }
 
         .social-links {
@@ -711,9 +847,9 @@
             justify-content: center;
             width: 40px;
             height: 40px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            color: #94a3b8;
+            color: #cbd5e0;
             transition: all 0.3s ease;
         }
 
@@ -727,7 +863,7 @@
             text-align: center;
             padding-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #94a3b8;
+            color: #cbd5e0;
             font-size: 0.9rem;
         }
 
@@ -830,8 +966,8 @@
                     <a href="#home" class="active">Home</a>
                     <a href="#features">AI Features</a>
                     <a href="#books">Books</a>
-                    <a href="#dashboard">Dashboard</a>
                     <a href="#ministry">Ministry</a>
+                    <a href="#dashboard">Dashboard</a>
                     <a href="#community">Community</a>
                 </nav>
                 
@@ -964,6 +1100,51 @@
         </div>
     </section>
 
+    <!-- Ministry Section -->
+    <section class="ministry-section" id="ministry">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ministry Resources</h2>
+                <p>Spiritual growth materials and ministry tools</p>
+            </div>
+            
+            <div class="ministry-grid">
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-bible"></i>
+                    </div>
+                    <div class="ministry-content">
+                        <h3>Bible Study Guides</h3>
+                        <p>Comprehensive study materials for individuals and groups, with AI-powered insights and discussion questions.</p>
+                        <a href="#" class="btn btn-primary">Explore Guides</a>
+                    </div>
+                </div>
+                
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-pray"></i>
+                    </div>
+                    <div class="ministry-content">
+                        <h3>Prayer Resources</h3>
+                        <p>Structured prayer guides, journals, and AI-assisted prayer prompts to deepen your prayer life.</p>
+                        <a href="#" class="btn btn-primary">Prayer Tools</a>
+                    </div>
+                </div>
+                
+                <div class="ministry-card">
+                    <div class="ministry-icon">
+                        <i class="fas fa-church"></i>
+                    </div>
+                    <div class="ministry-content">
+                        <h3>Ministry Training</h3>
+                        <p>Leadership development, sermon preparation, and ministry strategy resources for church leaders.</p>
+                        <a href="#" class="btn btn-primary">Training Materials</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Dashboard Section -->
     <section class="dashboard" id="dashboard">
         <div class="container">
@@ -1031,6 +1212,34 @@
         </div>
     </div>
 
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Login to Your Account</h3>
+                <button class="modal-close" id="loginClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Your password">
+                </div>
+                <div style="text-align: center; margin: 20px 0;">
+                    <p>Don't have an account? <a href="#" style="color: var(--ai-blue);">Sign up here</a></p>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" id="loginSubmit">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -1052,8 +1261,8 @@
                         <li><a href="#home">Home</a></li>
                         <li><a href="#features">AI Features</a></li>
                         <li><a href="#books">Books</a></li>
-                        <li><a href="#dashboard">Dashboard</a></li>
                         <li><a href="#ministry">Ministry</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
                         <li><a href="#community">Community</a></li>
                     </ul>
                 </div>
@@ -1194,6 +1403,8 @@
             
             // Login
             document.getElementById('loginBtn').addEventListener('click', toggleLogin);
+            document.getElementById('loginClose').addEventListener('click', toggleLogin);
+            document.getElementById('loginSubmit').addEventListener('click', performLogin);
             
             // Filter buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -1396,19 +1607,41 @@
         }
 
         function toggleLogin() {
-            if (currentUser) {
-                // Logout
-                currentUser = null;
-                document.getElementById('loginBtn').innerHTML = '<i class="fas fa-user"></i> Login';
-                showNotification('You have been logged out.');
+            const modal = document.getElementById('loginModal');
+            modal.classList.toggle('active');
+        }
+
+        function performLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (email && password) {
+                // Show loading state
+                const button = document.getElementById('loginSubmit');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    // Simulate successful login
+                    currentUser = {
+                        name: email.split('@')[0],
+                        email: email
+                    };
+                    
+                    document.getElementById('loginBtn').innerHTML = `<i class="fas fa-user-check"></i> ${currentUser.name}`;
+                    
+                    // Close modal
+                    toggleLogin();
+                    
+                    // Reset button
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    
+                    showNotification(`Welcome back, ${currentUser.name}! You now have access to all features.`);
+                }, 1500);
             } else {
-                // Simulate login
-                currentUser = {
-                    name: 'John Doe',
-                    email: 'john@example.com'
-                };
-                document.getElementById('loginBtn').innerHTML = '<i class="fas fa-user-check"></i> John';
-                showNotification('Welcome back, John!');
+                showNotification('Please enter both email and password');
             }
         }
 
@@ -1453,7 +1686,7 @@
                 color: white;
                 padding: 15px 25px;
                 border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                box-shadow: var(--shadow-lg);
                 z-index: 1001;
                 max-width: 300px;
                 animation: slideInRight 0.3s ease;
