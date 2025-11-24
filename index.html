@@ -1574,3 +1574,74 @@ const auth = async (req, res, next) => {
 }
 
 module.exports = auth
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Splitter</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        textarea { width: 100%; height: 300px; margin: 10px 0; }
+        button { padding: 10px 20px; margin: 5px; }
+        .file { background: #f0f0f0; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h2>Paste ALL Code Here:</h2>
+    <textarea id="allCode" placeholder="Paste the entire code here..."></textarea>
+    <br>
+    <button onclick="splitCode()">Split into Files</button>
+    <div id="files"></div>
+
+    <script>
+    function splitCode() {
+        const allCode = document.getElementById('allCode').value;
+        const files = {};
+        let currentFile = '';
+        let currentContent = [];
+        
+        const lines = allCode.split('\n');
+        
+        lines.forEach(line => {
+            if (line.startsWith('===') && line.endsWith('===')) {
+                if (currentFile) {
+                    files[currentFile] = currentContent.join('\n');
+                }
+                currentFile = line.replace(/===/g, '').trim();
+                currentContent = [];
+            } else {
+                currentContent.push(line);
+            }
+        });
+        
+        if (currentFile) {
+            files[currentFile] = currentContent.join('\n');
+        }
+        
+        displayFiles(files);
+    }
+    
+    function displayFiles(files) {
+        const container = document.getElementById('files');
+        container.innerHTML = '<h3>Copy each section to its file:</h3>';
+        
+        for (const [filename, content] of Object.entries(files)) {
+            const fileDiv = document.createElement('div');
+            fileDiv.className = 'file';
+            fileDiv.innerHTML = `
+                <strong>${filename}</strong>
+                <button onclick="copyText('${filename}')">Copy</button>
+                <pre>${content}</pre>
+            `;
+            container.appendChild(fileDiv);
+        }
+    }
+    
+    function copyText(filename) {
+        const content = document.querySelector(`strong:contains("${filename}")`).nextElementSibling.nextElementSibling.textContent;
+        navigator.clipboard.writeText(content).then(() => {
+            alert(`Copied ${filename}!`);
+        });
+    }
+    </script>
+</body>
+</html>
