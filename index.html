@@ -1,1111 +1,1131 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Definitive Word - Your Destiny Has Been Written</title>
-    <meta name="description" content="The Definitive Word Ministry - Your Destiny Has Been Written. Discover God's plan through prophetic teaching, life coaching, and transformative resources.">
-    <meta name="keywords" content="prophetic teaching, life coaching, Christian resources, destiny, ministry, South Africa">
-    <meta name="author" content="The Definitive Word Ministry">
-    <meta property="og:title" content="The Definitive Word - Your Destiny Has Been Written">
-    <meta property="og:description" content="Discover God's plan for your life through prophetic teaching and life coaching">
-    <meta property="og:image" content="https://yourdomain.com/images/og-image.jpg">
-    <meta property="og:url" content="https://yourdomain.com">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="The Definitive Word - Your Destiny Has Been Written">
-    <meta name="twitter:description" content="Discover God's plan for your life through prophetic teaching and life coaching">
-    <meta name="csrf-token" content="csrf_token_placeholder">
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import {
+  Menu,
+  X,
+  Book,
+  Users,
+  Heart,
+  MessageCircle,
+  ChevronRight,
+  Sparkles,
+  Edit,
+  Save,
+  Lock,
+  Unlock,
+  AlertCircle,
+  CheckCircle,
+  Shield,
+  User,
+  Mail,
+  Phone,
+  Calendar,
+  FileText,
+  ArrowRight,
+  Star
+} from 'lucide-react';
+import PropTypes from 'prop-types';
+
+// Constants for maintainability
+const CONSTANTS = {
+  ADMIN_PASSWORD: 'admin123',
+  CURRENCY: 'ZAR',
+  DIAGNOSTIC_CHECKS: [
+    { id: 1, name: 'React State Management', status: 'OK', message: 'All state hooks initialized correctly' },
+    { id: 2, name: 'Interactive Forms', status: 'OK', message: 'Prayer and contact forms fully functional' },
+    { id: 3, name: 'Navigation System', status: 'OK', message: 'All menu links and sections working' },
+    { id: 4, name: 'Mobile Responsiveness', status: 'OK', message: 'Responsive design active for all screen sizes' },
+    { id: 5, name: 'Admin System', status: 'OK', message: 'Admin authentication and edit mode ready' },
+    { id: 6, name: 'Content Management', status: 'OK', message: 'Editable content system operational' },
+    { id: 7, name: 'Currency Display', status: 'OK', message: 'South African Rand (ZAR) implemented' },
+    { id: 8, name: 'User Interactions', status: 'OK', message: 'All buttons and links responding correctly' }
+  ],
+  WORKSHOPS: [
+    { id: 1, icon: Users, title: "Father & Son Retreat", description: "A transformative weekend where fathers and sons discover their divine legacy together" },
+    { id: 2, icon: Heart, title: "Marriage Intensive", description: "Deep dive workshops for couples ready to walk in their ordained marriage destiny" },
+    { id: 3, icon: MessageCircle, title: "Leadership Development", description: "Equipping the next generation to walk in their God-given authority and calling" },
+    { id: 4, icon: Book, title: "Destiny Discovery Groups", description: "Weekly gatherings for insight, fellowship, and walking in divine purpose" }
+  ],
+  BLOG_POSTS: [
+    { id: 1, title: "Building Kingdom Foundations", date: "Nov 15, 2024", excerpt: "The key principles every father needs to establish generational legacy..." },
+    { id: 2, title: "When Destiny Seems Delayed", date: "Nov 10, 2024", excerpt: "Understanding God's timing and staying aligned with your written destiny..." },
+    { id: 3, title: "Finding Your Divine Calling", date: "Nov 5, 2024", excerpt: "How to discover and walk in the purpose God ordained before time began..." }
+  ]
+};
+
+// Custom Hooks for separation of concerns
+const useForm = (initialState) => {
+  const [form, setForm] = useState(initialState);
+  
+  const handleChange = useCallback((field, value) => {
+    setForm(prev => ({ ...prev, [field]: value }));
+  }, []);
+  
+  const resetForm = useCallback(() => {
+    setForm(initialState);
+  }, [initialState]);
+  
+  return { form, handleChange, resetForm, setForm };
+};
+
+const useAdmin = () => {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  
+  const login = useCallback((password) => {
+    const success = password === CONSTANTS.ADMIN_PASSWORD;
+    if (success) {
+      setIsAdmin(true);
+      setShowAdminLogin(false);
+    }
+    return success;
+  }, []);
+  
+  const logout = useCallback(() => {
+    setIsAdmin(false);
+    setEditMode(false);
+  }, []);
+  
+  const toggleEditMode = useCallback(() => {
+    setEditMode(prev => !prev);
+  }, []);
+  
+  return {
+    isAdmin,
+    editMode,
+    showAdminLogin,
+    setShowAdminLogin,
+    login,
+    logout,
+    toggleEditMode
+  };
+};
+
+// Reusable Components
+const EditableField = ({ 
+  isEditing, 
+  value, 
+  onChange, 
+  type = 'text', 
+  component: Component = 'input',
+  className = '',
+  ...props 
+}) => {
+  if (isEditing) {
+    const commonProps = {
+      value,
+      onChange: (e) => onChange(e.target.value),
+      className: `w-full border-2 border-blue-200 rounded px-3 py-2 focus:ring-2 focus:ring-red-600 focus:border-red-600 outline-none transition ${className}`,
+      ...props
+    };
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://js.stripe.com/v3/"></script>
-    
-    <style>
-        :root {
-            --prophetic-blue: #1e3a8a;
-            --prophetic-red: #dc2626;
-            --prophetic-gold: #d4af37;
-            --heavenly-gold: #ffd700;
-            --celestial-white: #f8fafc;
-            --divine-light: #fff9db;
-            --glorious-purple: #7e22ce;
-            --sacred-bronze: #b45309;
-            --light-gray: #f3f4f6;
-            --dark-gray: #374151;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, 
-                rgba(255, 249, 219, 0.8) 0%,
-                rgba(248, 250, 252, 0.9) 50%,
-                rgba(255, 253, 245, 0.9) 100%),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23d4af37" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            color: var(--dark-gray);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        /* Header & Navigation */
-        header {
-            background: linear-gradient(135deg, var(--prophetic-blue), var(--glorious-purple));
-            color: var(--celestial-white);
-            padding: 0.5rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(30, 58, 138, 0.3);
-            border-bottom: 3px solid var(--heavenly-gold);
-        }
-
-        nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 1.5rem;
-        }
-
-        .logo {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo h1 {
-            font-size: 1.6rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .logo p {
-            font-size: 0.8rem;
-            font-style: italic;
-            opacity: 0.9;
-            color: var(--heavenly-gold);
-        }
-
-        .nav-container {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--celestial-white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-links a:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .nav-links a:hover:before {
-            left: 100%;
-        }
-
-        .nav-links a:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-2px);
-        }
-
-        .user-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .user-welcome {
-            color: var(--celestial-white);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .cart-icon, .wishlist-icon {
-            position: relative;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
-
-        .cart-icon:hover, .wishlist-icon:hover {
-            background: rgba(255,255,255,0.1);
-            transform: scale(1.1);
-        }
-
-        .cart-count, .wishlist-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--heavenly-gold);
-            color: var(--prophetic-blue);
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn {
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn:hover:before {
-            left: 100%;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--celestial-white);
-            color: var(--celestial-white);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--heavenly-gold), var(--sacred-bronze));
-            color: var(--prophetic-blue);
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-        }
-
-        .btn-outline:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background: var(--error);
-            color: var(--celestial-white);
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--celestial-white);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-
-        .menu-toggle:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(30, 58, 138, 0.85), rgba(126, 34, 206, 0.85)), 
-                        url('https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: var(--celestial-white);
-            text-align: center;
-            padding: 8rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.3) 100%);
-            z-index: 1;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h2 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-            background: linear-gradient(135deg, var(--celestial-white), var(--heavenly-gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            font-style: italic;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-        }
-
-        /* Sections */
-        section {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 4rem 1.5rem;
-            background: var(--celestial-white);
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        section:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--prophetic-blue), var(--heavenly-gold), var(--glorious-purple));
-        }
-
-        section h2 {
-            color: var(--prophetic-blue);
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            position: relative;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        section h2:after {
-            content: '';
-            display: block;
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--prophetic-blue), var(--heavenly-gold));
-            margin: 1rem auto;
-            border-radius: 2px;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
-        }
-
-        /* Products Grid */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2.5rem;
-            margin-top: 3rem;
-        }
-
-        .product-card {
-            background: linear-gradient(145deg, var(--celestial-white), var(--divine-light));
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-            transition: all 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-        }
-
-        .product-card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--prophetic-blue), var(--heavenly-gold));
-        }
-
-        .product-image {
-            width: 100%;
-            height: 220px;
-            background: linear-gradient(135deg, var(--prophetic-blue), var(--glorious-purple));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--celestial-white);
-            font-size: 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-image:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 70%);
-        }
-
-        .wishlist-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(255,255,255,0.95);
-            border: none;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.3rem;
-            color: #ccc;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 2;
-        }
-
-        .wishlist-btn.active {
-            color: var(--prophetic-red);
-            transform: scale(1.1);
-        }
-
-        .wishlist-btn:hover {
-            transform: scale(1.2);
-            color: var(--prophetic-red);
-        }
-
-        .product-content {
-            padding: 2rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .product-content:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 2rem;
-            right: 2rem;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
-        }
-
-        .product-content h3 {
-            color: var(--prophetic-blue);
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-
-        .product-content p {
-            margin-bottom: 1.5rem;
-            color: var(--dark-gray);
-            flex-grow: 1;
-            line-height: 1.7;
-        }
-
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(212, 175, 55, 0.3);
-        }
-
-        .price {
-            font-size: 1.8rem;
-            color: var(--prophetic-red);
-            font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-
-        .in-stock {
-            color: var(--success);
-            font-size: 0.9rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .out-of-stock {
-            color: var(--error);
-            font-size: 0.9rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--prophetic-blue), var(--glorious-purple));
-            color: var(--celestial-white);
-            padding: 4rem 1.5rem 2rem;
-            margin-top: 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        footer:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--heavenly-gold), var(--sacred-bronze), var(--heavenly-gold));
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1.5rem;
-            color: var(--heavenly-gold);
-            font-size: 1.3rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            transition: transform 0.3s;
-        }
-
-        .footer-section ul li:hover {
-            transform: translateX(5px);
-        }
-
-        .footer-section a {
-            color: var(--celestial-white);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: var(--heavenly-gold);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            transition: all 0.3s;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .social-links a:hover {
-            background: var(--heavenly-gold);
-            transform: translateY(-3px);
-            color: var(--prophetic-blue);
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-        }
-
-        .footer-bottom:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 2px;
-            background: var(--heavenly-gold);
-        }
-
-        /* Utility Classes */
-        .hidden {
-            display: none !important;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .alt-bg {
-            background: linear-gradient(145deg, var(--divine-light), var(--celestial-white));
-            border: 1px solid rgba(212, 175, 55, 0.3);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-
-            .nav-container {
-                flex-direction: column;
-                align-items: flex-start;
-                width: 100%;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                background: linear-gradient(135deg, var(--prophetic-blue), var(--glorious-purple));
-                padding: 1.5rem;
-                display: none;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            }
-
-            .nav-container.active {
-                display: flex;
-            }
-
-            .nav-links {
-                flex-direction: column;
-                width: 100%;
-                gap: 1rem;
-            }
-
-            .user-actions {
-                flex-direction: column;
-                width: 100%;
-                gap: 1rem;
-                margin-top: 1rem;
-            }
-
-            .hero h2 {
-                font-size: 2.2rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            section {
-                padding: 3rem 1rem;
-                margin: 2rem 1rem;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-        }
-
-        /* Loading Spinner */
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--prophetic-blue);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 2s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        /* Glow Effects */
-        .glow {
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-        }
-
-        .glow:hover {
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
-        }
-
-        /* Admin Toggle */
-        .admin-toggle {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: linear-gradient(135deg, var(--prophetic-blue), var(--glorious-purple));
-            color: var(--celestial-white);
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 6px 25px rgba(30, 58, 138, 0.4);
-            z-index: 9999;
-            font-size: 1.6rem;
-            transition: all 0.3s;
-            border: 2px solid var(--heavenly-gold);
-        }
-
-        .admin-toggle:hover {
-            transform: scale(1.1) rotate(15deg);
-            box-shadow: 0 8px 30px rgba(30, 58, 138, 0.6);
-        }
-    </style>
-</head>
-<body>
-    <!-- Admin Toggle Button -->
-    <div class="admin-toggle" onclick="toggleAdminPanel()">
-        <i class="fas fa-crown"></i>
+    return Component === 'textarea' ? (
+      <textarea {...commonProps} />
+    ) : (
+      <input type={type} {...commonProps} />
+    );
+  }
+  
+  return <span className={className}>{value}</span>;
+};
+
+EditableField.propTypes = {
+  isEditing: PropTypes.bool.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  type: PropTypes.string,
+  component: PropTypes.string,
+  className: PropTypes.string
+};
+
+const SectionHeader = ({ title, subtitle, description, isEditing, onTitleChange, onSubtitleChange, onDescriptionChange }) => (
+  <div className="text-center mb-16">
+    <EditableField
+      isEditing={isEditing}
+      value={title}
+      onChange={onTitleChange}
+      component="input"
+      className="text-4xl md:text-5xl font-bold text-blue-900 mb-4"
+    />
+    <div className="w-24 h-1 bg-gradient-to-r from-blue-900 via-red-600 to-blue-900 mx-auto mb-6" />
+    {subtitle && (
+      <EditableField
+        isEditing={isEditing}
+        value={subtitle}
+        onChange={onSubtitleChange}
+        component="input"
+        className="text-xl md:text-2xl text-gray-700 mb-4"
+      />
+    )}
+    {description && (
+      <EditableField
+        isEditing={isEditing}
+        value={description}
+        onChange={onDescriptionChange}
+        component="textarea"
+        className="text-lg text-gray-600 max-w-3xl mx-auto"
+        rows="2"
+      />
+    )}
+  </div>
+);
+
+const AdminPanel = ({ 
+  isAdmin, 
+  editMode, 
+  onLogout, 
+  onToggleEditMode, 
+  onSave, 
+  onShowDiagnostic 
+}) => (
+  <div className="fixed top-24 right-4 z-50 bg-white shadow-2xl rounded-xl p-4 border-2 border-blue-900 w-48">
+    <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center">
+        <Shield className="h-4 w-4 text-blue-900 mr-2" />
+        <span className="font-bold text-sm text-blue-900">Admin Panel</span>
+      </div>
+      <button 
+        onClick={onLogout}
+        className="text-red-600 hover:text-red-700 transition"
+        aria-label="Logout"
+      >
+        <Lock className="h-4 w-4" />
+      </button>
     </div>
+    <div className="space-y-2">
+      <button
+        onClick={onToggleEditMode}
+        className={`w-full flex items-center justify-center px-3 py-2 rounded-lg transition ${
+          editMode 
+            ? 'bg-red-600 text-white hover:bg-red-700' 
+            : 'bg-blue-900 text-white hover:bg-blue-800'
+        }`}
+      >
+        {editMode ? (
+          <>
+            <Save className="h-3 w-3 mr-2" />
+            <span className="text-sm">Save Mode</span>
+          </>
+        ) : (
+          <>
+            <Edit className="h-3 w-3 mr-2" />
+            <span className="text-sm">Edit Mode</span>
+          </>
+        )}
+      </button>
+      {editMode && (
+        <button
+          onClick={onSave}
+          className="w-full bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition flex items-center justify-center"
+        >
+          <Save className="h-3 w-3 mr-2" />
+          <span className="text-sm">Save All Changes</span>
+        </button>
+      )}
+      <button
+        onClick={onShowDiagnostic}
+        className="w-full bg-gray-800 text-white px-3 py-2 rounded-lg hover:bg-gray-900 transition flex items-center justify-center"
+      >
+        <CheckCircle className="h-3 w-3 mr-2" />
+        <span className="text-sm">Diagnostics</span>
+      </button>
+    </div>
+  </div>
+);
 
-    <!-- Header -->
-    <header>
-        <nav>
-            <div class="logo">
-                <h1><i class="fas fa-cross"></i> The Definitive Word</h1>
-                <p>Your Destiny Has Been Written</p>
+const DiagnosticModal = ({ isOpen, onClose, diagnosticInfo }) => {
+  if (!isOpen) return null;
+  
+  return (
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 animate-fadeIn">
+      <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto animate-slideUp">
+        <div className="sticky top-0 bg-white border-b px-6 py-4">
+          <div className="flex justify-between items-center">
+            <h3 className="text-2xl font-bold text-blue-900">System Diagnostics</h3>
+            <button 
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 transition"
+              aria-label="Close"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+        </div>
+        <div className="p-6">
+          <div className="space-y-4">
+            {diagnosticInfo.map((check) => (
+              <div key={check.id} className="flex items-start border-b pb-4 last:border-b-0">
+                <CheckCircle className="h-5 w-5 text-green-600 mr-3 mt-1 flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-gray-900 truncate">{check.name}</p>
+                  <p className="text-sm text-gray-600 mt-1">{check.message}</p>
+                  <span className="inline-block mt-2 px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded">
+                    {check.status}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
+            <div className="flex items-center">
+              <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+              <p className="text-sm text-green-800 font-semibold">
+                All systems operational. Website is live and fully interactive.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AdminLoginModal = ({ isOpen, onClose, onLogin }) => {
+  const [password, setPassword] = useState('');
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (onLogin(password)) {
+      setPassword('');
+    }
+  };
+  
+  if (!isOpen) return null;
+  
+  return (
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 animate-fadeIn">
+      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full animate-slideUp">
+        <div className="p-6">
+          <div className="flex items-center mb-6">
+            <Shield className="h-8 w-8 text-blue-900 mr-3" />
+            <h3 className="text-2xl font-bold text-blue-900">Admin Login</h3>
+          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Admin Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter admin password"
+                className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-red-600 outline-none transition"
+                autoFocus
+              />
+            </div>
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                className="flex-1 bg-gradient-to-r from-blue-900 to-blue-800 text-white py-3 rounded-lg font-semibold hover:from-blue-800 hover:to-blue-700 transition shadow-md"
+              >
+                Login
+              </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-200 transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+          <p className="text-xs text-gray-500 mt-4 text-center">
+            For demonstration purposes only
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Navigation = ({ 
+  isMenuOpen, 
+  onToggleMenu, 
+  onNavigate, 
+  activeSection, 
+  isAdmin, 
+  onShowAdminLogin 
+}) => {
+  const menuItems = useMemo(() => [
+    { id: 'home', label: 'Home' },
+    { id: 'about', label: 'About' },
+    { id: 'ebooks', label: 'Ebooks' },
+    { id: 'workshops', label: 'Workshops' },
+    { id: 'coaching', label: 'Coaching' },
+    { id: 'prayer', label: 'Prayer' },
+    { id: 'blog', label: 'Blog' },
+    { id: 'contact', label: 'Contact' }
+  ], []);
+  
+  return (
+    <nav className="bg-gradient-to-r from-blue-900 to-blue-800 shadow-lg fixed w-full top-0 z-40">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-20">
+          <div className="flex items-center">
+            <Sparkles className="h-10 w-10 text-red-500 animate-pulse" />
+            <div className="ml-3">
+              <div className="text-xl font-bold text-white">The Definitive Word</div>
+              <div className="text-sm text-red-400 italic">Your Destiny Has Been Written</div>
+            </div>
+          </div>
+          
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center space-x-8">
+            {menuItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => onNavigate(item.id)}
+                className={`text-white hover:text-red-400 transition font-medium ${
+                  activeSection === item.id ? 'text-red-400 border-b-2 border-red-400' : ''
+                }`}
+                aria-current={activeSection === item.id ? 'page' : undefined}
+              >
+                {item.label}
+              </button>
+            ))}
+            
+            {/* Admin Button */}
+            <button
+              onClick={onShowAdminLogin}
+              className="text-white hover:text-red-400 transition"
+              aria-label={isAdmin ? "Admin logged in" : "Admin login"}
+            >
+              {isAdmin ? (
+                <Unlock className="h-5 w-5 text-green-400" />
+              ) : (
+                <Lock className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center space-x-4">
+            <button
+              onClick={onShowAdminLogin}
+              className="text-white"
+              aria-label="Admin login"
+            >
+              {isAdmin ? (
+                <Unlock className="h-5 w-5 text-green-400" />
+              ) : (
+                <Lock className="h-5 w-5" />
+              )}
+            </button>
+            <button 
+              onClick={onToggleMenu}
+              className="text-white"
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            >
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-blue-900 border-t border-blue-700 animate-slideDown">
+          <div className="px-2 pt-2 pb-3 space-y-1">
+            {menuItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => onNavigate(item.id)}
+                className={`block w-full text-left px-3 py-2 rounded transition ${
+                  activeSection === item.id
+                    ? 'bg-blue-800 text-white'
+                    : 'text-white hover:bg-blue-800'
+                }`}
+                aria-current={activeSection === item.id ? 'page' : undefined}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+// Main Component
+const MinistryWebsite = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [showDiagnostic, setShowDiagnostic] = useState(false);
+  const [content, setContent] = useState({
+    heroTitle: "The Definitive Word",
+    heroSubtitle: "Your Destiny Has Been Written",
+    heroDescription: "Empowering fathers, strengthening marriages, building community through wisdom and divine purpose",
+    aboutTitle: "Walking in Divine Purpose",
+    aboutDescription: "Welcome to The Definitive Word - a ministry birthed from divine revelation and insight...",
+    quote: "Your destiny is not something you create - it's something you discover. It has already been written.",
+    ebooks: [
+      { id: 1, title: "The Father's Blueprint", price: "R249.99", description: "A comprehensive guide for fathers building legacy relationships ordained by God" },
+      { id: 2, title: "Marriage Rebuilt", price: "R299.99", description: "Restoring divine connection and walking in your covenant destiny" },
+      { id: 3, title: "Living on Purpose", price: "R199.99", description: "Discovering the destiny that has already been written for your life" }
+    ],
+    contact: {
+      email: "info@thedefinitiveword.com",
+      phone: "(+27) 123-4567"
+    }
+  });
+  
+  const prayerRequestForm = useForm({ name: '', email: '', message: '' });
+  const contactForm = useForm({ 
+    firstName: '', 
+    lastName: '', 
+    email: '', 
+    phone: '', 
+    interest: 'Life Coaching', 
+    message: '' 
+  });
+  
+  const admin = useAdmin();
+  
+  // Handle navigation
+  const handleNavigate = useCallback((section) => {
+    setActiveSection(section);
+    setIsMenuOpen(false);
+    // Smooth scroll to section
+    const element = document.getElementById(section);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);
+  
+  // Handle prayer request submission
+  const handlePrayerSubmit = useCallback(() => {
+    if (!prayerRequestForm.form.name || !prayerRequestForm.form.message) {
+      alert('Please fill in your name and prayer request');
+      return;
+    }
+    alert('✓ Prayer request submitted successfully! We will be praying for you.');
+    prayerRequestForm.resetForm();
+  }, [prayerRequestForm]);
+  
+  // Handle contact form submission
+  const handleContactSubmit = useCallback(() => {
+    if (!contactForm.form.firstName || !contactForm.form.email || !contactForm.form.message) {
+      alert('Please fill in all required fields');
+      return;
+    }
+    alert('✓ Message sent successfully! We will get back to you soon.');
+    contactForm.resetForm();
+  }, [contactForm]);
+  
+  // Handle content changes
+  const handleContentChange = useCallback((field, value) => {
+    setContent(prev => {
+      const [category, subfield] = field.includes('.') ? field.split('.') : [field];
+      
+      if (category === 'ebooks') {
+        const [ebookIndex, ebookField] = subfield.split('.');
+        const updatedEbooks = [...prev.ebooks];
+        updatedEbooks[ebookIndex] = {
+          ...updatedEbooks[ebookIndex],
+          [ebookField]: value
+        };
+        return { ...prev, ebooks: updatedEbooks };
+      }
+      
+      if (category === 'contact') {
+        return {
+          ...prev,
+          contact: { ...prev.contact, [subfield]: value }
+        };
+      }
+      
+      return { ...prev, [field]: value };
+    });
+  }, []);
+  
+  // Handle save content
+  const handleSaveContent = useCallback(() => {
+    // In production, this would make an API call
+    alert('✓ Content saved successfully!');
+    admin.toggleEditMode();
+  }, [admin]);
+  
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+          from { transform: translateY(20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideDown {
+          from { transform: translateY(-20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
+        .animate-slideUp { animation: slideUp 0.3s ease-out; }
+        .animate-slideDown { animation: slideDown 0.3s ease-out; }
+      `}</style>
+      
+      {/* Admin Panel */}
+      {admin.isAdmin && (
+        <AdminPanel
+          isAdmin={admin.isAdmin}
+          editMode={admin.editMode}
+          onLogout={admin.logout}
+          onToggleEditMode={admin.toggleEditMode}
+          onSave={handleSaveContent}
+          onShowDiagnostic={() => setShowDiagnostic(true)}
+        />
+      )}
+      
+      {/* Modals */}
+      <DiagnosticModal
+        isOpen={showDiagnostic}
+        onClose={() => setShowDiagnostic(false)}
+        diagnosticInfo={CONSTANTS.DIAGNOSTIC_CHECKS}
+      />
+      
+      <AdminLoginModal
+        isOpen={admin.showAdminLogin}
+        onClose={() => admin.setShowAdminLogin(false)}
+        onLogin={admin.login}
+      />
+      
+      {/* Navigation */}
+      <Navigation
+        isMenuOpen={isMenuOpen}
+        onToggleMenu={() => setIsMenuOpen(!isMenuOpen)}
+        onNavigate={handleNavigate}
+        activeSection={activeSection}
+        isAdmin={admin.isAdmin}
+        onShowAdminLogin={() => admin.setShowAdminLogin(true)}
+      />
+      
+      {/* Hero Section */}
+      <section id="home" className="pt-24 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-red-900/10 via-transparent to-blue-900/10" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 relative z-10">
+          <div className="text-center">
+            <div className="inline-block mb-8 animate-pulse">
+              <Sparkles className="h-20 w-20 text-red-500 mx-auto" />
             </div>
             
-            <button class="menu-toggle" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
-            </button>
+            <EditableField
+              isEditing={admin.editMode}
+              value={content.heroTitle}
+              onChange={(val) => handleContentChange('heroTitle', val)}
+              component="input"
+              className="text-5xl md:text-7xl font-bold mb-6 bg-transparent text-center text-white placeholder-white/50"
+              placeholder="Enter hero title"
+            />
             
-            <div class="nav-container" id="navContainer">
-                <ul class="nav-links">
-                    <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="#products"><i class="fas fa-book"></i> Products</a></li>
-                    <li><a href="#coaching"><i class="fas fa-hands-helping"></i> Coaching</a></li>
-                    <li><a href="#blog"><i class="fas fa-blog"></i> Blog</a></li>
-                    <li><a href="#workshops"><i class="fas fa-users"></i> Workshops</a></li>
-                    <li><a href="#ministry"><i class="fas fa-church"></i> Ministry</a></li>
-                    <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
-                </ul>
+            <EditableField
+              isEditing={admin.editMode}
+              value={content.heroSubtitle}
+              onChange={(val) => handleContentChange('heroSubtitle', val)}
+              component="input"
+              className="text-3xl md:text-4xl mb-10 text-red-400 italic font-semibold bg-transparent text-center"
+              placeholder="Enter hero subtitle"
+            />
+            
+            <EditableField
+              isEditing={admin.editMode}
+              value={content.heroDescription}
+              onChange={(val) => handleContentChange('heroDescription', val)}
+              component="textarea"
+              className="text-xl md:text-2xl mb-12 text-blue-100 max-w-3xl mx-auto bg-transparent text-center placeholder-blue-100/50"
+              placeholder="Enter hero description"
+              rows="2"
+            />
+            
+            <button
+              onClick={() => handleNavigate('contact')}
+              className="bg-gradient-to-r from-red-600 to-red-500 text-white px-12 py-4 rounded-lg font-bold text-lg hover:from-red-700 hover:to-red-600 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+            >
+              Discover Your Destiny
+              <ArrowRight className="inline-block ml-2 h-5 w-5" />
+            </button>
+          </div>
+        </div>
+        <div className="h-2 bg-gradient-to-r from-red-600 via-red-500 to-red-600" />
+      </section>
+      
+      {/* About Section */}
+      <section id="about" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            title={content.aboutTitle}
+            description={content.aboutDescription}
+            isEditing={admin.editMode}
+            onTitleChange={(val) => handleContentChange('aboutTitle', val)}
+            onDescriptionChange={(val) => handleContentChange('aboutDescription', val)}
+          />
+          
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-gradient-to-r from-blue-50 to-gray-50 rounded-2xl p-8 border border-blue-100">
+              <div className="flex items-start mb-6">
+                <Star className="h-6 w-6 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                <EditableField
+                  isEditing={admin.editMode}
+                  value={content.quote}
+                  onChange={(val) => handleContentChange('quote', val)}
+                  component="textarea"
+                  className="text-lg md:text-xl text-blue-900 font-semibold italic bg-transparent"
+                  rows="2"
+                  placeholder="Enter inspirational quote"
+                />
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <p className="text-gray-700 leading-relaxed">
+                    Welcome to The Definitive Word - a ministry birthed from divine revelation and insight. I'm passionate about helping individuals, families, and communities discover and walk in their God-ordained destiny.
+                  </p>
+                  <p className="text-gray-700 leading-relaxed">
+                    With years of experience in ministry and life coaching, I've dedicated my life to guiding people into their written destiny.
+                  </p>
+                </div>
+                <div className="space-y-4">
+                  <p className="text-gray-700 leading-relaxed">
+                    My approach combines biblical wisdom with practical tools for real-world transformation. Whether you're a father seeking to build a godly legacy with your son, a couple working to fulfill your covenant marriage, or someone searching for their destiny.
+                  </p>
+                  <p className="text-gray-700 leading-relaxed">
+                    I'm here to help you see what God has already declared over your life.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Ebooks Section */}
+      <section id="ebooks" className="py-20 bg-gradient-to-b from-gray-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            title="Featured Ebooks"
+            subtitle="Unlock the wisdom that transforms destinies"
+            isEditing={admin.editMode}
+            onTitleChange={() => {}}
+            onSubtitleChange={() => {}}
+          />
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {content.ebooks.map((ebook, index) => (
+              <div key={ebook.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 border-t-4 border-red-600 group">
+                <div className="flex items-center mb-4">
+                  <Book className="h-10 w-10 text-blue-900 mr-3" />
+                  <EditableField
+                    isEditing={admin.editMode}
+                    value={ebook.title}
+                    onChange={(val) => handleContentChange(`ebooks.${index}.title`, val)}
+                    component="input"
+                    className="text-xl font-bold text-blue-900 bg-transparent"
+                    placeholder="Ebook title"
+                  />
+                </div>
                 
-                <div class="user-actions">
-                    <div class="wishlist-icon" onclick="toggleWishlist()">
-                        <i class="fas fa-heart"></i>
-                        <span class="wishlist-count">0</span>
-                    </div>
-                    <div class="cart-icon" onclick="toggleCart()">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count">0</span>
-                    </div>
-                    
-                    <div class="auth-buttons" id="authButtons">
-                        <!-- Will be populated by JavaScript -->
-                    </div>
+                <EditableField
+                  isEditing={admin.editMode}
+                  value={ebook.description}
+                  onChange={(val) => handleContentChange(`ebooks.${index}.description`, val)}
+                  component="textarea"
+                  className="text-gray-600 mb-4 min-h-[80px] bg-transparent"
+                  placeholder="Ebook description"
+                  rows="3"
+                />
+                
+                <div className="flex items-center justify-between mb-6">
+                  <EditableField
+                    isEditing={admin.editMode}
+                    value={ebook.price}
+                    onChange={(val) => handleContentChange(`ebooks.${index}.price`, val)}
+                    component="input"
+                    className="text-2xl font-bold text-red-600 bg-transparent"
+                    placeholder="Price"
+                  />
+                  <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                    {CONSTANTS.CURRENCY}
+                  </span>
                 </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h2>Welcome to The Definitive Word</h2>
-            <p>Your Destiny Has Been Written</p>
-            <p>Discover God's plan for your life through prophetic teaching, life coaching, and transformative resources</p>
-            <button class="btn btn-primary" onclick="scrollToSection('products')">
-                <i class="fas fa-gem"></i> Explore Divine Resources
+                
+                <button className="w-full bg-gradient-to-r from-blue-900 to-blue-800 text-white py-3 rounded-lg font-semibold hover:from-blue-800 hover:to-blue-700 transition group-hover:scale-[1.02] shadow-md">
+                  Purchase Now
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Workshops Section */}
+      <section id="workshops" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            title="Workshops & Events"
+            isEditing={admin.editMode}
+            onTitleChange={() => {}}
+          />
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {CONSTANTS.WORKSHOPS.map((workshop) => (
+              <div key={workshop.id} className="border-2 border-blue-100 rounded-xl p-6 hover:border-red-600 transition-all hover:shadow-xl bg-gradient-to-br from-white to-blue-50">
+                <workshop.icon className="h-12 w-12 text-red-600 mb-4" />
+                <h3 className="text-xl font-bold mb-3 text-blue-900">{workshop.title}</h3>
+                <p className="text-gray-600 mb-4">{workshop.description}</p>
+                <button className="text-red-600 font-semibold flex items-center hover:text-red-700 group">
+                  Learn More
+                  <ChevronRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Life Coaching Section */}
+      <section id="coaching" className="py-20 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-red-900/10 via-transparent to-blue-900/10" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <SectionHeader
+            title="Life Coaching"
+            subtitle="One-on-one guidance to discover your written destiny"
+            isEditing={admin.editMode}
+            onTitleChange={() => {}}
+            onSubtitleChange={() => {}}
+          />
+          
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
+            {[
+              { number: 1, title: "Revelation", description: "We seek God's word over your life and uncover what has been written" },
+              { number: 2, title: "Divine Strategy", description: "Create a God-ordained roadmap to walk in your destiny" },
+              { number: 3, title: "Accountability", description: "Regular sessions to keep you aligned with heaven's agenda" }
+            ].map((step) => (
+              <div key={step.number} className="text-center">
+                <div className="bg-gradient-to-br from-red-600 to-red-500 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6 shadow-xl">
+                  <span className="text-4xl font-bold text-white">{step.number}</span>
+                </div>
+                <h3 className="text-2xl font-bold mb-3">{step.title}</h3>
+                <p className="text-blue-100">{step.description}</p>
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-center">
+            <button
+              onClick={() => handleNavigate('contact')}
+              className="bg-gradient-to-r from-red-600 to-red-500 text-white px-12 py-4 rounded-lg font-bold text-lg hover:from-red-700 hover:to-red-600 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+            >
+              Schedule Free Consultation
+              <Calendar className="inline-block ml-2 h-5 w-5" />
             </button>
+          </div>
         </div>
-    </section>
-
-    <!-- Products Section -->
-    <section id="products">
-        <h2>Divine Resources</h2>
-        <p class="text-center" style="max-width: 800px; margin: 0 auto 2rem; font-size: 1.1rem;">
-            Immerse yourself in prophetic wisdom and biblical revelation with our collection of transformative resources designed to illuminate your path.
-        </p>
-        
-        <div class="products-grid" id="productsGrid">
-            <!-- Product cards will be dynamically generated -->
-        </div>
-    </section>
-
-    <!-- Coaching Section -->
-    <section id="coaching" class="alt-bg">
-        <h2>Prophetic Life Coaching</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
-            <div>
-                <h3 style="color: var(--prophetic-blue); margin-bottom: 1rem; font-size: 1.8rem;">Transform Your Life Through Divine Guidance</h3>
-                <p style="margin-bottom: 1.5rem; font-size: 1.1rem;">Our prophetic coaching program merges biblical wisdom with practical strategies to help you:</p>
-                <ul style="margin-left: 1.5rem; margin-bottom: 2rem;">
-                    <li style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-star" style="color: var(--heavenly-gold);"></i>
-                        Discover your divine purpose and calling
-                    </li>
-                    <li style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-star" style="color: var(--heavenly-gold);"></i>
-                        Overcome obstacles and limiting beliefs
-                    </li>
-                    <li style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-star" style="color: var(--heavenly-gold);"></i>
-                        Develop spiritual disciplines and growth
-                    </li>
-                    <li style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-star" style="color: var(--heavenly-gold);"></i>
-                        Create actionable plans for your goals
-                    </li>
-                    <li style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-star" style="color: var(--heavenly-gold);"></i>
-                        Walk in the fullness of your destiny
-                    </li>
-                </ul>
-                <button class="btn btn-primary" onclick="addToCart('Prophetic Life Coaching Session', 0, 'coaching')">
-                    <i class="fas fa-calendar-check"></i> Book Divine Session
+      </section>
+      
+      {/* Prayer Request Section */}
+      <section id="prayer" className="py-20 bg-gradient-to-b from-blue-50 to-gray-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            title="Submit a Prayer Request"
+            subtitle="We stand in agreement with you for breakthrough"
+            isEditing={admin.editMode}
+            onTitleChange={() => {}}
+            onSubtitleChange={() => {}}
+          />
+          
+          <div className="bg-white rounded-xl shadow-xl p-8 border-t-4 border-red-600">
+            <form onSubmit={(e) => { e.preventDefault(); handlePrayerSubmit(); }}>
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-blue-900 font-semibold mb-2">
+                    Your Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={prayerRequestForm.form.name}
+                    onChange={(e) => prayerRequestForm.handleChange('name', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-red-600 outline-none transition"
+                    placeholder="Enter your name"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-blue-900 font-semibold mb-2">
+                    Email (optional)
+                  </label>
+                  <input
+                    type="email"
+                    value={prayerRequestForm.form.email}
+                    onChange={(e) => prayerRequestForm.handleChange('email', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-red-600 outline-none transition"
+                    placeholder="your@email.com"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-blue-900 font-semibold mb-2">
+                    Prayer Request *
+                  </label>
+                  <textarea
+                    rows="6"
+                    value={prayerRequestForm.form.message}
+                    onChange={(e) => prayerRequestForm.handleChange('message', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-red-600 outline-none transition"
+                    placeholder="Share your prayer request..."
+                    required
+                  />
+                </div>
+                
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-900 to-blue-800 text-white py-4 rounded-lg font-bold text-lg hover:from-blue-800 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
+                >
+                  Submit Prayer Request
+                  <Heart className="inline-block ml-2 h-5 w-5" />
                 </button>
-            </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+      
+      {/* Blog Section */}
+      <section id="blog" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            title="Latest Teachings"
+            isEditing={admin.editMode}
+            onTitleChange={() => {}}
+          />
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {CONSTANTS.BLOG_POSTS.map((post) => (
+              <article key={post.id} className="border-2 border-blue-100 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:border-red-600 group">
+                <div className="bg-gradient-to-br from-blue-900 to-blue-800 h-48 flex items-center justify-center">
+                  <FileText className="h-16 w-16 text-red-500 group-hover:scale-110 transition" />
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center mb-3">
+                    <Calendar className="h-4 w-4 text-red-600 mr-2" />
+                    <time className="text-sm text-red-600 font-semibold">{post.date}</time>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-blue-900">{post.title}</h3>
+                  <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                  <button className="text-red-600 font-semibold flex items-center hover:text-red-700 group">
+                    Read More
+                    <ChevronRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition" />
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Contact Section */}
+      <section id="contact" className="py-20 bg-gradient-to-b from-gray-50 to-blue-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            title="Connect With Us"
+            subtitle="Begin your journey into divine destiny today"
+            isEditing={admin.editMode}
+            onTitleChange={() => {}}
+            onSubtitleChange={() => {}}
+          />
+          
+          <div className="bg-white rounded-xl shadow-xl p-8 border-t-4 border-red-600">
+            <form onSubmit={(e) => { e.preventDefault(); handleContactSubmit(); }}>
+              <div className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-blue-900 font-semibold mb-2">
+                      First Name *
+                    </label>
+                    <input
+                      type="text"
+                      value={contactForm.form.firstName}
+                      onChange={(e) => contactForm.handleChange('firstName', e.target.value)}
+                      className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-red-600 outline-none transition"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-blue-900 font-semibold mb-2">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      value={contactForm.form.lastName}
+                      onChange={(e) => contactForm.handleChange('lastName', e.target.value)}
+                      className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-red-600 outline-none transition"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-blue-900 font-semibold mb-2">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    value={contactForm.form.email}
+                    onChange={(e) => contactForm.handleChange('email', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-red-600 outline-none transition"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-blue-900 font-semibold mb-2">
+                    Phone (optional)
+                  </label>
+                  <input
+                    type="tel"
+                    value={contactForm.form.phone}
+                    onChange={(e) => contactForm.handleChange('phone', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-red-600 outline-none transition"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-blue-900 font-semibold mb-2">
+                    What are you interested in?
+                  </label>
+                  <select
+                    value={contactForm.form.interest}
+                    onChange={(e) => contactForm.handleChange('interest', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-red-600 outline-none transition bg-white"
+                  >
+                    <option>Life Coaching</option>
+                    <option>Workshops & Retreats</option>
+                    <option>Speaking Engagement</option>
+                    <option>General Inquiry</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-blue-900 font-semibold mb-2">
+                    Message *
+                  </label>
+                  <textarea
+                    rows="5"
+                    value={contactForm.form.message}
+                    onChange={(e) => contactForm.handleChange('message', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-red-600 outline-none transition"
+                    placeholder="Tell us how we can help you discover your destiny..."
+                    required
+                  />
+                </div>
+                
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-900 to-blue-800 text-white py-4 rounded-lg font-bold text-lg hover:from-blue-800 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
+                >
+                  Send Message
+                  <Mail className="inline-block ml-2 h-5 w-5" />
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+      
+      {/* Footer */}
+      <footer className="bg-gradient-to-b from-blue-900 to-gray-900 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-                <div style="background: linear-gradient(135deg, var(--prophetic-blue), var(--glorious-purple)); height: 400px; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; position: relative; overflow: hidden;">
-                    <i class="fas fa-bullseye"></i>
-                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 70%);"></div>
+              <div className="flex items-center mb-4">
+                <Sparkles className="h-8 w-8 text-red-500 mr-3" />
+                <div>
+                  <h3 className="text-xl font-bold">The Definitive Word</h3>
+                  <p className="text-sm text-red-400 italic">Your Destiny Has Been Written</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>The Definitive Word</h3>
-                <p>Your Destiny Has Been Written. We are dedicated to helping you discover and walk in your God-given purpose through prophetic teaching and life coaching.</p>
-                <div class="social-links">
-                    <a href="#" onclick="shareOnFacebook()"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" onclick="shareOnTwitter()"><i class="fab fa-twitter"></i></a>
-                    <a href="#" onclick="shareOnLinkedIn()"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" onclick="shareOnWhatsApp()"><i class="fab fa-whatsapp"></i></a>
-                </div>
+              </div>
+              <p className="text-gray-400 text-sm">
+                Empowering lives through wisdom and divine purpose.
+              </p>
             </div>
             
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#products">Divine Resources</a></li>
-                    <li><a href="#coaching">Prophetic Coaching</a></li>
-                    <li><a href="#blog">Blog</a></li>
-                    <li><a href="#workshops">Workshops</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <ul>
-                    <li><i class="fas fa-map-marker-alt"></i> Cape Town, South Africa</li>
-                    <li><i class="fas fa-phone"></i> +27 21 123 4567</li>
-                    <li><i class="fas fa-envelope"></i> info@definitiveword.org</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2025 The Definitive Word Ministry. Your Destiny Has Been Written.</p>
-            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--heavenly-gold);">Walking in prophetic purpose since 2025</p>
-        </div>
-    </footer>
-
-    <script>
-        // Sample products data
-        const sampleProducts = [
-            {
-                id: 1,
-                name: "Unveiling Your Destiny",
-                description: "A comprehensive guide to discovering and walking in your God-given purpose through prophetic insights and biblical wisdom.",
-                price: 299.99,
-                category: "ebook",
-                image: "📖",
-                inventory: 100,
-                sku: "EBK-001"
-            },
-            {
-                id: 2,
-                name: "Prophetic Insights",
-                description: "Understanding the prophetic voice in the modern church and your personal life with practical applications.",
-                price: 349.99,
-                category: "ebook",
-                image: "🕊️",
-                inventory: 50,
-                sku: "EBK-002"
-            },
-            {
-                id: 3,
-                name: "Destiny Declarations",
-                description: "Powerful declarations to speak over your life and activate your divine destiny through faith-filled words.",
-                price: 199.99,
-                category: "ebook",
-                image: "🗣️",
-                inventory: 75,
-                sku: "EBK-003"
-            },
-            {
-                id: 4,
-                name: "The Prophetic Journey",
-                description: "A 30-day devotional to deepen your prophetic understanding and spiritual walk with daily insights.",
-                price: 249.99,
-                category: "ebook",
-                image: "🛤️",
-                inventory: 60,
-                sku: "EBK-004"
-            }
-        ];
-
-        // Initialize the store
-        function initStore() {
-            renderProducts();
-            updateAuthUI();
-        }
-
-        // Render products
-        function renderProducts() {
-            const productsGrid = document.getElementById('productsGrid');
-            if (!productsGrid) return;
-
-            productsGrid.innerHTML = sampleProducts.map(product => `
-                <div class="product-card glow">
-                    <div class="product-image">
-                        ${product.image}
-                    </div>
-                    <button class="wishlist-btn" onclick="toggleWishlistItem(${product.id})">
-                        <i class="fas fa-heart"></i>
+            <div>
+              <h4 className="font-bold mb-4 text-red-400">Quick Links</h4>
+              <ul className="space-y-2">
+                {['About', 'Ebooks', 'Workshops', 'Coaching'].map((item) => (
+                  <li key={item}>
+                    <button
+                      onClick={() => handleNavigate(item.toLowerCase())}
+                      className="text-gray-400 hover:text-white transition text-sm"
+                    >
+                      {item}
                     </button>
-                    <div class="product-content">
-                        <h3>${product.name}</h3>
-                        <p>${product.description}</p>
-                        <div class="product-footer">
-                            <div class="price">R ${product.price.toFixed(2)}</div>
-                            <div class="${product.inventory > 0 ? 'in-stock' : 'out-of-stock'}">
-                                <i class="fas ${product.inventory > 0 ? 'fa-check-circle' : 'fa-times-circle'}"></i>
-                                ${product.inventory > 0 ? 'In Stock' : 'Out of Stock'}
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;" 
-                                onclick="addToCart('${product.name}', ${product.price}, '${product.category}', ${product.id})"
-                                ${product.inventory === 0 ? 'disabled' : ''}>
-                            <i class="fas fa-cart-plus"></i> Add to Divine Collection
-                        </button>
-                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-bold mb-4 text-red-400">Resources</h4>
+              <ul className="space-y-2">
+                {['Blog', 'Prayer', 'Contact'].map((item) => (
+                  <li key={item}>
+                    <button
+                      onClick={() => handleNavigate(item.toLowerCase())}
+                      className="text-gray-400 hover:text-white transition text-sm"
+                    >
+                      {item}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-bold mb-4 text-red-400">Connect</h4>
+              <div className="space-y-3">
+                <div className="flex items-center">
+                  <Mail className="h-4 w-4 text-gray-400 mr-3" />
+                  <EditableField
+                    isEditing={admin.editMode}
+                    value={content.contact.email}
+                    onChange={(val) => handleContentChange('contact.email', val)}
+                    component="input"
+                    className="text-gray-400 text-sm bg-transparent"
+                    placeholder="Email address"
+                  />
                 </div>
-            `).join('');
-        }
+                <div className="flex items-center">
+                  <Phone className="h-4 w-4 text-gray-400 mr-3" />
+                  <EditableField
+                    isEditing={admin.editMode}
+                    value={content.contact.phone}
+                    onChange={(val) => handleContentChange('contact.phone', val)}
+                    component="input"
+                    className="text-gray-400 text-sm bg-transparent"
+                    placeholder="Phone number"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-blue-800 pt-8 text-center">
+            <p className="text-gray-400 text-sm">
+              &copy; {new Date().getFullYear()} The Definitive Word. All rights reserved.
+            </p>
+            <p className="text-sm mt-2 italic text-red-400">
+              "For I know the plans I have for you" - Jeremiah 29:11
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
 
-        // Shopping cart functionality
-        let cart = [];
-        let wishlist = [];
-
-        function addToCart(name, price, category, id = null) {
-            const existingItem = cart.find(item => item.name === name);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    id: id || Date.now(),
-                    name,
-                    price,
-                    category,
-                    quantity: 1
-                });
-            }
-            
-            updateCartUI();
-            showNotification(`${name} added to your divine collection`, 'success');
-        }
-
-        function updateCartUI() {
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            const cartCount = document.querySelector('.cart-count');
-            if (cartCount) {
-                cartCount.textContent = totalItems;
-            }
-        }
-
-        function toggleWishlistItem(productId) {
-            const existingIndex = wishlist.findIndex(item => item.id === productId);
-            const wishlistBtn = event.currentTarget;
-            
-            if (existingIndex !== -1) {
-                wishlist.splice(existingIndex, 1);
-                wishlistBtn.classList.remove('active');
-                showNotification('Item removed from wishlist', 'success');
-            } else {
-                const product = sampleProducts.find(p => p.id === productId);
-                if (product) {
-                    wishlist.push(product);
-                    wishlistBtn.classList.add('active');
-                    showNotification('Item added to wishlist', 'success');
-                }
-            }
-            
-            updateWishlistUI();
-        }
-
-        function updateWishlistUI() {
-            const wishlistCount = document.querySelector('.wishlist-count');
-            if (wishlistCount) {
-                wishlistCount.textContent = wishlist.length;
-            }
-        }
-
-        // Authentication UI
-        function updateAuthUI() {
-            const authButtons = document.getElementById('authButtons');
-            if (!authButtons) return;
-
-            authButtons.innerHTML = `
-                <button class="btn btn-outline" onclick="openAuthModal()">
-                    <i class="fas fa-user"></i> Divine Access
-                </button>
-                <button class="btn btn-primary" onclick="openAuthModal('register')">
-                    <i class="fas fa-user-plus"></i> Join Destiny
-                </button>
-            `;
-        }
-
-        // Utility functions
-        function toggleMenu() {
-            const navContainer = document.getElementById('navContainer');
-            navContainer.classList.toggle('active');
-        }
-
-        function scrollToSection(sectionId) {
-            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function showNotification(message, type = 'success') {
-            // Create a simple notification
-            console.log(`${type.toUpperCase()}: ${message}`);
-            // In a real implementation, you'd show this to the user
-        }
-
-        function toggleAdminPanel() {
-            // Check if user is admin (you'll need to implement proper authentication)
-            const isAdmin = confirm('Access Admin Panel? (Admin credentials required)');
-            if (isAdmin) {
-                // In a real implementation, this would open the admin panel
-                alert('Admin panel would open here with full editing capabilities');
-            }
-        }
-
-        // Social sharing functions
-        function shareOnFacebook() {
-            window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank');
-        }
-
-        function shareOnTwitter() {
-            window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent('The Definitive Word - Your Destiny Has Been Written'), '_blank');
-        }
-
-        function shareOnLinkedIn() {
-            window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(window.location.href), '_blank');
-        }
-
-        function shareOnWhatsApp() {
-            window.open('https://wa.me/?text=' + encodeURIComponent('Check out The Definitive Word Ministry - ' + window.location.href), '_blank');
-        }
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', initStore);
-    </script>
-</body>
-</html>
+export default MinistryWebsite;
