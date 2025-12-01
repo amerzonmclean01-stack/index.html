@@ -1,6 +1,3 @@
-// ==================== COMPLETE WEBSITE FUNCTIONALITY ====================
-// Add this script section right before the closing </body> tag, or integrate with existing script
-
 // System State Management
 const websiteState = {
     // Content management
