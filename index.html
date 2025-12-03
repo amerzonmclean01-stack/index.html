@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Prophetic Hub</title>
+    <title>The Definitive Word</title>
     <style>
         :root {
             --bg-main: #ffffff;
@@ -251,7 +251,7 @@
 
 <header>
     <nav>
-        <h2>Your Prophetic Hub</h2>
+        <h2>The Definitive Word</h2>
         <ul>
             <li><a href="#ebooks">Ebooks</a></li>
             <li><a href="#community">Community</a></li>
@@ -268,7 +268,7 @@
     <div class="hero-inner">
         <div>
             <span class="hero-highlight">Ebooks · Ministry · Community · Coaching</span>
-            <h1>Your Online Prophetic & Coaching Hub</h1>
+            <h1>The Definitive Word – Your Online Prophetic & Coaching Hub</h1>
             <p>Showcase your prophetic ministry, sell your ebooks, gather an engaged community, publish teachings, and book life-coaching sessions from one central, clean hub.</p>
             <div class="hero-buttons">
                 <a href="#ebooks" class="btn btn-primary">Shop Ebooks</a>
@@ -276,7 +276,7 @@
             </div>
         </div>
         <div class="hero-card">
-            <h3>Get Started Today</h3>
+            <h3>Get Started with The Definitive Word</h3>
             <p>Collect emails, sell digital products, and receive bookings immediately.</p>
             <form id="heroLeadForm">
                 <input type="email" id="heroEmail" placeholder="Enter your email to stay connected" required>
@@ -293,10 +293,8 @@
 
 <section id="ebooks">
     <h2>Ebooks Store</h2>
-    <p>Promote and sell your ebooks directly from your hub. Each “Buy Now” can be connected to Stripe, PayPal, or another checkout link.</p>
-    <div class="grid" id="ebookList">
-        <!-- Ebook cards injected by JavaScript -->
-    </div>
+    <p>Promote and sell your ebooks directly from The Definitive Word hub. Each “Buy Now” can be connected to Stripe, PayPal, or another checkout link.</p>
+    <div class="grid" id="ebookList"></div>
 </section>
 
 <section id="community">
@@ -410,7 +408,7 @@
     <p>Provide a direct way for visitors to contact your ministry team for invitations, questions, or testimonies.</p>
     <div class="two-column">
         <div class="card">
-            <h3>Contact Form</h3>
+            <h3>Contact The Definitive Word</h3>
             <form id="contactForm">
                 <input type="text" id="contactName" placeholder="Your name" required>
                 <input type="email" id="contactEmail" placeholder="Your email" required>
@@ -430,7 +428,7 @@
 <footer>
     <div class="footer-inner">
         <div>
-            <h4>Your Prophetic Hub</h4>
+            <h4>The Definitive Word</h4>
             <p style="font-size:0.9rem;">A central home for your ebooks, community, ministry, coaching, and training.</p>
         </div>
         <div>
@@ -447,22 +445,20 @@
         </div>
     </div>
     <p style="text-align:center; margin-top:1rem; font-size:0.8rem; color:#9ca3af;">
-        &copy; <span id="year"></span> Your Prophetic Hub. All rights reserved.
+        &copy; <span id="year"></span> The Definitive Word. All rights reserved.
     </p>
 </footer>
 
 <script>
-    // Dynamic year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Sample data
     const ebooks = [
         {
             title: "Foundations of Prophetic Living",
             desc: "A practical guide to hearing God and walking boldly in your calling.",
             price: 9.99,
             cover: "https://via.placeholder.com/600x400/1f4f8f/ffffff?text=Prophetic+Ebook",
-            link: "#" // Replace with Stripe/PayPal link
+            link: "#"
         },
         {
             title: "Purpose & Destiny Blueprint",
@@ -503,7 +499,6 @@
         }
     ];
 
-    // Render ebooks
     const ebookList = document.getElementById('ebookList');
     ebooks.forEach((ebook, index) => {
         const div = document.createElement('div');
@@ -518,7 +513,6 @@
         ebookList.appendChild(div);
     });
 
-    // Render workshops
     const workshopsList = document.getElementById('workshopsList');
     workshops.forEach((w, i) => {
         const div = document.createElement('div');
@@ -533,7 +527,6 @@
         workshopsList.appendChild(div);
     });
 
-    // Render blog posts
     const blogList = document.getElementById('blogList');
     function refreshBlogList() {
         blogList.innerHTML = "";
@@ -550,7 +543,6 @@
     }
     refreshBlogList();
 
-    // Load community posts from localStorage
     function loadCommunity() {
         const stored = JSON.parse(localStorage.getItem('communityPosts') || "[]");
         const container = document.getElementById('comments');
@@ -564,25 +556,20 @@
     }
     loadCommunity();
 
-    // Ecommerce: ebook purchase
     function buyEbook(index) {
         const ebook = ebooks[index];
         alert(
             `This would redirect to your payment page for "${ebook.title}".\n\nReplace this alert with a real Stripe/PayPal checkout link.`
         );
-        // Example: window.location.href = ebook.link;
     }
 
-    // Workshops registration
     function registerWorkshop(index) {
         const wk = workshops[index];
         alert(
             `This would open a registration form or payment link for "${wk.title}".`
         );
-        // Example: window.location.href = "https://your-workshop-registration-link.com";
     }
 
-    // Hero lead capture
     document.getElementById('heroLeadForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const email = document.getElementById('heroEmail').value.trim();
@@ -591,7 +578,6 @@
         this.reset();
     });
 
-    // Community form
     document.getElementById('postForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const name = document.getElementById('communityName').value.trim();
@@ -604,7 +590,6 @@
         loadCommunity();
     });
 
-    // Prayer requests
     document.getElementById('prayerForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const val = document.getElementById('prayerRequest').value.trim();
@@ -614,7 +599,6 @@
         this.reset();
     });
 
-    // Blog form (local only)
     document.getElementById('blogForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const title = document.getElementById('blogTitle').value.trim();
@@ -631,7 +615,6 @@
         alert("Your post has been added locally. Connect to a CMS to store it permanently.");
     });
 
-    // Booking form
     document.getElementById('bookingForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const service = document.getElementById('serviceType').value;
@@ -644,7 +627,6 @@
         this.reset();
     });
 
-    // Contact form
     document.getElementById('contactForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const name = document.getElementById('contactName').value.trim();
@@ -656,7 +638,6 @@
         this.reset();
     });
 
-    // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const target = document.querySelector(this.getAttribute('href'));
